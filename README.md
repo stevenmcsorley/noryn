@@ -90,7 +90,7 @@ The native bridge processes commands on the message thread and uses private per-
 
 ## Build and verify
 
-Requires CMake 3.22+, C++17, Git and internet for the initial JUCE 8.0.6 fetch. Debian/Ubuntu dependencies include ALSA, X11/Xrandr/Xinerama/Xcursor, FreeType, Fontconfig and OpenGL development packages.
+Use the repository or matching source archive for builds. Requires CMake 3.22+, C++17, Git and internet for the initial JUCE 8.0.6 fetch. Debian/Ubuntu dependencies include ALSA, X11/Xrandr/Xinerama/Xcursor, FreeType, Fontconfig and OpenGL development packages.
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release

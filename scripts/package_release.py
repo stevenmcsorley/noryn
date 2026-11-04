@@ -23,7 +23,7 @@ def plugin_files():
 
 
 def project_files():
-    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "run.sh", ".gitignore", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav"]
+    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "run.sh", ".gitignore", ".gitattributes", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav"]
     files = [ROOT / name for name in fixed]
     for folder in ["Source", "scripts", "licenses", "presets", "examples", ".github"]:
         files += [p for p in (ROOT / folder).rglob("*") if p.is_file() and not p.is_symlink()]

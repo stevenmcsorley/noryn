@@ -4,9 +4,7 @@
     "noryn": {
       "type": "stdio",
       "command": "node",
-      "args": [
-        "${PLUGIN_ROOT}/server/bootstrap.mjs"
-      ],
+      "args": ["${PLUGIN_ROOT}/server/bootstrap.mjs"],
       "cwd": "${PLUGIN_ROOT}"
     }
   }

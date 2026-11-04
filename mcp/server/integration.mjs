@@ -1,8 +1,22 @@
-import{Client}from'@modelcontextprotocol/sdk/client/index.js';import{StreamableHTTPClientTransport}from'@modelcontextprotocol/sdk/client/streamableHttp.js';import{promises as fs}from'node:fs';import path from'node:path';import{fileURLToPath}from'node:url';import assert from'node:assert/strict';
-const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));const token=(await fs.readFile(path.join(root,'.mcp-token'),'utf8')).trim();
-const client=new Client({name:'noryn-integration',version:'0.3.0'});await client.connect(new StreamableHTTPClientTransport(new URL('http://127.0.0.1:8787/mcp'),{requestInit:{headers:{Authorization:`Bearer ${token}`}}}));
-try{
-const result=await client.callTool({name:'code',arguments:{code:`async () => {
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import assert from "node:assert/strict";
+const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const token = (await fs.readFile(path.join(root, ".mcp-token"), "utf8")).trim();
+const client = new Client({ name: "noryn-integration", version: "0.3.0" });
+await client.connect(
+  new StreamableHTTPClientTransport(new URL("http://127.0.0.1:8787/mcp"), {
+    requestInit: { headers: { Authorization: `Bearer ${token}` } },
+  }),
+);
+try {
+  const result = await client.callTool({
+    name: "code",
+    arguments: {
+      code: `async () => {
  const before=await codemode.get_state({});const instanceId=before.instanceId;
  const values=Object.fromEntries(Object.entries(before.parameters).map(([id,p])=>[id,p.value]));
  try {
@@ -20,6 +34,11 @@ const result=await client.callTool({name:'code',arguments:{code:`async () => {
  } finally {
    await codemode.panic({instanceId});await codemode.load_preset({index:before.factoryPreset,instanceId});await codemode.set_parameters({values,instanceId});await codemode.write_sequence({steps:before.steps,replace:true,instanceId});
  }
-}`}});
-assert(!result.isError,JSON.stringify(result));console.log(JSON.stringify(result));
-}finally{await client.close();}
+}`,
+    },
+  });
+  assert(!result.isError, JSON.stringify(result));
+  console.log(JSON.stringify(result));
+} finally {
+  await client.close();
+}

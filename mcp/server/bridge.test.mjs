@@ -1,4 +1,86 @@
-import test from'node:test';import assert from'node:assert/strict';import{promises as fs}from'node:fs';import path from'node:path';import os from'node:os';import crypto from'node:crypto';import{instances,dispatch}from'./bridge.mjs';
-test('discovers only live, correctly scoped native descriptors',async()=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'noryn-bridge-'));try{const id=crypto.randomUUID();await fs.mkdir(path.join(root,id,'inbox'),{recursive:true});await fs.mkdir(path.join(root,id,'outbox'));await fs.writeFile(path.join(root,id+'.json'),JSON.stringify({id,pid:process.pid,inbox:path.join(root,id,'inbox'),outbox:path.join(root,id,'outbox')}));assert.equal((await instances(root)).length,1);await fs.writeFile(path.join(root,crypto.randomUUID()+'.json'),JSON.stringify({id:'../../outside',pid:process.pid,inbox:'/tmp/outside/inbox',outbox:'/tmp/outside/outbox'}));assert.equal((await instances(root)).length,1);}finally{await fs.rm(root,{recursive:true,force:true});}});
-test('round-trips one command through its own instance inbox and cleans responses',async()=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'noryn-dispatch-'));let timer;try{const id=crypto.randomUUID(),inbox=path.join(root,id,'inbox'),outbox=path.join(root,id,'outbox');await fs.mkdir(inbox,{recursive:true});await fs.mkdir(outbox);await fs.writeFile(path.join(root,id+'.json'),JSON.stringify({id,pid:process.pid,inbox,outbox}));let done=false;timer=setInterval(async()=>{if(done)return;for(const file of (await fs.readdir(inbox)).filter(name=>name.endsWith('.json'))){done=true;const request=JSON.parse(await fs.readFile(path.join(inbox,file),'utf8'));await fs.writeFile(path.join(outbox,file),JSON.stringify({ok:true,operation:request.op}));await fs.unlink(path.join(inbox,file)).catch(()=>{});}},10);const result=await dispatch('state',{},id,root);assert.deepEqual(result,{ok:true,operation:'state'});assert.equal((await fs.readdir(outbox)).length,0);}finally{clearInterval(timer);await fs.rm(root,{recursive:true,force:true});}});
-test('rejects an unavailable instance without writing commands',async()=>{const root=await fs.mkdtemp(path.join(os.tmpdir(),'noryn-empty-'));try{await assert.rejects(dispatch('state',{},undefined,root),/No running NORYN/);}finally{await fs.rm(root,{recursive:true,force:true});}});
+import test from "node:test";
+import assert from "node:assert/strict";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import os from "node:os";
+import crypto from "node:crypto";
+import { instances, dispatch } from "./bridge.mjs";
+test("discovers only live, correctly scoped native descriptors", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "noryn-bridge-"));
+  try {
+    const id = crypto.randomUUID();
+    await fs.mkdir(path.join(root, id, "inbox"), { recursive: true });
+    await fs.mkdir(path.join(root, id, "outbox"));
+    await fs.writeFile(
+      path.join(root, id + ".json"),
+      JSON.stringify({
+        id,
+        pid: process.pid,
+        inbox: path.join(root, id, "inbox"),
+        outbox: path.join(root, id, "outbox"),
+      }),
+    );
+    assert.equal((await instances(root)).length, 1);
+    await fs.writeFile(
+      path.join(root, crypto.randomUUID() + ".json"),
+      JSON.stringify({
+        id: "../../outside",
+        pid: process.pid,
+        inbox: "/tmp/outside/inbox",
+        outbox: "/tmp/outside/outbox",
+      }),
+    );
+    assert.equal((await instances(root)).length, 1);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+test("round-trips one command through its own instance inbox and cleans responses", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "noryn-dispatch-"));
+  let timer;
+  try {
+    const id = crypto.randomUUID(),
+      inbox = path.join(root, id, "inbox"),
+      outbox = path.join(root, id, "outbox");
+    await fs.mkdir(inbox, { recursive: true });
+    await fs.mkdir(outbox);
+    await fs.writeFile(
+      path.join(root, id + ".json"),
+      JSON.stringify({ id, pid: process.pid, inbox, outbox }),
+    );
+    let done = false;
+    timer = setInterval(async () => {
+      if (done) return;
+      for (const file of (await fs.readdir(inbox)).filter((name) =>
+        name.endsWith(".json"),
+      )) {
+        done = true;
+        const request = JSON.parse(
+          await fs.readFile(path.join(inbox, file), "utf8"),
+        );
+        await fs.writeFile(
+          path.join(outbox, file),
+          JSON.stringify({ ok: true, operation: request.op }),
+        );
+        await fs.unlink(path.join(inbox, file)).catch(() => {});
+      }
+    }, 10);
+    const result = await dispatch("state", {}, id, root);
+    assert.deepEqual(result, { ok: true, operation: "state" });
+    assert.equal((await fs.readdir(outbox)).length, 0);
+  } finally {
+    clearInterval(timer);
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+test("rejects an unavailable instance without writing commands", async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), "noryn-empty-"));
+  try {
+    await assert.rejects(
+      dispatch("state", {}, undefined, root),
+      /No running NORYN/,
+    );
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});

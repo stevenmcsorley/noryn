@@ -8,9 +8,7 @@
       "interface": {
         "displayName": "NORYN Control",
         "shortDescription": "Control your NORYN synth",
-        "capabilities": [
-          "tools"
-        ],
+        "capabilities": ["tools"],
         "logo": "./assets/icon.svg",
         "composerIcon": "./assets/icon.svg",
         "brandColor": "#66DCE4",
