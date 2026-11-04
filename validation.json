@@ -1,0 +1,16 @@
+{
+  "version": "0.3.0",
+  "factory_presets": 96,
+  "tested_controls": 58,
+  "weakest_control": "depth",
+  "minimum_relative_audio_difference": 0.048012,
+  "quietest_preset_rms": 0.010037,
+  "loudest_preset_rms": 0.122936,
+  "state_recall": true,
+  "gui_bindings": true,
+  "audio_telemetry": true,
+  "stress_sample_rates": [44100, 48000, 96000],
+  "stress_block_sizes": [16, 64, 127, 512],
+  "elapsed_seconds": 32.18,
+  "dense_16_voice_realtime_ratio": 0.7516
+}

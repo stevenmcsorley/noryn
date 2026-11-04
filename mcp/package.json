@@ -1,0 +1,26 @@
+{
+  "name": "noryn-codemode",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "scripts": {
+    "bridge": "node server/bridge.mjs",
+    "dev": "wrangler dev --ip 127.0.0.1 --port 8787",
+    "check": "tsc --noEmit",
+    "test": "node --test server/*.test.mjs"
+  },
+  "dependencies": {
+    "@cloudflare/codemode": "0.5.6",
+    "@modelcontextprotocol/client": "^2.4.0",
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "@modelcontextprotocol/server": "^2.4.0",
+    "agents": "latest",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "typescript": "^5.8.0",
+    "wrangler": "latest"
+  },
+  "license": "AGPL-3.0-only"
+}

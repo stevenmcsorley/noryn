@@ -1,0 +1,16 @@
+{
+  "version": "0.3.0",
+  "runtime": "Cloudflare Code Mode / DynamicWorkerExecutor on local workerd",
+  "stdioVerified": true,
+  "nativeRoundTrip": {
+    "verified": true,
+    "preset": "Code Mode Glass Orbit",
+    "chords": 4,
+    "scale": "D major",
+    "bpm": 110,
+    "lfo2": {
+      "destination": "Filter cutoff",
+      "rate": 0.129999980330467
+    }
+  }
+}

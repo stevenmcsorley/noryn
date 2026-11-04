@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "noryn-control",
+  "version": "0.3.0",
+  "description": "Control the local NORYN synth through Cloudflare Code Mode: sound design, presets, a 64-step sequencer, chord progressions, scales and four LFOs.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "NORYN Control",
+        "shortDescription": "Control your NORYN synth",
+        "capabilities": [
+          "tools"
+        ],
+        "logo": "./assets/icon.svg",
+        "composerIcon": "./assets/icon.svg",
+        "brandColor": "#66DCE4",
+        "brandColorDark": "#66DCE4"
+      }
+    }
+  },
+  "license": "AGPL-3.0-only"
+}

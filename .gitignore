@@ -1,0 +1,10 @@
+build/
+mcp/node_modules/
+mcp/.wrangler/
+mcp/.dev.vars
+mcp/.*-token
+mcp/mcp.local.json
+dist/
+WORKPLAN.md
+*.log
+.DS_Store

@@ -1,0 +1,101 @@
+# NORYN factory bank
+
+96 factory sounds plus Init. All patches are editable.
+
+- 0: Init / Open Canvas
+- 1: Cinematic Horizon
+- 2: June at Midnight
+- 3: Velvet Solstice
+- 4: Glass Cathedral
+- 5: Aurora Choir
+- 6: Distant Satellites
+- 7: Amber Polysix
+- 8: Underwater Silk
+- 9: Celestial Strings
+- 10: Winter Tape
+- 11: Oceanic Memory
+- 12: Neon Cinema
+- 13: Rubber Circuit
+- 14: Solid Foundation
+- 15: Acid Meridian
+- 16: Reese Transmission
+- 17: Talking Voltage
+- 18: Obsidian FM
+- 19: Round Trip
+- 20: Basement Funk
+- 21: Subterranean
+- 22: Broken Transformer
+- 23: Warm Octave
+- 24: Chrome Runner
+- 25: Solar Flare
+- 26: Silicon Whistle
+- 27: Pulse Racer
+- 28: Razor Bloom
+- 29: Singing Wire
+- 30: Festival Horizon
+- 31: Velour Solo
+- 32: Laser Etching
+- 33: Copper Reed
+- 34: Retro Arcade
+- 35: Bending Light
+- 36: Icebreaker
+- 37: Tine Afterglow
+- 38: Worn Electric
+- 39: Prism Bell
+- 40: Ivory Circuit
+- 41: Sunday Organ
+- 42: Vapor Clav
+- 43: Toy Constellation
+- 44: Soft Mallet
+- 45: Crystal Rhodes
+- 46: Radio Harpsichord
+- 47: Glass Marimba
+- 48: Dream Celesta
+- 49: Plucked Horizon
+- 50: Koto Satellite
+- 51: Muted Neon
+- 52: Silver Droplet
+- 53: Analog Raindrop
+- 54: Bamboo Logic
+- 55: Deep House Wire
+- 56: Chromatic Spark
+- 57: Nylon Emulator
+- 58: Clockwork Harp
+- 59: Satin Staccato
+- 60: Resonant Pebble
+- 61: Ghost in Glass
+- 62: Dust of Europa
+- 63: Frozen Transformer
+- 64: Breathing Machine
+- 65: Ocean of Static
+- 66: Alien Choir
+- 67: Bowed Satellite
+- 68: Abyssal Current
+- 69: Spectral Garden
+- 70: Violet Interference
+- 71: Cathedral Dust
+- 72: Beyond the Signal
+- 73: Orbital Sequence
+- 74: Pulse Engine
+- 75: Vowel Conveyor
+- 76: Sawtooth Highway
+- 77: Digital Carousel
+- 78: Liquid Clock
+- 79: Binary Aurora
+- 80: Square Dance
+- 81: Resonant Traffic
+- 82: Planetary Gears
+- 83: Chopped Starlight
+- 84: Neon Pendulum
+- 85: Golden Brass
+- 86: String Machine
+- 87: Cinema Horns
+- 88: Amber Ensemble
+- 89: Synthetic Oboe
+- 90: Wide Horizon Brass
+- 91: Chamber of Light
+- 92: Vintage Solina
+- 93: Spectral Cello
+- 94: Royal Fanfare
+- 95: Muted Copper
+- 96: Orchestral Dream

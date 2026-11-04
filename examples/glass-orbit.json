@@ -1,0 +1,49 @@
+{
+  "name": "Code Mode Glass Orbit",
+  "factoryPreset": 37,
+  "bpm": 110,
+  "scale": "D major",
+  "lfo2": {
+    "destination": "Filter cutoff",
+    "rate": 0.13,
+    "amount": 0.25
+  },
+  "steps": [
+    {
+      "index": 0,
+      "notes": [
+        50,
+        54,
+        57
+      ],
+      "length": 16
+    },
+    {
+      "index": 16,
+      "notes": [
+        59,
+        62,
+        66
+      ],
+      "length": 16
+    },
+    {
+      "index": 32,
+      "notes": [
+        55,
+        59,
+        62
+      ],
+      "length": 16
+    },
+    {
+      "index": 48,
+      "notes": [
+        57,
+        61,
+        64
+      ],
+      "length": 16
+    }
+  ]
+}

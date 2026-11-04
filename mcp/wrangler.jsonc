@@ -1,0 +1,9 @@
+{
+  "$schema":"node_modules/wrangler/config-schema.json",
+  "name":"noryn-codemode",
+  "main":"server/worker.ts",
+  "compatibility_date":"2026-11-04",
+  "compatibility_flags":["nodejs_compat"],
+  "worker_loaders":[{"binding":"LOADER"}],
+  "vars":{"NORYN_BRIDGE_URL":"http://127.0.0.1:8788"}
+}
