@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 DIST.mkdir(exist_ok=True)
 
 
@@ -23,7 +23,7 @@ def plugin_files():
 
 
 def project_files():
-    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "run.sh", ".gitignore", ".gitattributes", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav"]
+    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "run.sh", ".gitignore", ".gitattributes", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]
     files = [ROOT / name for name in fixed]
     for folder in ["Source", "scripts", "licenses", "presets", "examples", ".github"]:
         files += [p for p in (ROOT / folder).rglob("*") if p.is_file() and not p.is_symlink()]
@@ -42,7 +42,7 @@ with zipfile.ZipFile(native, "w", zipfile.ZIP_DEFLATED, compresslevel=8) as arch
     for file in (base / "VST3/NORYN.vst3").rglob("*"):
         if file.is_file():
             archive.write(file, "NORYN/VST3/" + file.relative_to(base / "VST3").as_posix())
-    for name in ["README.md", "LICENSE", "THIRD_PARTY.md", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "sequencer.png", "lfos.png", "scales.png", "preview-small.png", "demo.wav"]:
+    for name in ["README.md", "LICENSE", "THIRD_PARTY.md", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "sequencer.png", "lfos.png", "scales.png", "preview-small.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]:
         if name == "README.md":
             archive.writestr("NORYN/README.md", (ROOT / name).read_text().replace("](mcp/README.md)", "](noryn-control/README.md)"))
         else:
@@ -58,7 +58,7 @@ with zipfile.ZipFile(native, "w", zipfile.ZIP_DEFLATED, compresslevel=8) as arch
     launcher = zipfile.ZipInfo("NORYN/run.sh")
     launcher.external_attr = 0o100755 << 16
     archive.writestr(launcher, (ROOT / "run.sh").read_text())
-    archive.writestr("NORYN/START-HERE.txt", "NORYN 0.3 for Linux x86_64\n\nRun ./run.sh or Standalone/NORYN. Select audio and MIDI devices in Options.\nCopy the complete VST3/NORYN.vst3 bundle into ~/.vst3/ and rescan your DAW.\nSee README.md for the synth, sequencer, scale engine and four LFOs.\nThe noryn-control directory is the optional local Cloudflare Code Mode MCP plugin.\nAGPL-3.0 license and matching source are provided with this release.\n")
+    archive.writestr("NORYN/START-HERE.txt", "NORYN 0.4 for Linux x86_64\n\nRun ./run.sh or Standalone/NORYN. Select audio and MIDI devices in Options.\nCopy the complete VST3/NORYN.vst3 bundle into ~/.vst3/ and rescan your DAW.\nSee README.md for the synth, sequencer, scale engine and four LFOs.\nThe noryn-control directory is the optional local Cloudflare Code Mode MCP plugin.\nAGPL-3.0 license and matching source are provided with this release.\n")
 
 source = DIST / f"NORYN-{VERSION}-source.tar.gz"
 juce = ROOT / "build/_deps/juce-src"
@@ -88,7 +88,7 @@ with tarfile.open(source) as archive:
     assert f"NORYN-{VERSION}/vendor/JUCE/modules/juce_core/juce_core.h" in archive.getnames()
     assert not any(name.endswith((".mcp-token", ".bridge-token", ".dev.vars", "WORKPLAN.md")) for name in archive.getnames())
 
-assets = [native, plugin, source] + [ROOT / name for name in ["preview.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav"]]
+assets = [native, plugin, source] + [ROOT / name for name in ["preview.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]]
 checksums = DIST / "SHA256SUMS.txt"
 checksums.write_text("".join(f"{hashlib.sha256(file.read_bytes()).hexdigest()}  {file.name}\n" for file in assets))
 print("\n".join(f"{file.name}: {file.stat().st_size:,} bytes" for file in [native, plugin, source, checksums]))

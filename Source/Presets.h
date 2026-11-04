@@ -9,6 +9,10 @@ struct Preset
     juce::String name, category, description;
     std::vector<std::pair<const char *, float>> values;
 };
+} // namespace noryn
+#include "SignaturePresets.h"
+namespace noryn
+{
 inline const std::vector<Preset> &factoryPresets()
 {
     static const std::vector<Preset> bank = []
@@ -271,6 +275,7 @@ inline const std::vector<Preset> &factoryPresets()
                 }
                 out.push_back(std::move(p));
             }
+        appendSignaturePresets(out);
         return out;
     }();
     return bank;

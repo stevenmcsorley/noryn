@@ -52,7 +52,7 @@ export async function dispatch(op, args = {}, instanceId, root = controlRoot) {
     : available[0];
   if (!instance)
     throw new Error(
-      "No running NORYN 0.3 instance. Launch the updated synth first.",
+      "No running NORYN instance. Launch the updated synth first.",
     );
   const id = crypto.randomUUID() + ".json";
   const incoming = path.join(instance.inbox, id),

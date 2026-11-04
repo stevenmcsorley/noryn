@@ -16,7 +16,7 @@ const instanceId = z
     "Optional instance ID from get_state; defaults to the latest running synth.",
   );
 function upstream(env: Env) {
-  const server = new McpServer({ name: "noryn", version: "0.3.0" });
+  const server = new McpServer({ name: "noryn", version: "0.4.0" });
   async function call(op: string, args: unknown, id?: string) {
     const response = await fetch(`${env.NORYN_BRIDGE_URL}/api`, {
       method: "POST",
@@ -47,7 +47,7 @@ function upstream(env: Env) {
     "list_presets",
     {
       description:
-        "List all 96 factory sounds plus Init and locally saved user patches.",
+        "List all 288 factory sounds plus Init and locally saved user patches.",
       inputSchema: { instanceId },
     },
     async ({ instanceId }) => call("presets", {}, instanceId),
@@ -70,7 +70,7 @@ function upstream(env: Env) {
     {
       description:
         "Load a factory sound by index, preserving sequence, scale and tempo.",
-      inputSchema: { index: z.number().int().min(0).max(96), instanceId },
+      inputSchema: { index: z.number().int().min(0).max(288), instanceId },
     },
     async ({ index, instanceId }) => call("loadPreset", { index }, instanceId),
   );
@@ -231,7 +231,7 @@ export default {
     )
       return new Response("Unauthorized", { status: 401 });
     if (new URL(request.url).pathname === "/health")
-      return Response.json({ name: "noryn-codemode", version: "0.3.0" });
+      return Response.json({ name: "noryn-codemode", version: "0.4.0" });
     const server = await codeMcpServer({
       server: upstream(env),
       executor: new DynamicWorkerExecutor({ loader: env.LOADER }),

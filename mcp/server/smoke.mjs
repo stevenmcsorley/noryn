@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const token = (await fs.readFile(path.join(root, ".mcp-token"), "utf8")).trim();
-const client = new Client({ name: "noryn-verification", version: "0.3.0" });
+const client = new Client({ name: "noryn-verification", version: "0.4.0" });
 await client.connect(
   new StreamableHTTPClientTransport(new URL("http://127.0.0.1:8787/mcp"), {
     requestInit: { headers: { Authorization: `Bearer ${token}` } },
@@ -27,7 +27,7 @@ try {
     const result = await client.callTool({
       name: "code",
       arguments: {
-        code: "async () => { const state = await codemode.get_state({}); return { instanceId: state.instanceId, version: state.version, presets: (await codemode.list_presets({instanceId: state.instanceId})).factory.length, parameters: Object.keys(state.parameters).length, steps: state.steps.length }; }",
+        code: "async () => { const state = await codemode.get_state({}); const bank = (await codemode.list_presets({instanceId: state.instanceId})).factory; const signatures = bank.filter(p => p.description?.startsWith(\"Inspired by \")); const daft = bank.filter(p => /daft punk/i.test(p.name + \" \" + p.description)); if (state.version !== \"0.4.0\" || bank.length !== 289 || signatures.length !== 192 || daft.length < 6) throw new Error(\"Signature bank or searchable references missing\"); return { version: state.version, presets: bank.length, signaturePresets: signatures.length, daftPunkMatches: daft.length, parameters: Object.keys(state.parameters).length, steps: state.steps.length }; }",
       },
     });
     assert(!result.isError, JSON.stringify(result));

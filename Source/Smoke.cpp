@@ -1,3 +1,4 @@
+#include "Presets.h"
 #include "ScaleEngine.h"
 #include "Sequencer.h"
 #include <cmath>
@@ -172,7 +173,7 @@ int main(int argc, char **argv)
         testScaleEngine();
         testSequencer();
         Harness h;
-        require(h.p->getNumPrograms() == 97, "Expected 96 factory presets plus Init");
+        require(h.p->getNumPrograms() == 289, "Expected 288 factory presets plus Init");
         auto started = Time::getMillisecondCounterHiRes();
         String csv = "parameter,normalized_low,normalized_high,relative_audio_difference\n";
         float minimumDifference = 100;
@@ -224,7 +225,19 @@ int main(int argc, char **argv)
         std::set<int> testedEngines;
         std::set<String> names;
         double quietest = 1.e10, loudest = 0;
-        String catalog = "# NORYN factory bank\n\n96 factory sounds plus Init. All patches are editable.\n\n";
+        std::set<String> signatureStates;
+        String levels = "index,name,category,rms,peak\n";
+        String catalog = "# NORYN factory bank\n\n288 factory sounds plus Init. All patches are "
+                         "editable.\n\n192 original signature patches reference songs, artists and classic "
+                         "synthesis palettes. They are interpretations, not extracted artist patches, "
+                         "samples, exact recreations or endorsements. The original programs 0-96 retain "
+                         "their numbers. Search the browser by name, song, artist or playing tip.\n\n\n\n";
+        catalog += "## Signature demo guide\n\n`signature-demo.wav` auditions one patch from each new family "
+                   "in three-second segments, using original notes/chords.\n\n";
+        for (int group = 0; group < 16; ++group)
+            catalog += "- " + String(group * 3) + "–" + String(group * 3 + 3) +
+                       " s: " + h.p->getProgramName(97 + group * 12) + "\n";
+        catalog += "\n## All programs\n\n";
         for (int i = 0; i < h.p->getNumPrograms(); ++i)
         {
             auto name = h.p->getProgramName(i);
@@ -232,17 +245,60 @@ int main(int argc, char **argv)
             h.p->setCurrentProgram(i);
             testedEngines.insert(
                 int(h.parameters.at("engine")->convertFrom0to1(h.parameters.at("engine")->getValue())));
-            auto sound = h.render(.9, .8f, {48, 60});
+            const auto &preset = noryn::factoryPresets()[size_t(i)];
+            for (const auto &edit : preset.values)
+            {
+                auto it = h.parameters.find(edit.first);
+                require(it != h.parameters.end(), "Unknown preset parameter: " + String(edit.first));
+                const auto range = it->second->getNormalisableRange();
+                require(std::isfinite(edit.second) && edit.second >= range.start && edit.second <= range.end,
+                        "Out-of-range preset parameter: " + name + " / " + edit.first);
+            }
+            if (i >= 97)
+            {
+                String signature;
+                for (const auto &pair : h.parameters)
+                    signature += pair.first + ":" + String(pair.second->getValue(), 7) + ";";
+                require(signatureStates.insert(signature).second, "Duplicate signature sound: " + name);
+                require(preset.description.startsWith("Inspired by "), "Missing signature reference");
+            }
+            auto sound =
+                h.render(i >= 97 ? 2.5 : .9, .8f,
+                         preset.category == "Basses" ? std::vector<int>{48} : std::vector<int>{48, 60});
             double rms = std::sqrt(energy(sound) / (sound.getNumSamples() * 2));
             require(rms > .00015, "Silent preset: " + name);
             quietest = jmin(quietest, rms);
             loudest = jmax(loudest, rms);
-            catalog += "- " + String(i) + ": " + name + "\n";
+            double peak = sound.getMagnitude(0, sound.getNumSamples());
+            if (i >= 97)
+                require(rms < .35 && peak < .98, "Signature preset has excessive level: " + name);
+            levels += String(i) + ",\"" + name + "\",\"" + preset.category + "\"," + String(rms, 6) + "," +
+                      String(peak, 6) + "\n";
+            catalog += "### " + String(i) + ": " + name + "\n\n**" + preset.category + "** — " +
+                       preset.description + "\n\n";
             if (i % 12 == 0)
                 std::cout << "Presets checked: " << i << std::endl;
         }
+        directory.getChildFile("preset-levels.csv").replaceWithText(levels);
         require(testedEngines.size() == 5, "Factory sounds do not cover all five voice engines");
         directory.getChildFile("PRESETS.md").replaceWithText(catalog);
+        const auto listed = norynControl(h.p.get(), JSON::parse("{\"op\":\"presets\"}"));
+        require(listed["factory"].size() == 289, "MCP omitted new presets");
+        require(listed["factory"][288]["description"].toString().contains("ODESZA"),
+                "MCP omitted signature reference/description");
+        require(h.p->getProgramName(1) == "Cinematic Horizon" &&
+                    h.p->getProgramName(13) == "Rubber Circuit" &&
+                    h.p->getProgramName(96) == "Orchestral Dream",
+                "Legacy program numbering changed");
+        h.p->setCurrentProgram(288);
+        MemoryBlock signatureState;
+        h.p->getStateInformation(signatureState);
+        float signatureCutoff = h.parameters.at("cutoff")->getValue();
+        h.p->setCurrentProgram(0);
+        h.p->setStateInformation(signatureState.getData(), int(signatureState.getSize()));
+        require(h.p->getCurrentProgram() == 288 &&
+                    std::abs(h.parameters.at("cutoff")->getValue() - signatureCutoff) < .00001f,
+                "New signature preset state recall failed");
         h.p->setCurrentProgram(43);
         MemoryBlock state;
         h.p->getStateInformation(state);
@@ -522,6 +578,43 @@ int main(int argc, char **argv)
         h.p->setCurrentProgram(1);
         norynRefreshEditor(editor.get());
 
+        TextEditor *search = nullptr;
+        ComboBox *presetBox = nullptr;
+        for (auto *child : editor->getChildren())
+        {
+            if (child->getName() == "presetSearch")
+                search = dynamic_cast<TextEditor *>(child);
+            if (child->getName() == "presets")
+                presetBox = dynamic_cast<ComboBox *>(child);
+        }
+        require(search && presetBox, "Missing searchable preset browser");
+        search->setText("Daft Punk");
+        search->onTextChange();
+        require(presetBox->getNumItems() >= 6, "Artist search omitted signature patches");
+        search->setText("DAFT voyager");
+        search->onTextChange();
+        require(presetBox->getNumItems() == 1, "Case-insensitive multiword search failed");
+        search->setText("unlikely-no-match-92847");
+        search->onTextChange();
+        require(presetBox->getNumItems() == 0, "Empty search results failed");
+        search->clear();
+        search->onTextChange();
+        require(presetBox->getNumItems() >= 289, "Clearing search did not restore bank");
+        h.p->setCurrentProgram(193); // House & Garage signature bank.
+        norynRefreshEditor(editor.get());
+        search->setText("Fingers");
+        search->onTextChange();
+        auto bankImage = editor->createComponentSnapshot(editor->getLocalBounds());
+        auto bankFile = directory.getChildFile("signature-bank.png");
+        bankFile.deleteFile();
+        auto bankStream = bankFile.createOutputStream();
+        PNGImageFormat bankPng;
+        require(bankStream && bankPng.writeImageToStream(bankImage, *bankStream), "Bank screenshot failed");
+        bankStream.reset();
+        search->clear();
+        search->onTextChange();
+        h.p->setCurrentProgram(1);
+        norynRefreshEditor(editor.get());
         auto imageFile = directory.getChildFile("preview.png");
         imageFile.deleteFile();
         auto stream = imageFile.createOutputStream();
@@ -573,9 +666,29 @@ int main(int argc, char **argv)
             offset += sound.getNumSamples();
         }
         wav(directory.getChildFile("demo.wav"), demo);
+        AudioBuffer<float> signatureDemo(2, 48000 * 48);
+        signatureDemo.clear();
+        offset = 0;
+        for (int group = 0; group < 16; ++group)
+        {
+            int program = 97 + group * 12;
+            h.p->setCurrentProgram(program);
+            auto sound = h.render(3, .72f,
+                                  group < 4 ? std::vector<int>{48}
+                                  : group == 4 || group == 6 || group == 7 || group == 15
+                                      ? std::vector<int>{60}
+                                      : std::vector<int>{48, 55, 62, 65});
+            for (int c = 0; c < 2; ++c)
+                signatureDemo.copyFrom(c, offset, sound, c, 0, sound.getNumSamples());
+            offset += sound.getNumSamples();
+        }
+        wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.3.0\",\n  \"factory_presets\": 96,\n  \"tested_controls\": " +
-                        String(audibleControls) + ",\n  \"weakest_control\": \"" + weakest +
+        String report = "{\n  \"version\": \"0.4.0\",\n  \"factory_presets\": 288,\n  \"signature_presets\": "
+                        "192,\n  \"unique_signature_states\": " +
+                        String(int(signatureStates.size())) +
+                        ",\n  \"tested_controls\": " + String(audibleControls) +
+                        ",\n  \"weakest_control\": \"" + weakest +
                         "\",\n  \"minimum_relative_audio_difference\": " + String(minimumDifference, 6) +
                         ",\n  \"quietest_preset_rms\": " + String(quietest, 6) +
                         ",\n  \"loudest_preset_rms\": " + String(loudest, 6) +
@@ -586,7 +699,7 @@ int main(int argc, char **argv)
                         ",\n  \"dense_16_voice_realtime_ratio\": " + String(realtimeRatio, 4) + "\n}\n";
         directory.getChildFile("validation.json").replaceWithText(report);
         std::cout << "PASS: " << audibleControls
-                  << " audible synthesis controls, 96 presets, GUI bindings, live telemetry, state recall, "
+                  << " audible synthesis controls, 288 presets, GUI bindings, live telemetry, state recall, "
                      "stress checks ("
                   << elapsed << " s)\n";
         h.p->releaseResources();

@@ -440,7 +440,7 @@ class NorynProcessor : public AudioProcessor
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "0.3.0");
+        result->setProperty("version", "0.4.0");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", getProgramName(getCurrentProgram()));
         result->setProperty("playing", sequencer.playing.load());
@@ -501,6 +501,7 @@ class NorynProcessor : public AudioProcessor
                 item->setProperty("index", i);
                 item->setProperty("name", getProgramName(i));
                 item->setProperty("category", factoryPresets()[size_t(i)].category);
+                item->setProperty("description", factoryPresets()[size_t(i)].description);
                 factory.add(var(item));
             }
             for (const auto &file : userPresetFiles())
@@ -830,6 +831,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     std::vector<Control> controls;
     std::vector<Choice> choices;
     ComboBox categories, presets;
+    TextEditor presetSearch;
     TextButton previous{"<"}, next{">"}, audition{"PLAY PATCH"}, reset{"INIT"}, panic{"STOP"};
     Label description, status;
     std::vector<int> visiblePrograms;
@@ -943,6 +945,13 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             const auto &preset = factoryPresets()[size_t(i)];
             if (filter != "All sounds" && filter != preset.category)
                 continue;
+            auto query = presetSearch.getText().trim();
+            auto haystack = preset.name + " " + preset.category + " " + preset.description;
+            bool matches = true;
+            for (const auto &word : StringArray::fromTokens(query, " ", "\""))
+                matches = matches && haystack.containsIgnoreCase(word);
+            if (!matches)
+                continue;
             if (filter == "All sounds" && preset.category != lastName)
             {
                 presets.addSectionHeading(preset.category);
@@ -959,7 +968,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             if (!files.isEmpty())
                 presets.addSectionHeading("User patches");
             for (int i = 0; i < files.size(); ++i)
-                presets.addItem(files[i].getFileNameWithoutExtension(), 10000 + i);
+                if (files[i].getFileNameWithoutExtension().containsIgnoreCase(presetSearch.getText().trim()))
+                    presets.addItem(files[i].getFileNameWithoutExtension(), 10000 + i);
         }
         presets.setSelectedId(p.userLoaded.load() >= 0 ? 10000 + p.userLoaded.load()
                                                        : p.getCurrentProgram() + 1,
@@ -982,7 +992,12 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         if (visiblePrograms.empty())
             return;
         auto it = std::find(visiblePrograms.begin(), visiblePrograms.end(), p.getCurrentProgram());
-        int i = it == visiblePrograms.end() ? 0 : int(it - visiblePrograms.begin());
+        if (it == visiblePrograms.end())
+        {
+            load(direction < 0 ? visiblePrograms.back() : visiblePrograms.front());
+            return;
+        }
+        int i = int(it - visiblePrograms.begin());
         i = (i + direction + int(visiblePrograms.size())) % int(visiblePrograms.size());
         load(visiblePrograms[size_t(i)]);
     }
@@ -994,11 +1009,13 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         if (std::find(visiblePrograms.begin(), visiblePrograms.end(), index) == visiblePrograms.end())
         {
             categories.setSelectedId(1, dontSendNotification);
+            presetSearch.setText({}, false);
             fillPresets();
         }
         presets.setSelectedId(p.userLoaded.load() >= 0 ? 10000 + p.userLoaded.load() : index + 1,
                               dontSendNotification);
         description.setText(factoryPresets()[size_t(index)].description, dontSendNotification);
+        description.setTooltip(description.getText());
     }
     void playPreview()
     {
@@ -1681,6 +1698,22 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         status.setColour(Label::textColourId, muted);
         status.setBounds(265, 903, 1010, 22);
         addAndMakeVisible(status);
+        presetSearch.setName("presetSearch");
+        presetSearch.setBounds(948, 83, 476, 22);
+        presetSearch.setTextToShowWhenEmpty("Search sounds, artists, songs...", muted);
+        presetSearch.setFont(FontOptions(12.f));
+        presetSearch.setColour(TextEditor::backgroundColourId, Colour(0xff0b151b));
+        presetSearch.setColour(TextEditor::textColourId, text);
+        presetSearch.setColour(TextEditor::outlineColourId, Colour(0xff49616d));
+        presetSearch.setTooltip(
+            "Search names, artists, songs and playing tips. Combine words; Escape clears.");
+        presetSearch.onTextChange = [this] { fillPresets(); };
+        presetSearch.onEscapeKey = [this]
+        {
+            presetSearch.clear();
+            grabKeyboardFocus();
+        };
+        addAndMakeVisible(presetSearch);
         synthTab.setBounds(322, 83, 100, 22);
         sequenceTab.setBounds(430, 83, 180, 22);
         modTab.setBounds(618, 83, 160, 22);
@@ -1729,6 +1762,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     }
     bool keyPressed(const KeyPress &key) override
     {
+        if (presetSearch.hasKeyboardFocus(true))
+            return false;
         if (key == KeyPress::spaceKey)
         {
             audition.setToggleState(!audition.getToggleState(), dontSendNotification);
@@ -1749,7 +1784,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     }
     bool keyStateChanged(bool down) override
     {
-        return keys.keyStateChanged(down);
+        return presetSearch.hasKeyboardFocus(true) ? false : keys.keyStateChanged(down);
     }
     void paint(Graphics &g) override
     {
@@ -1764,7 +1799,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("N O R Y N", 25, 14, 290, 46, Justification::centredLeft);
         g.setFont(FontOptions(10.f));
         g.setColour(cyan);
-        g.drawText("HYBRID SYNTHESIZER / 96 FACTORY SOUNDS", 28, 62, 295, 21, Justification::centredLeft);
+        g.drawText("HYBRID SYNTHESIZER / " + String(p.getNumPrograms() - 1) + " FACTORY SOUNDS", 28, 62, 295,
+                   21, Justification::centredLeft);
         if (activePage == 0)
         {
             panel(g, {16, 110, 465, 286}, "OSC A", cyan);
@@ -1816,7 +1852,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("MIDI / sustain / mod wheel / bend", 28, 879, 210, 16, Justification::centredLeft);
         g.setColour(amber);
         g.setFont(FontOptions(10.f));
-        g.drawText("NORYN 0.3 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
+        g.drawText("NORYN 0.4 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
                    Justification::centredLeft);
         g.setColour(muted);
         g.drawText(String(p.visual.sampleRate.load() / 1000, 1) + " kHz", 1310, 903, 108, 22,

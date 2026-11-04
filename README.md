@@ -1,4 +1,4 @@
-# NORYN 0.3 — Hybrid Synthesizer
+# NORYN 0.4 — Hybrid Synthesizer
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
 
@@ -9,6 +9,8 @@ Native Linux VST3 instrument and standalone synthesizer. The interface takes cue
 | ![Synthesizer](preview.png) | ![Sequencer](sequencer.png) |
 | **Four LFOs** | **Scale engine** |
 | ![Four LFOs](lfos.png) | ![Scale engine](scales.png) |
+
+The new [Signature Collection browser](signature-bank.png) supports artist and song search. Listen to the [48-second signature demo](signature-demo.wav).
 
 ## Launch
 
@@ -31,7 +33,11 @@ Only the dedicated stereo output scope, FFT spectrum and level meters follow pla
 
 ## Sounds
 
-96 editable factory patches, twelve each in Pads, Basses, Leads, Keys, Plucks, Textures, Motion and Brass & Strings, plus Init. Categories filter the browser. Arrows cycle within a category. PLAY PATCH auditions a suitable note or chord. [PRESETS.md](PRESETS.md) lists the bank.
+288 editable factory patches plus Init: the original 96 sounds and 192 new Signature Collection patches across Pads, Basses, Leads, Keys, Plucks, Textures, Motion and Brass & Strings. Search by sound name, artist, song or playing tip; combine words to narrow results. Categories filter the browser. Arrows cycle within a category. PLAY PATCH auditions a suitable note or chord. [PRESETS.md](PRESETS.md) lists the bank.
+
+The Signature Collection includes funk/disco and synth-pop bass, acid/techno, Reese/modern bass, classic solo leads, poly brass, festival/trance, melodic plucks, house/garage keys, FM keys/bells, organs, vintage pads, cinematic ambience, vocal/digital textures, rhythmic motion and organic plucks. References range from Stevie Wonder, Herbie Hancock, Kraftwerk, Vangelis, Jean-Michel Jarre, Prince, Depeche Mode and New Order to Daft Punk, Tiesto, Armin van Buuren, deadmau5, Avicii, Skrillex, Disclosure, Bicep, Four Tet and many more. Every new patch has a musical reference and playing tip in its description (hover to read the full text); MCP listings include descriptions too.
+
+These are original NORYN interpretations of musical palettes, not extracted commercial patches, recordings, exact recreations or artist endorsements. They use only the instrument's synthesis engines. The original program numbers 0–96 stay unchanged for existing projects. [PRESETS.md](PRESETS.md) lists every patch and reference.
 
 Five synthesis engines make the bank more varied:
 
@@ -98,8 +104,8 @@ cmake --build build --target Noryn_All NorynSmoke -j2
 NORYN_NO_MCP=1 xvfb-run -a build/NorynSmoke_artefacts/Release/NorynSmoke .
 ```
 
-The checks cover 58 sound controls with rendered audio comparisons; every UI parameter binding and minimum; disabled wraparound/accidental reset; all 96 presets and five engines; full parameter/pattern recall; 64-step timing at 120/240 BPM; live and chord step recording; exhaustive scale/root/direction/MIDI-note bounds; collision-safe note-offs; matching scope/audio samples; static setting graphs; OSC-display independence; LFO rate/depth graph response; moving modulation indicators with fixed base values; destination isolation and no audio modulation with routes Off; and finite output at 44.1/48/96 kHz with 16/64/127/512-sample blocks.
+The checks cover 58 sound controls with rendered audio comparisons; every UI parameter binding and minimum; disabled wraparound/accidental reset; all 288 presets and five engines; signature parameter bounds, unique states, output levels and artist/song search; full parameter/pattern recall; 64-step timing at 120/240 BPM; live and chord step recording; exhaustive scale/root/direction/MIDI-note bounds; collision-safe note-offs; matching scope/audio samples; static setting graphs; OSC-display independence; LFO rate/depth graph response; moving modulation indicators with fixed base values; destination isolation and no audio modulation with routes Off; and finite output at 44.1/48/96 kHz with 16/64/127/512-sample blocks.
 
-Reports: `validation.json`, `control-sensitivity.csv`, `native-knob-verification.json`. Screenshots: `preview.png`, `sequencer.png`, `lfos.png`, `scales.png`, `preview-small.png`. `demo.wav` samples the eight preset categories. Native mouse testing also verifies that dragging 70% below the minimum stays at zero after release/double-click. Offline verification does not replace listening or validation across DAWs.
+Reports: `validation.json`, `control-sensitivity.csv`, `native-knob-verification.json`. Screenshots: `preview.png`, `sequencer.png`, `lfos.png`, `scales.png`, `preview-small.png`. `demo.wav` samples the eight original preset categories. `signature-demo.wav` is a 48-second tour of the 16 new signature families, using original notes/chords rather than song melodies. `preset-levels.csv` reports RMS and peak for every tested patch. Native mouse testing also verifies that dragging 70% below the minimum stays at zero after release/double-click. Offline verification does not replace listening or validation across DAWs.
 
 NORYN is released under [AGPL-3.0](LICENSE). JUCE uses its AGPLv3 open-source option in this build; dependency notices are in [THIRD_PARTY.md](THIRD_PARTY.md). Binary releases include the license and a matching source archive with JUCE 8.0.6. Windows/macOS binaries require builds on those platforms. User wavetable import, a multi-slot arbitrary modulation matrix and host tempo sync remain future work.

@@ -1,6 +1,6 @@
 # NORYN Control — Cloudflare Code Mode MCP
 
-This local plugin controls the actual NORYN 0.3 native synth. It uses `@cloudflare/codemode`'s `codeMcpServer` and `DynamicWorkerExecutor`, running in Cloudflare workerd through Wrangler. One MCP `code` tool exposes typed `codemode` operations. This is a local runtime, not a deployed Cloudflare service.
+This local plugin controls the actual NORYN 0.4 native synth. It uses `@cloudflare/codemode`'s `codeMcpServer` and `DynamicWorkerExecutor`, running in Cloudflare workerd through Wrangler. One MCP `code` tool exposes typed `codemode` operations. This is a local runtime, not a deployed Cloudflare service.
 
 ## Connect
 
@@ -24,7 +24,7 @@ For development, `./start.sh` runs the broker at `127.0.0.1:8788` and Code Mode 
 ## Operations
 
 - `get_state`: actual parameters, ranges, labels, choices, transport and 64 steps.
-- `list_presets`, `load_preset`: 96 factory sounds plus Init.
+- `list_presets`, `load_preset`: 288 factory sounds plus Init.
 - `set_parameters`: actual native values, validated before application.
 - `save_preset`, `load_user_preset`: named local sound/pattern/scale states.
 - `write_sequence`: polyphonic steps, velocity and duration; preserve or replace.
@@ -53,6 +53,17 @@ async () => {
 ```
 
 Inspect current parameter ranges and enum labels before editing. Source graphs remain static; mapped controls show effective modulation separately from their base value. Routes Off do not leave hidden oscillator/filter modulation active.
+
+Find signature sounds by musical reference inside Code Mode:
+
+```js
+async () => {
+  const { factory } = await codemode.list_presets({});
+  return factory.filter(p => /daft punk/i.test(`${p.name} ${p.description}`));
+}
+```
+
+The bank contains 288 editable sounds plus Init, including 192 original musical-reference interpretations. Descriptions include artist/song references and playing tips. They are not extracted artist patches or exact recreations. Existing indices 0–96 remain stable.
 
 ## Verify
 
