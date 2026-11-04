@@ -1,9 +1,11 @@
 #include "ControlBridge.h"
 #include "Engine.h"
+#include "Performance.h"
 #include "Presets.h"
 #include "ScaleEngine.h"
 #include "SequencePad.h"
 #include "Sequencer.h"
+#include <complex>
 using namespace juce;
 using namespace noryn;
 namespace
@@ -17,7 +19,8 @@ class NorynProcessor : public AudioProcessor
     AudioProcessorValueTreeState state;
     const Tables &tables = sharedTables();
     Visuals visual;
-    Synthesiser synth;
+    PerformanceSynth synth;
+    EnsembleChorus ensemble;
     MidiKeyboardState keyboard;
     dsp::Oversampling<float> oversampling{2, 1, dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true,
                                           true};
@@ -29,7 +32,7 @@ class NorynProcessor : public AudioProcessor
     Sequencer sequencer;
     AudioBuffer<float> clickAudio;
     SmoothedValue<float> delayTime, master, width, delayWet, feedback;
-    int delayIndex = 0;
+    int delayIndex = 0, lastVoiceMode = 0;
     std::atomic<int> currentPreset{1};
     std::atomic<bool> panicRequested{false};
     std::vector<int> previewNotes;
@@ -37,7 +40,7 @@ class NorynProcessor : public AudioProcessor
     std::atomic<int> userLoaded{-1};
     NorynProcessor()
         : AudioProcessor(BusesProperties().withOutput("Output", AudioChannelSet::stereo(), true)),
-          state(*this, nullptr, "NORYN", layout())
+          state(*this, nullptr, "NORYN", layout()), synth(state)
     {
         for (int i = 0; i < 16; ++i)
             synth.addVoice(new Voice(state, tables, visual, i));
@@ -67,53 +70,89 @@ class NorynProcessor : public AudioProcessor
                 range = NormalisableRange<float>(
                     lo, hi, [](float a, float b, float t) { return a * std::pow(b / a, t); },
                     [](float a, float b, float x) { return std::log(x / a) / std::log(b / a); });
-            auto attrs =
-                AudioParameterFloatAttributes()
-                    .withStringFromValueFunction(
-                        [key = String(id)](float value, int)
-                        {
-                            if (key == "fmratio")
-                                return String(value, 2) + " x";
-                            if (key == "seqnotelength")
-                                return String(value, 2) + " steps";
-                            if (key == "bpm")
-                                return String(value, 1) + " BPM";
-                            if (key == "cutoff")
-                                return value >= 1000 ? String(value / 1000, 2) + " kHz"
-                                                     : String(roundToInt(value)) + " Hz";
-                            if (key == "attack" || key == "decay" || key == "release" || key == "fattack" ||
-                                key == "fdecay" || key == "frelease" || key == "delaytime")
-                                return value < 1 ? String(roundToInt(value * 1000)) + " ms"
-                                                 : String(value, 2) + " s";
-                            if (key == "rate" || key == "chorusrate" || key.endsWith("rate"))
-                                return String(value, 2) + " Hz";
-                            if (key == "detune")
-                                return String(value, 1) + " ct";
-                            return String(value * 100, 1) + " %";
-                        })
-                    .withValueFromStringFunction(
-                        [key = String(id)](const String &str)
-                        {
-                            float value = str.getFloatValue();
-                            if (key == "cutoff")
-                                return str.containsIgnoreCase("k") ? value * 1000 : value;
-                            bool seconds = key == "attack" || key == "decay" || key == "release" ||
-                                           key == "fattack" || key == "fdecay" || key == "frelease" ||
-                                           key == "delaytime";
-                            if (seconds)
-                                return str.containsIgnoreCase("ms") ? value / 1000 : value;
-                            if (key == "rate" || key == "chorusrate" || key.endsWith("rate") ||
-                                key == "detune" || key == "bpm" || key == "seqnotelength" || key == "fmratio")
-                                return value;
-                            return str.contains("%") ? value / 100 : value;
-                        });
+            auto attrs = AudioParameterFloatAttributes()
+                             .withStringFromValueFunction(
+                                 [key = String(id)](float value, int)
+                                 {
+                                     if (key == "oscbsemi" || key == "bendrange")
+                                         return String(value, 1) + " st";
+                                     if (key == "pitchfine")
+                                         return String(value, 1) + " ct";
+                                     if (key == "glidetime")
+                                         return String(value, 3) + " s";
+                                     if (key == "fmratio")
+                                         return String(value, 2) + " x";
+                                     if (key == "seqnotelength")
+                                         return String(value, 2) + " steps";
+                                     if (key == "bpm")
+                                         return String(value, 1) + " BPM";
+                                     if (key == "cutoff")
+                                         return value >= 1000 ? String(value / 1000, 2) + " kHz"
+                                                              : String(roundToInt(value)) + " Hz";
+                                     if (key == "attack" || key == "decay" || key == "release" ||
+                                         key == "fattack" || key == "fdecay" || key == "frelease" ||
+                                         key == "seqrelease" || key == "delaytime")
+                                         return value < 1 ? String(roundToInt(value * 1000)) + " ms"
+                                                          : String(value, 2) + " s";
+                                     if (key == "rate" || key == "chorusrate" || key.endsWith("rate"))
+                                         return String(value, 2) + " Hz";
+                                     if (key == "detune")
+                                         return String(value, 1) + " ct";
+                                     return String(value * 100, 1) + " %";
+                                 })
+                             .withValueFromStringFunction(
+                                 [key = String(id)](const String &str)
+                                 {
+                                     float value = str.getFloatValue();
+                                     if (key == "cutoff")
+                                         return str.containsIgnoreCase("k") ? value * 1000 : value;
+                                     bool seconds = key == "attack" || key == "decay" || key == "release" ||
+                                                    key == "fattack" || key == "fdecay" ||
+                                                    key == "frelease" || key == "seqrelease" ||
+                                                    key == "delaytime";
+                                     if (seconds)
+                                         return str.containsIgnoreCase("ms") ? value / 1000 : value;
+                                     if (key == "rate" || key == "chorusrate" || key.endsWith("rate") ||
+                                         key == "detune" || key == "oscbsemi" || key == "bendrange" ||
+                                         key == "pitchfine" || key == "glidetime" || key == "bpm" ||
+                                         key == "seqnotelength" || key == "fmratio")
+                                         return value;
+                                     return str.contains("%") ? value / 100 : value;
+                                 });
             p.add(std::make_unique<AudioParameterFloat>(ParameterID(id, 1), name, range, def, attrs));
         };
         p.add(std::make_unique<AudioParameterChoice>(
             ParameterID("engine", 1), "Voice Engine",
             StringArray{"Hybrid WT", "FM Operator", "Plucked String", "Drawbar Organ", "Analog Stack"}, 0));
         add("fmratio", "FM Ratio", .5f, 12, 2);
+        p.add(std::make_unique<AudioParameterChoice>(
+            ParameterID("fmprofile", 1), "FM Structure",
+            StringArray{"Legacy 2-op", "Six-op soft tine", "Six-op bright tine", "Six-op glass bell",
+                        "Six-op velvet EP", "Six-op digital mallet", "Six-op metal bell", "Six-op reed EP",
+                        "Six-op sub bass", "Six-op clav", "Six-op ceramic", "Six-op organ",
+                        "Six-op air keys"},
+            0));
         add("pan", "Voice Pan", -1, 1, 0);
+        p.add(std::make_unique<AudioParameterChoice>(ParameterID("filtercharacter", 1), "Filter Character",
+                                                     StringArray{"Legacy SVF", "Nonlinear ladder"}, 0));
+        p.add(std::make_unique<AudioParameterChoice>(
+            ParameterID("voicemode", 1), "Voice Mode",
+            StringArray{"Polyphonic", "Mono retrigger", "Mono legato"}, 0));
+        p.add(std::make_unique<AudioParameterChoice>(
+            ParameterID("choruscharacter", 1), "Chorus Character",
+            StringArray{"Legacy chorus", "Ensemble I", "Ensemble II"}, 0));
+        add("envcurve", "Envelope Curvature", 0, 1, 0);
+        add("phasefree", "Random Start Phase", 0, 1, 0);
+        add("analogdrift", "Analog Pitch Drift", 0, 1, 0);
+        add("subshape", "Analog Square Sub", 0, 1, 0);
+        add("oscbsemi", "Osc B Semitones", -24, 24, 0);
+        add("glidetime", "Portamento Time", 0, 2, 0);
+        add("bendrange", "Pitch Bend Semitones", 1, 24, 2);
+        add("pitchfine", "Master Fine Tuning", -100, 100, 0);
+        p.add(std::make_unique<AudioParameterChoice>(
+            ParameterID("osclink", 1), "Oscillator Architecture",
+            StringArray{"Independent oscillators", "Phase-linked DCO"}, 0));
+
         add("position", "WT Position", 0, 1, .6f);
         add("scan", "WT Spread", 0, 1, .1f);
         add("balance", "A / B Balance", 0, 1, .5f);
@@ -163,7 +202,8 @@ class NorynProcessor : public AudioProcessor
         const StringArray destinations{
             "Off",         "Filter cutoff", "Resonance", "WT position",      "A / B mix",
             "Saw / pulse", "Pulse width",   "B detune",  "Phase modulation", "Stereo unison",
-            "Drive",       "Noise",         "Sub level", "Amplitude",        "Pan"};
+            "Drive",       "Noise",         "Sub level", "Amplitude",        "Pan",
+            "Pitch"};
         for (int n = 1; n <= 4; ++n)
         {
             String prefix = "lfo" + String(n);
@@ -183,7 +223,10 @@ class NorynProcessor : public AudioProcessor
             add((prefix + "amount").toRawUTF8(), ("LFO " + String(n) + " Amount").toRawUTF8(), -1, 1, .5f);
         }
         add("bpm", "Sequencer BPM", 30, 300, 120);
-        add("seqgate", "Step Gate", .05f, .95f, .7f);
+        add("seqgate", "Step Gate", .05f, 1.f, .7f);
+        add("seqrelease", "Sequence Release Limit", .005f, 2, .08f);
+        p.add(std::make_unique<AudioParameterBool>(ParameterID("seqfollowrelease", 1),
+                                                   "Sequence Uses Patch Release", false));
         add("seqvelocity", "Step Velocity", .1f, 1, .8f);
         add("seqnotelength", "Entry Length in Steps", .05f, 64, 1, true);
         add("clicklevel", "Metronome Level", 0, 1, .4f);
@@ -252,6 +295,7 @@ class NorynProcessor : public AudioProcessor
             wheel.store(0);
         visual.voices.store(0);
         synth.setCurrentPlaybackSampleRate(sr * 2);
+        lastVoiceMode = int(v("voicemode"));
         visual.sampleRate.store(float(sr));
         oversampling.initProcessing(size_t(jmax(1, block)));
         oversampling.reset();
@@ -262,6 +306,7 @@ class NorynProcessor : public AudioProcessor
         chorus.setCentreDelay(9.f);
         chorus.setFeedback(.18f);
         chorus.prepare({sr, (uint32)jmax(1, block), 2});
+        ensemble.prepare(sr);
         Reverb::Parameters initialReverb;
         initialReverb.roomSize = v("size");
         initialReverb.damping = .4f;
@@ -296,6 +341,11 @@ class NorynProcessor : public AudioProcessor
         buffer.clear();
         if (buffer.getNumSamples() == 0)
             return;
+        if (lastVoiceMode != int(v("voicemode")))
+        {
+            synth.allNotesOff(0, false);
+            lastVoiceMode = int(v("voicemode"));
+        }
         keyboard.processNextMidiBuffer(midi, 0, buffer.getNumSamples(), true);
         if (panicRequested.exchange(false))
         {
@@ -307,12 +357,13 @@ class NorynProcessor : public AudioProcessor
             keyboard.reset();
             oversampling.reset();
             chorus.reset();
+            ensemble.reset();
             reverb.reset();
             delay.clear();
         }
         sequencer.process(midi, sequenceMidi, clickAudio, buffer.getNumSamples(), getSampleRate(), v("bpm"),
                           int(v("seqlength")), int(v("seqdivision")), v("seqgate"), v("metronome") > .5f,
-                          v("clicklevel"));
+                          v("clicklevel"), v("seqnotelength"));
         scaleEngine.process(sequenceMidi, quantizedMidi, int(v("scale")), int(v("root")),
                             int(v("quantizedirection")), int(v("customscale")), v("quantizelive") > .5f);
         scaledMidi.clear();
@@ -335,7 +386,10 @@ class NorynProcessor : public AudioProcessor
         chorus.setRate(v("chorusrate"));
         chorus.setMix(v("chorus") * .7f);
         dsp::ProcessContextReplacing<float> context(base);
-        chorus.process(context);
+        if (v("choruscharacter") < .5f)
+            chorus.process(context);
+        else
+            ensemble.process(buffer, v("chorus"), int(v("choruscharacter")), v("chorusrate"));
         float sr = float(getSampleRate());
         delayTime.setTargetValue(v("delaytime") * sr);
         master.setTargetValue(v("master"));
@@ -435,6 +489,14 @@ class NorynProcessor : public AudioProcessor
         setStateInformation(data.getData(), int(data.getSize()));
         userLoaded.store(index);
     }
+    String loadedPresetName()
+    {
+        auto files = userPresetFiles();
+        const int index = userLoaded.load();
+        if (index >= 0 && index < files.size())
+            return files[index].getFileNameWithoutExtension();
+        return getProgramName(getCurrentProgram());
+    }
     var controlState()
     {
         auto *result = new DynamicObject();
@@ -442,7 +504,7 @@ class NorynProcessor : public AudioProcessor
         result->setProperty("name", "NORYN");
         result->setProperty("version", "0.4.0");
         result->setProperty("factoryPreset", getCurrentProgram());
-        result->setProperty("presetName", getProgramName(getCurrentProgram()));
+        result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
         result->setProperty("recording", sequencer.recording.load());
         result->setProperty("playhead", sequencer.playhead.load());
@@ -480,6 +542,17 @@ class NorynProcessor : public AudioProcessor
             cell->setProperty("notes", var(notes));
             cell->setProperty("velocity", sequencer.steps[i].velocity.load());
             cell->setProperty("length", sequencer.steps[i].length.load());
+            Array<var> details;
+            for (int note = 0; note < 128; ++note)
+                if (sequencer.steps[i].has(note))
+                {
+                    auto *detail = new DynamicObject();
+                    detail->setProperty("note", note);
+                    detail->setProperty("length", sequencer.steps[i].lengthFor(note));
+                    detail->setProperty("velocity", sequencer.steps[i].velocityFor(note));
+                    details.add(var(detail));
+                }
+            cell->setProperty("noteDetails", var(details));
             steps.add(var(cell));
         }
         result->setProperty("steps", var(steps));
@@ -582,6 +655,17 @@ class NorynProcessor : public AudioProcessor
                 for (const auto &note : *entry["notes"].getArray())
                     cell.add(int(note), jlimit(.01f, 1.f, float(entry.getProperty("velocity", .8f))));
                 cell.length.store(jlimit(.05f, 64.f, float(entry.getProperty("length", 1.f))));
+                if (auto *details = entry["noteDetails"].getArray())
+                    for (const auto &detail : *details)
+                    {
+                        int note = int(detail["note"]);
+                        if (note < 0 || note > 127 || !cell.has(note))
+                            continue;
+                        cell.noteLengths[size_t(note)].store(
+                            jlimit(.05f, 64.f, float(detail.getProperty("length", cell.length.load()))));
+                        cell.noteVelocities[size_t(note)].store(
+                            jlimit(.01f, 1.f, float(detail.getProperty("velocity", cell.velocity.load()))));
+                    }
             }
             return result();
         }
@@ -590,7 +674,12 @@ class NorynProcessor : public AudioProcessor
             if (args.hasProperty("bpm"))
                 setValue("bpm", jlimit(30.f, 300.f, float(args["bpm"])), true);
             if (args.hasProperty("playing"))
-                sequencer.playing.store(bool(args["playing"]));
+            {
+                if (bool(args["playing"]))
+                    sequencer.playing.store(true);
+                else
+                    sequencer.stop();
+            }
             if (args.hasProperty("recording"))
                 sequencer.recording.store(bool(args["recording"]));
             if (args.hasProperty("stepRecord"))
@@ -713,6 +802,23 @@ class NorynProcessor : public AudioProcessor
             currentPreset.store(jlimit(0, getNumPrograms() - 1, int(tree.getProperty("factoryPreset", 0))));
             userLoaded.store(int(tree.getProperty("userPresetIndex", -1)));
             sequencer.restore(tree.getChildWithName("Sequence64"));
+            // APVTS otherwise retains current values for missing children. Older patches
+            // must receive legacy defaults, not inherit the most recently auditioned model.
+            for (auto *item : getParameters())
+                if (auto *parameter = dynamic_cast<RangedAudioParameter *>(item))
+                {
+                    bool present = false;
+                    for (const auto &child : tree)
+                        present = present || child.getProperty("id").toString() == parameter->paramID;
+                    if (!present)
+                    {
+                        ValueTree child("PARAM");
+                        child.setProperty("id", parameter->paramID, nullptr);
+                        child.setProperty("value", parameter->convertFrom0to1(parameter->getDefaultValue()),
+                                          nullptr);
+                        tree.addChild(child, -1, nullptr);
+                    }
+                }
             bool legacyRouting = int(tree.getProperty("routingVersion", 0)) < 2;
             state.replaceState(tree);
             if (legacyRouting)
@@ -846,10 +952,13 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     int activePage = 0, buildingPage = 0;
     std::map<Component *, int> widgetPages;
     TextButton routeShortcut{"ROUTE LFO"};
+    TextButton characterTab{"VOICE DESIGN"};
     TextButton synthTab{"SYNTH"}, sequenceTab{"64 STEP SEQUENCER"}, modTab{"4 LFO ROUTING"},
         scaleTab{"SCALE ENGINE"};
     TextButton seqPlay{"PLAY"}, seqStop{"STOP SEQ"}, seqRecord{"RECORD"}, seqClear{"CLEAR"};
     ComboBox recordMode, patterns;
+    ToggleButton seqFollowRelease{"PATCH RELEASE"};
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> seqReleaseAttachment;
     ToggleButton metroToggle{"METRONOME"}, liveQuantize{"QUANTIZE LIVE MIDI"};
     std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> metroAttachment, liveQuantizeAttachment;
     std::array<std::unique_ptr<SequencePad>, 64> stepPads;
@@ -1014,7 +1123,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         }
         presets.setSelectedId(p.userLoaded.load() >= 0 ? 10000 + p.userLoaded.load() : index + 1,
                               dontSendNotification);
-        description.setText(factoryPresets()[size_t(index)].description, dontSendNotification);
+        description.setText(lastUser >= 0 ? "User patch: " + p.loadedPresetName() + ". Saved sound, sequence and scale."
+                                          : factoryPresets()[size_t(index)].description, dontSendNotification);
         description.setTooltip(description.getText());
     }
     void playPreview()
@@ -1060,6 +1170,9 @@ class NorynEditor : public AudioProcessorEditor, private Timer
                                 ? (voiceEngine == 0 || voiceEngine == 3 || voiceEngine == 4)
                             : controlId == "fm" ? (voiceEngine == 0 || voiceEngine == 1 || voiceEngine == 3)
                                                 : true;
+            if (int(p.v("engine")) == 4 && p.v("osclink") > .5f &&
+                (controlId == "detune" || controlId == "oscbsemi" || controlId == "octaveb"))
+                relevant = false;
             slider.setEnabled(relevant);
             control.label->setAlpha(relevant ? 1.f : .4f);
             if (controlId == "position")
@@ -1083,9 +1196,9 @@ class NorynEditor : public AudioProcessorEditor, private Timer
                 mapped = true;
                 effective = p.v("master") * p.visual.ampMod.load();
             }
-            const char *destinationIds[] = {"",      "cutoff",     "resonance", "position", "balance",
-                                            "shape", "pulsewidth", "detune",    "fm",       "unison",
-                                            "drive", "noise",      "sub",       "master",   "pan"};
+            const char *destinationIds[] = {
+                "",   "cutoff", "resonance", "position", "balance", "shape",  "pulsewidth", "detune",
+                "fm", "unison", "drive",     "noise",    "sub",     "master", "pan",        "pitchfine"};
             bool explicitlyAssigned = false;
             String modulationSources;
             for (int source = 1; source <= 4; ++source)
@@ -1093,7 +1206,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
                 String prefix = "lfo" + String(source);
                 int destination = int(p.v((prefix + "dest").toRawUTF8()));
                 float amount = p.v((prefix + "amount").toRawUTF8()) * (source == 1 ? p.v("depth") : 1);
-                if (destination > 0 && destination < 15 && slider.getName() == destinationIds[destination] &&
+                if (destination > 0 && destination < 16 && slider.getName() == destinationIds[destination] &&
                     std::abs(amount) > .001f)
                 {
                     explicitlyAssigned = true;
@@ -1105,14 +1218,18 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             slider.setTooltip(
                 slider.getProperties()["baseTooltip"].toString() +
                 (modulationSources.isNotEmpty() ? " Modulated by " + modulationSources + "." : String()));
-            slider.getProperties().set("showModulation",
-                                       mapped && explicitlyAssigned && p.visual.voices.load() > 0);
+            slider.getProperties().set("showModulation", mapped && explicitlyAssigned && relevant &&
+                                                             p.visual.voices.load() > 0);
             if (mapped)
                 slider.getProperties().set("modulationValue", effective);
         }
         for (auto &selector : choices)
             if (selector.box->getName() == "family")
                 selector.box->setEnabled(int(p.v("engine")) == 0);
+            else if (selector.box->getName() == "osclink")
+                selector.box->setEnabled(int(p.v("engine")) == 4);
+            else if (selector.box->getName() == "fmprofile")
+                selector.box->setEnabled(int(p.v("engine")) == 1);
         status.setText(touched, dontSendNotification);
         repaint();
     }
@@ -1177,7 +1294,9 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             if (which == 0)
             {
                 int engine = int(p.v("engine"));
-                if (engine == 1)
+                if (engine == 1 && p.v("fmprofile") > .5f)
+                    value = SixOperator::preview(int(p.v("fmprofile")), phase, p.v("fm"), p.v("fmratio"));
+                else if (engine == 1)
                     value = p.tables.sin(phase + p.tables.sin(phase * p.v("fmratio")) * p.v("fm") * 1.6f);
                 else if (engine == 2)
                     value = p.tables.sin(phase) * std::exp(-p.v("decay") * .08f * t);
@@ -1247,10 +1366,15 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         };
         Path wave;
         wave.startNewSubPath(point(0, 0));
-        wave.lineTo(point(a, 1));
-        wave.lineTo(point(a + d, s));
-        wave.lineTo(point(a + d + hold, s));
-        wave.lineTo(point(total, 0));
+        for (int i = 1; i <= 300; ++i)
+        {
+            const float time = total * i / 300.f;
+            const float raw = time < a              ? time / a
+                              : time < a + d        ? 1 - (1 - s) * (time - a) / d
+                              : time < a + d + hold ? s
+                                                    : s * (1 - (time - a - d - hold) / release);
+            wave.lineTo(point(time, contour(raw, time < a, p.v("envcurve"))));
+        }
         glow(g, wave, cyan);
     }
     void lfo(Graphics &g, Rectangle<float> r)
@@ -1276,7 +1400,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     {
         float cutoff = p.v("cutoff"), k = 2 - 1.94f * p.v("resonance");
         int mode = int(p.v("filtermode"));
-        lcd(g, r, amber, "FILTER / " + String(cutoff, 0) + " Hz", false, false);
+        lcd(g, r, amber, (p.v("filtercharacter") > .5f ? "LADDER / " : "SVF / ") + String(cutoff, 0) + " Hz",
+            false, false);
         auto plot = r.reduced(8, 20);
         plot.setBottom(r.getBottom() - 8);
         Path curve;
@@ -1287,6 +1412,16 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             float mag = (mode == 2 ? ratio * ratio : mode == 3 ? k * ratio : 1) / jmax(.0001f, den);
             if (mode == 1)
                 mag *= mag;
+            if (p.v("filtercharacter") > .5f)
+            {
+                const std::complex<float> pole = 1.f / std::complex<float>(1, ratio);
+                const auto loop = std::pow(pole, 4);
+                const auto numerator = mode == 0   ? pole * pole
+                                       : mode == 1 ? loop
+                                       : mode == 2 ? std::pow(1.f - pole, 4)
+                                                   : 4.f * std::pow(pole - pole * pole, 2);
+                mag = std::abs(numerator / (1.f + 3.8f * p.v("resonance") * loop));
+            }
             float db = Decibels::gainToDecibels(mag, -60.f);
             float y = plot.getY() + jlimit(0.f, 1.f, (18 - db) / 66) * plot.getHeight(),
                   x = plot.getX() + t * plot.getWidth();
@@ -1362,6 +1497,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         sequenceTab.setToggleState(page == 1, dontSendNotification);
         modTab.setToggleState(page == 2, dontSendNotification);
         scaleTab.setToggleState(page == 3, dontSendNotification);
+        characterTab.setToggleState(page == 4, dontSendNotification);
         repaint();
     }
     void pageWidget(Component &c, int page)
@@ -1378,11 +1514,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         seqPlay.setClickingTogglesState(true);
         seqRecord.setClickingTogglesState(true);
         seqPlay.onClick = [this] { p.sequencer.playing.store(seqPlay.getToggleState()); };
-        seqStop.onClick = [this]
-        {
-            p.sequencer.playing.store(false);
-            p.sequencer.recording.store(false);
-        };
+        seqStop.onClick = [this] { p.sequencer.stop(); };
         seqRecord.onClick = [this]
         {
             bool record = seqRecord.getToggleState();
@@ -1421,7 +1553,15 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         knob("seqvelocity", "Entry velocity", 397, 180, cyan, 104);
         knob("seqgate", "Gate", 520, 180, cyan, 104);
         knob("clicklevel", "Click level", 643, 180, amber, 104);
-        knob("seqnotelength", "Note length", 766, 180, cyan, 104);
+        knob("seqnotelength", "Entry length", 766, 180, cyan, 104);
+        knob("seqrelease", "Release limit", 1125, 180, amber, 104);
+        seqFollowRelease.setName("seqfollowrelease");
+        seqFollowRelease.setBounds(1250, 209, 160, 30);
+        seqFollowRelease.setTooltip(
+            "Use the sound preset's full release instead of the sequencer release limit.");
+        seqReleaseAttachment = std::make_unique<AudioProcessorValueTreeState::ButtonAttachment>(
+            p.state, "seqfollowrelease", seqFollowRelease);
+        pageWidget(seqFollowRelease, 1);
         choice("seqdivision", {"Quarter / 1/4", "Eighth / 1/8", "Sixteenth / 1/16", "Thirty-second / 1/32"},
                {905, 209, 195, 30});
         for (int i = 0; i < 64; ++i)
@@ -1430,10 +1570,11 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             pad->entryNote = [this] { return int(p.v("seqnote")); };
             pad->entryVelocity = [this] { return p.v("seqvelocity"); };
             pad->entryLength = [this] { return p.v("seqnotelength"); };
-            pad->select = [this](int note, float velocity)
+            pad->select = [this](int note, float velocity, float duration)
             {
                 p.setValue("seqnote", float(note));
                 p.setValue("seqvelocity", velocity);
+                p.setValue("seqnotelength", duration);
             };
             pad->setBounds(28 + (i % 16) * 86, 326 + (i / 16) * 112, 78, 96);
             pageWidget(*pad, 1);
@@ -1446,7 +1587,8 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         StringArray destinations{
             "Off",         "Filter cutoff", "Resonance", "WT position",      "A / B mix",
             "Saw / pulse", "Pulse width",   "B detune",  "Phase modulation", "Stereo unison",
-            "Drive",       "Noise",         "Sub level", "Amplitude",        "Pan"};
+            "Drive",       "Noise",         "Sub level", "Amplitude",        "Pan",
+            "Pitch"};
         for (int i = 0; i < 4; ++i)
         {
             int x = i % 2 == 0 ? 16 : 728, y = i < 2 ? 110 : 468;
@@ -1566,6 +1708,47 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("Sequencer notes are always sent through the selected scale. Enable QUANTIZE LIVE MIDI to "
                    "constrain your keyboard as well.",
                    40, 532, 1300, 35, Justification::centredLeft);
+    }
+
+    void buildCharacterPage()
+    {
+        buildingPage = 4;
+        choice("voicemode", {"Polyphonic", "Mono retrigger", "Mono legato"}, {38, 165, 400, 30});
+        choice("filtercharacter", {"Legacy SVF", "Nonlinear ladder"}, {520, 165, 400, 30});
+        choice("choruscharacter", {"Legacy chorus", "Ensemble I", "Ensemble II"}, {1000, 165, 400, 30});
+        knob("glidetime", "Glide time", 55, 235, cyan, 125);
+        knob("bendrange", "Bend semitones", 220, 235, cyan, 125);
+        knob("pitchfine", "Fine cents", 55, 385, cyan, 125);
+        knob("oscbsemi", "B semitones", 220, 385, cyan, 125);
+        knob("envcurve", "Analog contour", 540, 235, amber, 125);
+        knob("subshape", "Square sub blend", 710, 235, amber, 125);
+        knob("phasefree", "Random phase", 1020, 235, cyan, 125);
+        knob("analogdrift", "Pitch drift", 1190, 235, cyan, 125);
+        choice("fmprofile",
+               {"Legacy 2-op", "Six-op soft tine", "Six-op bright tine", "Six-op glass bell",
+                "Six-op velvet EP", "Six-op digital mallet", "Six-op metal bell", "Six-op reed EP",
+                "Six-op sub bass", "Six-op clav", "Six-op ceramic", "Six-op organ", "Six-op air keys"},
+               {1000, 650, 400, 30});
+        choice("osclink", {"Independent oscillators", "Phase-linked DCO"}, {1000, 710, 400, 30});
+    }
+    void paintCharacter(Graphics &g)
+    {
+        panel(g, {16, 110, 465, 705}, "PERFORMANCE", cyan);
+        panel(g, {491, 110, 465, 705}, "FILTER / CONTOUR", amber);
+        panel(g, {966, 110, 458, 705}, "ENSEMBLE / OSCILLATORS", cyan);
+        g.setColour(muted);
+        g.setFont(FontOptions(13.f));
+        g.drawFittedText("Mono modes use last-note priority per MIDI channel. Legato keeps the contour "
+                         "running during overlapping notes. Glide is measured in seconds.",
+                         {40, 550, 415, 140}, Justification::topLeft, 5);
+        g.drawFittedText("The nonlinear ladder has saturation inside its feedback path. Contour shapes the "
+                         "amp and filter envelopes; the static ADSR graphs show the same curve. Square sub "
+                         "blends in an oscillator-A-tracked sub.",
+                         {515, 440, 415, 180}, Justification::topLeft, 7);
+        g.drawFittedText("Ensemble I/II use opposite-phase delay modulation with bandwidth limiting. Random "
+                         "phase varies note attacks; drift adds slow per-voice pitch movement. These are "
+                         "character models, not circuit-identical emulations.",
+                         {990, 440, 408, 180}, Justification::topLeft, 7);
     }
 
   public:
@@ -1699,7 +1882,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         status.setBounds(265, 903, 1010, 22);
         addAndMakeVisible(status);
         presetSearch.setName("presetSearch");
-        presetSearch.setBounds(948, 83, 476, 22);
+        presetSearch.setBounds(1090, 83, 334, 22);
         presetSearch.setTextToShowWhenEmpty("Search sounds, artists, songs...", muted);
         presetSearch.setFont(FontOptions(12.f));
         presetSearch.setColour(TextEditor::backgroundColourId, Colour(0xff0b151b));
@@ -1718,8 +1901,9 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         sequenceTab.setBounds(430, 83, 180, 22);
         modTab.setBounds(618, 83, 160, 22);
         scaleTab.setBounds(786, 83, 150, 22);
-        TextButton *tabs[] = {&synthTab, &sequenceTab, &modTab, &scaleTab};
-        for (int page = 0; page < 4; ++page)
+        characterTab.setBounds(944, 83, 138, 22);
+        TextButton *tabs[] = {&synthTab, &sequenceTab, &modTab, &scaleTab, &characterTab};
+        for (int page = 0; page < 5; ++page)
         {
             auto *tab = tabs[page];
             tab->setClickingTogglesState(false);
@@ -1733,6 +1917,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         buildSequencePage();
         buildModulationPage();
         buildScalePage();
+        buildCharacterPage();
         buildingPage = 0;
         showPage(0);
         fillPresets();
@@ -1840,8 +2025,10 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             paintSequence(g);
         else if (activePage == 2)
             paintModulation(g);
-        else
+        else if (activePage == 3)
             paintScale(g);
+        else
+            paintCharacter(g);
         g.setColour(Colour(0xff080f16));
         g.fillRoundedRectangle(16, 831, 232, 68, 5);
         g.setColour(cyan);
@@ -1901,4 +2088,22 @@ var norynControl(AudioProcessor *processor, const var &request)
     if (!p)
         throw std::runtime_error("Not NORYN");
     return p->handleControl(request);
+}
+// Offline verification only; called between audio blocks by the validation executable.
+var norynPerformanceTelemetry(AudioProcessor *processor)
+{
+    auto *p = dynamic_cast<NorynProcessor *>(processor);
+    Array<var> result;
+    if (p)
+        for (int i = 0; i < p->synth.getNumVoices(); ++i)
+            if (auto *voice = dynamic_cast<Voice *>(p->synth.getVoice(i)); voice && voice->isVoiceActive())
+            {
+                auto *row = new DynamicObject();
+                row->setProperty("frequency", voice->hz);
+                row->setProperty("target", voice->targetHz);
+                row->setProperty("bendRatio", voice->bend);
+                row->setProperty("keyDown", voice->isKeyDown());
+                result.add(var(row));
+            }
+    return result;
 }

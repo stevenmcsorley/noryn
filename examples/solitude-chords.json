@@ -1,0 +1,365 @@
+{
+  "name": "Solitude - eight-bar chord study",
+  "bpm": 61,
+  "division": "1/8",
+  "steps": 64,
+  "gate": 0.96,
+  "description": "Piano-style harmonic study arranged for testing NORYN; not a complete performance transcription.",
+  "sources": [
+    "https://www.hooktheory.com/theorytab/view/m83/solitude",
+    "https://m83.it/solitude-felsmanntiley"
+  ],
+  "chords": [
+    {
+      "index": 0,
+      "name": "Cm7",
+      "notes": [
+        48,
+        55,
+        58,
+        60,
+        63
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 48,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 55,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 58,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 63,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "name": "Bbadd9",
+      "notes": [
+        46,
+        53,
+        58,
+        60,
+        62
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 46,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 53,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 58,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 62,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "name": "F",
+      "notes": [
+        41,
+        53,
+        57,
+        60,
+        65
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 41,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 53,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 57,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 65,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "name": "Fmadd9",
+      "notes": [
+        41,
+        53,
+        56,
+        60,
+        67
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 41,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 53,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 56,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 67,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "name": "Ebmaj7",
+      "notes": [
+        39,
+        51,
+        55,
+        58,
+        62
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 39,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 51,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 55,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 58,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 62,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 40,
+      "name": "Abmaj7",
+      "notes": [
+        44,
+        51,
+        55,
+        60,
+        63
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 44,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 51,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 55,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 63,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "name": "Dm7b5/Ab",
+      "notes": [
+        44,
+        50,
+        53,
+        60,
+        62
+      ],
+      "length": 8,
+      "noteDetails": [
+        {
+          "note": 44,
+          "velocity": 0.64,
+          "length": 8
+        },
+        {
+          "note": 50,
+          "velocity": 0.752,
+          "length": 7.8
+        },
+        {
+          "note": 53,
+          "velocity": 0.764,
+          "length": 7.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 7.8
+        },
+        {
+          "note": 62,
+          "velocity": 0.788,
+          "length": 7.8
+        }
+      ]
+    },
+    {
+      "index": 56,
+      "name": "G7sus4",
+      "notes": [
+        43,
+        50,
+        53,
+        60,
+        62
+      ],
+      "length": 4,
+      "noteDetails": [
+        {
+          "note": 43,
+          "velocity": 0.64,
+          "length": 4
+        },
+        {
+          "note": 50,
+          "velocity": 0.752,
+          "length": 3.8
+        },
+        {
+          "note": 53,
+          "velocity": 0.764,
+          "length": 3.8
+        },
+        {
+          "note": 60,
+          "velocity": 0.776,
+          "length": 3.8
+        },
+        {
+          "note": 62,
+          "velocity": 0.788,
+          "length": 3.8
+        }
+      ]
+    },
+    {
+      "index": 60,
+      "name": "G7",
+      "notes": [
+        43,
+        50,
+        53,
+        59,
+        62
+      ],
+      "length": 4,
+      "noteDetails": [
+        {
+          "note": 43,
+          "velocity": 0.64,
+          "length": 4
+        },
+        {
+          "note": 50,
+          "velocity": 0.752,
+          "length": 3.8
+        },
+        {
+          "note": 53,
+          "velocity": 0.764,
+          "length": 3.8
+        },
+        {
+          "note": 59,
+          "velocity": 0.776,
+          "length": 3.8
+        },
+        {
+          "note": 62,
+          "velocity": 0.788,
+          "length": 3.8
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,17 @@ struct SequenceStep
 {
     std::atomic<uint64_t> low{0}, high{0};
     std::atomic<float> velocity{.8f}, length{1};
+    std::array<std::atomic<float>, 128> noteLengths{}, noteVelocities{};
+    float lengthFor(int note) const
+    {
+        float own = noteLengths[size_t(note)].load();
+        return own > 0 ? own : length.load();
+    }
+    float velocityFor(int note) const
+    {
+        float own = noteVelocities[size_t(note)].load();
+        return own > 0 ? own : velocity.load();
+    }
     bool has(int note) const
     {
         return ((note < 64 ? low.load() : high.load()) >> (note % 64)) & 1;
@@ -17,8 +28,12 @@ struct SequenceStep
     {
         return low.load() == 0 && high.load() == 0;
     }
-    void add(int note, float vel)
+    void add(int note, float vel, float duration = 0)
     {
+        if (note < 0 || note > 127 || (!has(note) && count() >= 16))
+            return;
+        noteVelocities[size_t(note)].store(juce::jlimit(.01f, 1.f, vel));
+        noteLengths[size_t(note)].store(duration > 0 ? juce::jlimit(.05f, 64.f, duration) : 0);
         (note < 64 ? low : high).fetch_or(uint64_t(1) << (note % 64));
         velocity.store(vel);
     }
@@ -27,9 +42,17 @@ struct SequenceStep
         low.store(0);
         high.store(0);
         length.store(1);
+        for (auto &n : noteLengths)
+            n.store(0);
+        for (auto &n : noteVelocities)
+            n.store(0);
     }
     void toggle(int note, float vel)
     {
+        if (note < 0 || note > 127 || (!has(note) && count() >= 16))
+            return;
+        noteLengths[size_t(note)].store(0);
+        noteVelocities[size_t(note)].store(vel);
         (note < 64 ? low : high).fetch_xor(uint64_t(1) << (note % 64));
         velocity.store(vel);
     }
@@ -59,7 +82,9 @@ struct Sequencer
     std::array<bool, 128> held{};
     std::array<double, 128> recordedAt{};
     std::array<int, 128> recordedStep{};
-    double sampleClock = 0;
+    std::array<int, 128> activeStep{};
+    std::atomic<bool> flushRequested{true}, restartRequested{false};
+    double sampleClock = 0, nextTick = 0, lastStepSamples = 0;
     bool wasPlaying = false, wasRecording = false;
     uint64_t ticks = 0;
     int next = 0, current = 0;
@@ -68,6 +93,10 @@ struct Sequencer
     void reset()
     {
         noteOffs.fill(-1);
+        activeStep.fill(-1);
+        flushRequested.store(true);
+        restartRequested.store(false);
+        nextTick = lastStepSamples = 0;
         recordedAt.fill(-1);
         recordedStep.fill(-1);
         sampleClock = 0;
@@ -79,8 +108,16 @@ struct Sequencer
         playhead.store(-1);
         clickEnv = 0;
     }
+    void stop()
+    {
+        playing.store(false);
+        recording.store(false);
+        flushRequested.store(true);
+    }
     void clear()
     {
+        flushRequested.store(true);
+        restartRequested.store(true);
         for (auto &step : steps)
             step.clear();
         recordCursor.store(0);
@@ -117,67 +154,114 @@ struct Sequencer
     }
     void process(const juce::MidiBuffer &input, juce::MidiBuffer &output, juce::AudioBuffer<float> &clicks,
                  int count, double sr, float bpm, int length, int division, float gate, bool click,
-                 float clickLevel)
+                 float clickLevel, float entryLength = 1)
     {
         using namespace juce;
         bpm = jlimit(30.f, 300.f, bpm);
         length = jlimit(1, 64, length);
-        int perBeat = 1 << jlimit(0, 3, division);
-        double stepSamples = sr * 60 / (bpm * perBeat);
+        gate = jlimit(.05f, 1.f, gate);
+        const int perBeat = 1 << jlimit(0, 3, division);
+        const double stepSamples = sr * 60 / (bpm * perBeat), blockStart = sampleClock;
         effectiveBpm.store(bpm);
         output.clear();
         output.addEvents(input, 0, count, 0);
         clicks.clear();
-        bool run = playing.load(), record = recording.load(), stepMode = stepRecord.load();
-        if (run && !wasPlaying)
+        const bool run = playing.load(), record = recording.load(), stepMode = stepRecord.load();
+        auto releaseAll = [&]
         {
-            untilNext = 0;
-            ticks = 0;
-            next = 0;
-            current = 0;
+            output.addEvent(MidiMessage::controllerEvent(16, 64, 0), 0);
+            output.addEvent(MidiMessage::controllerEvent(16, 66, 0), 0);
+            output.addEvent(MidiMessage::allNotesOff(16), 0);
+            noteOffs.fill(-1);
+            activeStep.fill(-1);
+            clickEnv = 0;
+        };
+        if (flushRequested.exchange(false) || (!run && wasPlaying))
+            releaseAll();
+        if (lastStepSamples > 0 && std::abs(lastStepSamples - stepSamples) > .00001)
+        {
+            const double ratio = stepSamples / lastStepSamples;
+            nextTick = blockStart + jmax(0.0, nextTick - blockStart) * ratio;
+            for (auto &deadline : noteOffs)
+                if (deadline >= 0)
+                    deadline = blockStart + jmax(0.0, deadline - blockStart) * ratio;
         }
-        if (!run && wasPlaying)
+        lastStepSamples = stepSamples;
+        const bool restart = restartRequested.exchange(false);
+        if ((run && !wasPlaying) || restart)
         {
-            for (int note = 0; note < 128; ++note)
-                if (noteOffs[note] >= 0)
-                {
-                    output.addEvent(MidiMessage::noteOff(16, note), 0);
-                    noteOffs[note] = -1;
-                }
+            nextTick = blockStart;
+            ticks = 0;
+            next = current = 0;
+        }
+        if (!run)
+        {
             playhead.store(-1);
             clickEnv = 0;
         }
-        if (!record && wasRecording)
-            held.fill(false);
-        auto event = input.cbegin(), end = input.cend();
-        for (int sample = 0; sample < count; ++sample)
+        // Removing a sounding pad/note releases it in the next block, even if its old gate was long.
+        for (int note = 0; note < 128; ++note)
+            if (noteOffs[size_t(note)] >= 0 && activeStep[size_t(note)] >= 0 &&
+                !steps[size_t(activeStep[size_t(note)])].has(note))
+            {
+                output.addEvent(MidiMessage::noteOff(16, note), 0);
+                noteOffs[size_t(note)] = -1;
+                activeStep[size_t(note)] = -1;
+            }
+        auto finishRecorded = [&](int note, double now)
         {
+            if (recordedAt[size_t(note)] >= 0 && recordedStep[size_t(note)] >= 0)
+                steps[size_t(recordedStep[size_t(note)])].noteLengths[size_t(note)].store(
+                    jlimit(.05f, 64.f, float((now - recordedAt[size_t(note)]) / stepSamples)));
+            recordedAt[size_t(note)] = -1;
+            recordedStep[size_t(note)] = -1;
+            held[size_t(note)] = false;
+        };
+        if (!record && wasRecording)
             for (int note = 0; note < 128; ++note)
-                if (noteOffs[note] >= 0)
+                finishRecorded(note, blockStart);
+        if (record && !wasRecording)
+        {
+            held.fill(false);
+            recordedAt.fill(-1);
+            recordedStep.fill(-1);
+        }
+        auto event = input.cbegin(), end = input.cend();
+        const float clickDecay = std::exp(-1.f / (float(sr) * .008f));
+        int at = 0;
+        while (at < count)
+        {
+            const double now = blockStart + at;
+            // Off events precede a retrigger at the same sample.
+            for (int note = 0; note < 128; ++note)
+                if (noteOffs[size_t(note)] >= 0 && noteOffs[size_t(note)] <= now + .000001)
                 {
-                    if (noteOffs[note] <= 0)
-                    {
-                        output.addEvent(MidiMessage::noteOff(16, note), sample);
-                        noteOffs[note] = -1;
-                    }
-                    else
-                        noteOffs[note] -= 1;
+                    output.addEvent(MidiMessage::noteOff(16, note), at);
+                    noteOffs[size_t(note)] = -1;
+                    activeStep[size_t(note)] = -1;
                 }
-            if (run && untilNext <= 0)
+            if (run && nextTick <= now + .000001)
             {
                 current = next % length;
                 next = (current + 1) % length;
                 playhead.store(current);
                 auto &step = steps[size_t(current)];
-                for (int note = 0; note < 128; ++note)
+                int voices = 0;
+                for (int note = 0; note < 128 && voices < 16; ++note)
                     if (step.has(note))
                     {
-                        if (noteOffs[note] >= 0)
-                            output.addEvent(MidiMessage::noteOff(16, note), sample);
-                        output.addEvent(MidiMessage::noteOn(16, note, step.velocity.load()), sample);
-                        noteOffs[note] = jmax(1.0, stepSamples * gate * step.length.load());
+                        if (record && !stepMode && held[size_t(note)] &&
+                            recordedStep[size_t(note)] == current)
+                            continue;
+                        if (noteOffs[size_t(note)] >= 0)
+                            output.addEvent(MidiMessage::noteOff(16, note), at);
+                        output.addEvent(MidiMessage::noteOn(16, note, step.velocityFor(note)), at);
+                        noteOffs[size_t(note)] =
+                            now + jmax(1.0, std::round(stepSamples * gate * step.lengthFor(note)));
+                        activeStep[size_t(note)] = current;
+                        ++voices;
                     }
-                untilNext += stepSamples;
+                nextTick += stepSamples;
                 if (click && ticks % perBeat == 0)
                 {
                     clickEnv = 1;
@@ -186,47 +270,57 @@ struct Sequencer
                 }
                 ++ticks;
             }
-            while (event != end && (*event).samplePosition <= sample)
+            while (event != end && (*event).samplePosition <= at)
             {
-                auto message = (*event).getMessage();
-                if (record && message.isNoteOn())
+                const auto msg = (*event).getMessage();
+                if (record && msg.isNoteOn())
                 {
-                    int target = stepMode ? recordCursor.load() % length
-                                          : (current + (untilNext < stepSamples * .5 ? 1 : 0)) % length;
-                    steps[size_t(target)].add(message.getNoteNumber(), message.getFloatVelocity());
-                    recordedAt[size_t(message.getNoteNumber())] = sampleClock;
-                    recordedStep[size_t(message.getNoteNumber())] = target;
-                    held[size_t(message.getNoteNumber())] = true;
+                    const int target = stepMode || !run
+                                           ? recordCursor.load() % length
+                                           : (current + (nextTick - now < stepSamples * .5 ? 1 : 0)) % length;
+                    const int note = msg.getNoteNumber();
+                    steps[size_t(target)].add(note, msg.getFloatVelocity(), stepMode ? entryLength : 0);
+                    recordedAt[size_t(note)] = stepMode ? -1 : now;
+                    recordedStep[size_t(note)] = stepMode ? -1 : target;
+                    held[size_t(note)] = true;
                 }
-                else if (record && message.isNoteOff())
+                else if (record && msg.isNoteOff())
                 {
-                    int note = message.getNoteNumber();
-                    if (!stepMode && recordedAt[size_t(note)] >= 0 && recordedStep[size_t(note)] >= 0)
-                    {
-                        steps[size_t(recordedStep[size_t(note)])].length.store(juce::jlimit(
-                            .05f, 64.f,
-                            float((sampleClock - recordedAt[size_t(note)]) / (stepSamples * gate))));
-                        recordedAt[size_t(note)] = -1;
-                    }
-                    held[size_t(message.getNoteNumber())] = false;
+                    const int note = msg.getNoteNumber();
+                    if (!stepMode)
+                        finishRecorded(note, now);
+                    else
+                        held[size_t(note)] = false;
                     if (stepMode && std::none_of(held.begin(), held.end(), [](bool down) { return down; }))
                         recordCursor.store((recordCursor.load() + 1) % length);
                 }
+                else if (record && (msg.isAllNotesOff() || msg.isAllSoundOff()))
+                    for (int note = 0; note < 128; ++note)
+                        finishRecorded(note, now);
                 ++event;
             }
+            int nextAt = count;
             if (run)
-                untilNext -= 1;
-            sampleClock += 1;
+                nextAt = jmin(nextAt, jmax(at + 1, int(std::ceil(nextTick - blockStart - .000001))));
+            if (event != end)
+                nextAt = jmin(nextAt, jmax(at + 1, (*event).samplePosition));
+            for (double deadline : noteOffs)
+                if (deadline >= 0)
+                    nextAt = jmin(nextAt, jmax(at + 1, int(std::ceil(deadline - blockStart - .000001))));
             if (click && run && clickEnv > 1.e-4f)
-            {
-                float value =
-                    std::sin(clickPhase * juce::MathConstants<float>::twoPi) * clickEnv * clickLevel * .5f;
-                clicks.setSample(0, sample, value);
-                clickPhase += clickFrequency / float(sr);
-                clickPhase -= std::floor(clickPhase);
-                clickEnv *= std::exp(-1.f / (float(sr) * .008f));
-            }
+                for (int sample = at; sample < nextAt; ++sample)
+                {
+                    clicks.setSample(0, sample,
+                                     std::sin(clickPhase * juce::MathConstants<float>::twoPi) * clickEnv *
+                                         clickLevel * .5f);
+                    clickPhase += clickFrequency / float(sr);
+                    clickPhase -= std::floor(clickPhase);
+                    clickEnv *= clickDecay;
+                }
+            at = nextAt;
         }
+        sampleClock += count;
+        untilNext = nextTick - sampleClock;
         wasPlaying = run;
         wasRecording = record;
     }
@@ -241,6 +335,15 @@ struct Sequencer
             step.setProperty("high", juce::String::toHexString(juce::int64(steps[i].high.load())), nullptr);
             step.setProperty("velocity", steps[i].velocity.load(), nullptr);
             step.setProperty("length", steps[i].length.load(), nullptr);
+            for (int n = 0; n < 128; ++n)
+                if (steps[i].has(n))
+                {
+                    juce::ValueTree detail("Note");
+                    detail.setProperty("note", n, nullptr);
+                    detail.setProperty("velocity", steps[i].velocityFor(n), nullptr);
+                    detail.setProperty("length", steps[i].lengthFor(n), nullptr);
+                    step.addChild(detail, -1, nullptr);
+                }
             tree.addChild(step, -1, nullptr);
         }
         return tree;
@@ -259,6 +362,16 @@ struct Sequencer
             steps[i].high.store(uint64_t(step.getProperty("high").toString().getHexValue64()));
             steps[i].velocity.store(juce::jlimit(.01f, 1.f, float(step.getProperty("velocity", .8f))));
             steps[i].length.store(juce::jlimit(.05f, 64.f, float(step.getProperty("length", 1.f))));
+            for (const auto &detail : step)
+            {
+                const int n = int(detail.getProperty("note", -1));
+                if (n < 0 || n > 127 || !steps[i].has(n))
+                    continue;
+                steps[i].noteLengths[size_t(n)].store(
+                    juce::jlimit(.05f, 64.f, float(detail.getProperty("length", steps[i].length.load()))));
+                steps[i].noteVelocities[size_t(n)].store(
+                    juce::jlimit(.01f, 1.f, float(detail.getProperty("velocity", steps[i].velocity.load()))));
+            }
         }
     }
 };

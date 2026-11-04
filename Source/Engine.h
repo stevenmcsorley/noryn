@@ -1,4 +1,6 @@
 #pragma once
+#include "CharacterDSP.h"
+#include "SixOperator.h"
 #include <JuceHeader.h>
 #include <array>
 #include <atomic>
@@ -157,7 +159,8 @@ struct Visuals
 {
     Scope left, right;
     std::atomic<int> voices{0}, selectedVoice{-1};
-    std::array<std::atomic<float>, 20> effective{};
+    static constexpr int telemetryCapacity = 32;
+    std::array<std::atomic<float>, telemetryCapacity> effective{};
     std::atomic<uint64_t> modMask{0};
     std::atomic<float> ampMod{1};
     std::atomic<float> peakL{0}, peakR{0}, sampleRate{48000};
@@ -214,12 +217,14 @@ struct Voice : SynthesiserVoice
         KeyTrack,
         VelocityFilter,
         Pan,
+        PitchFine,
         Count
     };
-    static constexpr const char *ids[Count] = {"position", "scan",      "balance",   "detune",     "shape",
-                                               "sub",      "cutoff",    "resonance", "drive",      "rate",
-                                               "depth",    "unison",    "noise",     "pulsewidth", "pwmdepth",
-                                               "fm",       "envamount", "keytrack",  "velfilter",  "pan"};
+    static_assert(Count <= Visuals::telemetryCapacity, "Modulation telemetry capacity is too small");
+    static constexpr const char *ids[Count] = {
+        "position",  "scan",  "balance",   "detune",   "shape",     "sub",   "cutoff",
+        "resonance", "drive", "rate",      "depth",    "unison",    "noise", "pulsewidth",
+        "pwmdepth",  "fm",    "envamount", "keytrack", "velfilter", "pan",   "pitchfine"};
     AudioProcessorValueTreeState &state;
     const Tables &tables;
     Visuals &visual;
@@ -231,11 +236,62 @@ struct Voice : SynthesiserVoice
     int stringWrite = 0;
     float stringPrevious = 0;
     std::array<float, 3> extraPhases{};
+    float psAnalog = 0;
     float ps = 0, pl = 0, hz = 440, velocity = 0, bend = 1, gNow = .1f, kNow = 1;
+    int lastPitchWheel = 8192;
     float bRatio = 1, driveGain = 1, driveComp = 1;
     ADSR amp, filterEnv;
     Filter filters[2][2];
+    CharacterLadder ladder;
+    std::array<SixOperator, 3> fmSix;
+    int activeFMProfile = 0;
+    bool ampAttacking = true, filterAttacking = true, ampReleased = false, filterReleased = false;
+    float targetHz = 440, glideStep = 0, driftPhase = .2f;
+    int glideRemaining = 0;
+    uint32_t noteSerial = 0;
+    void setCurrentPlaybackSampleRate(double sr) override
+    {
+        SynthesiserVoice::setCurrentPlaybackSampleRate(sr);
+        if (sr > 0)
+        {
+            ladder.prepare({sr, 512, 2});
+            for (auto &fm : fmSix)
+                fm.prepare(sr);
+        }
+    }
+    void retarget(int note, float vel, bool retrigger, float seconds)
+    {
+        targetHz = float(MidiMessage::getMidiNoteInHertz(note));
+        glideRemaining = int(seconds * getSampleRate());
+        glideStep = glideRemaining > 0 ? (std::log2(targetHz) - std::log2(hz)) / float(glideRemaining) : 0;
+        if (glideRemaining == 0)
+            hz = targetHz;
+        velocity = vel;
+        setKeyDown(true);
+        if (retrigger)
+        {
+            amp.noteOn();
+            filterEnv.noteOn();
+            ampAttacking = filterAttacking = true;
+            ampReleased = filterReleased = false;
+        }
+    }
     uint32_t random = 1;
+    bool stringReady = false;
+    void exciteString()
+    {
+        stringWrite = 0;
+        stringPrevious = 0;
+        for (auto &sample : stringBuffer)
+        {
+            random ^= random << 13;
+            random ^= random >> 17;
+            random ^= random << 5;
+            sample = (float(random & 0xffff) / 32768.f - 1) * .65f;
+        }
+        stringReady = true;
+    }
+
     int coefficientCountdown = 0;
     Voice(AudioProcessorValueTreeState &s, const Tables &t, Visuals &vis, int voiceIndex)
         : state(s), tables(t), visual(vis), index(voiceIndex)
@@ -255,27 +311,39 @@ struct Voice : SynthesiserVoice
     {
         hz = float(MidiMessage::getMidiNoteInHertz(note));
         velocity = vel;
+        targetHz = hz;
+        glideRemaining = 0;
+        ampAttacking = filterAttacking = true;
+        ampReleased = filterReleased = false;
+        ++noteSerial;
         pitchWheelMoved(wheel);
+        activeFMProfile = int(v("fmprofile"));
+        if (int(v("engine")) == 1 && v("fmprofile") > .5f)
+            for (int u = 0; u < 3; ++u)
+                fmSix[size_t(u)].start(int(v("fmprofile")), vel,
+                                       v("phasefree") *
+                                           wrap(noteSerial * .618033989f + index * .137f + u * .271f));
         for (int p = 0; p < Count; ++p)
             smooth[p] = raw[p]->load();
         for (int u = 0; u < 3; ++u)
         {
             pa[u] = wrap(.173f * u + note * .007f);
             pb[u] = wrap(.371f * u + note * .011f);
+            const float spread = v("phasefree");
+            const float randomPhase = wrap(float(noteSerial) * .618033989f + index * .137f + u * .271f);
+            pa[u] = wrap(pa[u] + randomPhase * spread);
+            pb[u] = wrap(pb[u] + wrap(randomPhase * .793f + .12f) * spread);
             pc[u] = 0;
         }
         ps = pl = 0;
+        psAnalog = int(v("engine")) == 4 && v("osclink") > .5f ? pa[0] * .5f : 0;
         extraPhases.fill(0);
         random = uint32_t(note * 7919 + 11);
         stringWrite = 0;
         stringPrevious = 0;
-        for (auto &sample : stringBuffer)
-        {
-            random ^= random << 13;
-            random ^= random >> 17;
-            random ^= random << 5;
-            sample = (float(random & 0xffff) / 32768.f - 1) * .65f;
-        }
+        stringReady = false;
+        if (int(v("engine")) == 2)
+            exciteString();
         visual.selectedVoice.store(index);
         coefficientCountdown = 0;
         for (auto &channel : filters)
@@ -285,22 +353,42 @@ struct Voice : SynthesiserVoice
         filterEnv.setSampleRate(getSampleRate());
         amp.reset();
         filterEnv.reset();
+        ladder.setCutoffFrequencyHz(v("cutoff"));
+        ladder.setResonance(v("resonance"));
+        ladder.reset();
         bRatio = std::exp2(smooth[Detune] / 1200);
         driveGain = std::exp2(smooth[Drive] * 4.5f);
         driveComp = 1 / std::sqrt(driveGain);
-        setEnvelopes();
+        setEnvelopes(true);
         amp.noteOn();
         filterEnv.noteOn();
     }
-    void setEnvelopes()
+    void setEnvelopes(bool force = false)
     {
-        amp.setParameters({v("attack"), v("decay"), v("sustain"), v("release")});
-        filterEnv.setParameters({v("fattack"), v("fdecay"), v("fsustain"), v("frelease")});
+        const float cap = isPlayingChannel(16) && v("seqfollowrelease") < .5f ? v("seqrelease") : 12.f;
+        auto update = [&](ADSR &envelope, const ADSR::Parameters &next, bool released)
+        {
+            const auto old = envelope.getParameters();
+            const bool changed = old.attack != next.attack || old.decay != next.decay ||
+                                 old.sustain != next.sustain || old.release != next.release;
+            if (!force && (!changed || (released && old.release == next.release)))
+                return;
+            envelope.setParameters(next);
+            if (released)
+                envelope.noteOff();
+        };
+        update(amp, {v("attack"), v("decay"), v("sustain"), jmin(v("release"), cap)}, ampReleased);
+        update(filterEnv, {v("fattack"), v("fdecay"), v("fsustain"), jmin(v("frelease"), cap)},
+               filterReleased);
     }
     void stopNote(float, bool tail) override
     {
         amp.noteOff();
         filterEnv.noteOff();
+        for (auto &fm : fmSix)
+            fm.release();
+        ampAttacking = filterAttacking = false;
+        ampReleased = filterReleased = true;
         if (!tail)
         {
             amp.reset();
@@ -310,23 +398,49 @@ struct Voice : SynthesiserVoice
     }
     void pitchWheelMoved(int p) override
     {
-        bend = std::pow(2.f, (p - 8192) / 8192.f * 2 / 12);
+        lastPitchWheel = p;
+        bend = std::pow(2.f, (p - 8192) / 8192.f * v("bendrange") / 12);
     }
     void controllerMoved(int, int) override {}
     void renderNextBlock(AudioBuffer<float> &out, int start, int count) override
     {
         setEnvelopes();
+        bend = std::exp2((lastPitchWheel - 8192) / 8192.f * v("bendrange") / 12);
         float sr = float(getSampleRate()), alpha = 1 - std::exp(-1 / (sr * .008f));
         std::array<float, Count> target{};
         for (int p = 0; p < Count; ++p)
             target[p] = raw[p]->load();
         int family = int(v("family")), mode = int(v("filtermode")), lfoShape = int(v("lfoshape")),
-            engine = int(v("engine"));
+            engine = int(v("engine")), fmProfile = int(v("fmprofile"));
         float fmRatio = v("fmratio"),
               stringDamping = std::exp(-6.9078f / (jmax(.03f, v("decay")) * jmax(20.f, hz * bend)));
+        if (engine == 1 && fmProfile != activeFMProfile)
+        {
+            if (fmProfile > 0)
+                for (auto &fm : fmSix)
+                    fm.start(fmProfile, velocity);
+            activeFMProfile = fmProfile;
+        }
+        if (engine == 2 && !stringReady)
+            exciteString();
+        const bool useLadder = v("filtercharacter") > .5f;
+        const bool linkedDCO = engine == 4 && v("osclink") > .5f;
+        if (useLadder)
+        {
+            const dsp::LadderFilterMode modes[] = {dsp::LadderFilterMode::LPF12, dsp::LadderFilterMode::LPF24,
+                                                   dsp::LadderFilterMode::HPF24,
+                                                   dsp::LadderFilterMode::BPF24};
+            ladder.setMode(modes[jlimit(0, 3, mode)]);
+            ladder.setDrive(1 + v("drive") * 3);
+        }
+        const float envelopeCurve = v("envcurve"), drift = v("analogdrift"), subCharacter = v("subshape");
+        bool dynamicPitch =
+            drift > .00001f || glideRemaining > 0 || std::abs(target[PitchFine] - smooth[PitchFine]) > .001f;
+        const float octaveA = std::exp2(v("octavea")), octaveB = std::exp2(v("octaveb") + v("oscbsemi") / 12);
         bool trace = visual.selectedVoice.load() == index;
-        float ha = jmin(hz * bend * std::pow(2.f, v("octavea")), sr * .42f),
-              hb = jmin(hz * bend * std::pow(2.f, v("octaveb")), sr * .42f);
+        float currentPitchRatio = std::exp2(target[PitchFine] / 1200);
+        float ha = jmin(hz * bend * octaveA * currentPitchRatio, sr * .42f),
+              hb = jmin(hz * bend * octaveB * currentPitchRatio, sr * .42f);
         int tableBand = Tables::bandFor(ha * 1.025f, sr);
         float wheel = 0;
         for (int c = 1; c <= 16; ++c)
@@ -347,10 +461,12 @@ struct Voice : SynthesiserVoice
                 modAmounts[m] *= target[Depth];
             modDestinations[m] = int(v(destIds[m]));
         }
+        for (int m = 0; m < 4; ++m)
+            dynamicPitch = dynamicPitch || (modDestinations[m] == 15 && std::abs(modAmounts[m]) > .00001f);
         uint64_t modMask = 0;
-        const int destinationParameter[] = {-1,    Cutoff,     Resonance, Position, Balance,
-                                            Shape, PulseWidth, Detune,    FM,       Unison,
-                                            Drive, Noise,      Sub,       -1,       Pan};
+        const int destinationParameter[] = {-1,         Cutoff, Resonance, Position, Balance, Shape,
+                                            PulseWidth, Detune, FM,        Unison,   Drive,   Noise,
+                                            Sub,        -1,     Pan,       PitchFine};
         for (int m = 0; m < 4; ++m)
             if (modDestinations[m] > 0 && std::abs(modAmounts[m]) > .001f &&
                 destinationParameter[modDestinations[m]] >= 0)
@@ -379,7 +495,23 @@ struct Voice : SynthesiserVoice
             for (int p = 0; p < Count; ++p)
                 smooth[p] += alpha * (target[p] - smooth[p]);
             auto s = smooth;
-            float env = amp.getNextSample(), fe = filterEnv.getNextSample();
+            float rawAmp = amp.getNextSample(), rawFilter = filterEnv.getNextSample();
+            float env = contour(rawAmp, ampAttacking, envelopeCurve),
+                  fe = contour(rawFilter, filterAttacking, envelopeCurve);
+            if (rawAmp >= .99999f)
+                ampAttacking = false;
+            if (rawFilter >= .99999f)
+                filterAttacking = false;
+            if (glideRemaining > 0)
+            {
+                hz *= std::exp2(glideStep);
+                if (--glideRemaining == 0)
+                    hz = targetHz;
+            }
+            if (drift > 0)
+                driftPhase = wrap(driftPhase + (.071f + index * .0031f) / sr);
+            const float analogCents = drift > 0 ? tables.sin(driftPhase) * drift * 4 : 0;
+            float pitchCents = s[PitchFine] + analogCents;
             float lfo = lfoValue(pl, lfoShape, tables);
             pl = wrap(pl + s[Rate] / sr);
             float cutoffMod = 0, panMod = 0, ampMod = 0, detuneMod = 0, driveMod = 0;
@@ -433,6 +565,9 @@ struct Voice : SynthesiserVoice
                 case 14:
                     panMod += amount;
                     break;
+                case 15:
+                    pitchCents += amount * 100;
+                    break;
                 default:
                     break;
                 }
@@ -440,6 +575,13 @@ struct Voice : SynthesiserVoice
             for (int parameter : {Resonance, Position, Balance, Shape, FM, Unison, Noise, Sub})
                 s[size_t(parameter)] = jlimit(0.f, 1.f, s[size_t(parameter)]);
 
+            if (dynamicPitch)
+            {
+                currentPitchRatio = std::exp2(pitchCents / 1200);
+                ha = jmin(hz * bend * octaveA * currentPitchRatio, sr * .42f);
+                hb = jmin(hz * bend * octaveB * currentPitchRatio, sr * .42f);
+            }
+            s[PitchFine] = pitchCents;
             float pw = jlimit(.05f, .95f, s[PulseWidth]);
             float stringValue = 0;
             if (engine == 2)
@@ -467,7 +609,9 @@ struct Voice : SynthesiserVoice
             {
                 if (u > 0 && s[Unison] < .0001f)
                     continue;
-                float ratio = detuneRatios[u], da = ha * ratio / sr, db = hb * ratio * bDetune / sr;
+                float ratio = detuneRatios[u], da = ha * ratio / sr,
+                      db = linkedDCO ? da : hb * ratio * bDetune / sr;
+                const float phaseB = linkedDCO ? pa[u] : pb[u];
                 float a = tables.read(pa[u] + (s[FM] > .0001f ? tables.sin(pb[u]) * s[FM] * 1.6f : 0.f),
                                       jlimit(0.f, 1.f,
                                              s[Position] + (u == 1   ? -1.f
@@ -475,7 +619,12 @@ struct Voice : SynthesiserVoice
                                                                      : 0.f) *
                                                                s[Scan] * .35f),
                                       family, tableBand);
-                if (engine == 1)
+                if (engine == 1 && fmProfile > 0)
+                {
+                    a = (u == 0 || s[Unison] > .0001f) ? fmSix[size_t(u)].next(ha * ratio, s[FM], fmRatio)
+                                                       : 0;
+                }
+                else if (engine == 1)
                 {
                     float modulation = tables.sin(pc[u]) * (.15f + s[FM] * 10) * (.15f + fe * .85f);
                     a = tables.sin(pa[u] + modulation * .15915494f);
@@ -495,10 +644,10 @@ struct Voice : SynthesiserVoice
                     float sawA = 2 * pa[u] - 1 - blep(pa[u], da), triangle = 2 * std::abs(2 * pa[u] - 1) - 1;
                     a = triangle * (1 - s[Position]) + sawA * s[Position];
                 }
-                float saw = 2 * pb[u] - 1 - blep(pb[u], db);
-                float pulse = (pb[u] < pw ? 1.f : -1.f) + blep(pb[u], db) - blep(wrap(pb[u] + 1 - pw), db);
+                float saw = 2 * phaseB - 1 - blep(phaseB, db);
+                float pulse = (phaseB < pw ? 1.f : -1.f) + blep(phaseB, db) - blep(wrap(phaseB + 1 - pw), db);
                 pulse -= (2 * pw - 1);
-                float softPhase = pb[u] < pw ? pb[u] / pw * .5f : .5f + (pb[u] - pw) / (1 - pw) * .5f;
+                float softPhase = phaseB < pw ? phaseB / pw * .5f : .5f + (phaseB - pw) / (1 - pw) * .5f;
                 float soft = tables.sin(softPhase) - (2 * pw - 1) * .63661977f;
                 pulse = (soft * (1 - s[PwmDepth]) + pulse * s[PwmDepth]) * .7f;
                 float b = saw * (1 - s[Shape]) + pulse * s[Shape];
@@ -507,14 +656,22 @@ struct Voice : SynthesiserVoice
                 stereo[0] += signal * panL[u];
                 stereo[1] += signal * panR[u];
                 pa[u] = wrap(pa[u] + da);
-                pb[u] = wrap(pb[u] + db);
+                pb[u] = linkedDCO ? pa[u] : wrap(pb[u] + db);
             }
             random ^= random << 13;
             random ^= random >> 17;
             random ^= random << 5;
             float noise = (float(random & 0xffff) / 32768.f - 1) * s[Noise] * .6f;
             float sub = tables.sin(ps) * s[Sub] * .7f;
-            ps = wrap(ps + hz * bend * .5f / sr);
+            if (subCharacter > 0)
+            {
+                const float subDt = ha * .5f / sr;
+                const float squareSub =
+                    (psAnalog < .5f ? 1.f : -1.f) + blep(psAnalog, subDt) - blep(wrap(psAnalog + .5f), subDt);
+                sub = (tables.sin(ps) * (1 - subCharacter) + squareSub * subCharacter * .8f) * s[Sub] * .7f;
+                psAnalog = wrap(psAnalog + subDt);
+            }
+            ps = wrap(ps + hz * bend * currentPitchRatio * .5f / sr);
             if (coefficientCountdown-- <= 0)
             {
                 float octaves = cutoffMod + fe * s[EnvAmount] * 7 + wheel * 3 +
@@ -523,6 +680,12 @@ struct Voice : SynthesiserVoice
                 float cut = jlimit(20.f, jmin(20000.f, sr * .35f), s[Cutoff] * std::exp2(octaves));
                 gNow = std::tan(MathConstants<float>::pi * cut / sr);
                 kNow = 2 - 1.94f * s[Resonance];
+                if (useLadder)
+                {
+                    ladder.setCutoffFrequencyHz(cut);
+                    ladder.setResonance(s[Resonance]);
+                    ladder.setDrive(1 + 3 * jlimit(0.f, 1.f, s[Drive] + driveMod / 4.5f));
+                }
                 coefficientCountdown = 7;
                 if (trace)
                 {
@@ -541,11 +704,14 @@ struct Voice : SynthesiserVoice
                 }
             }
             float drive = driveGain * (driveMod != 0 ? std::exp2(driveMod) : 1), comp = driveComp;
+            if (useLadder)
+                ladder.advance();
             for (int c = 0; c < 2; ++c)
             {
                 float x = std::tanh((stereo[c] + sub + noise) * drive) * comp;
-                float filtered = filters[c][0].tick(x, gNow, kNow, mode);
-                if (mode == 1)
+                float filtered = useLadder ? ladder.tick((stereo[c] + sub + noise) * 1.2f, c)
+                                           : filters[c][0].tick(x, gNow, kNow, mode);
+                if (!useLadder && mode == 1)
                     filtered = filters[c][1].tick(filtered, gNow, kNow, 0);
                 out.addSample(c, start + i,
                               filtered * env * velocity * .24f * jlimit(0.f, 2.f, 1 + ampMod) *

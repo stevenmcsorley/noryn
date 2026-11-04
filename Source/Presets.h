@@ -11,6 +11,8 @@ struct Preset
 };
 } // namespace noryn
 #include "SignaturePresets.h"
+#include "SolitudePresets.h"
+#include "ReferenceCharacter.h"
 namespace noryn
 {
 inline const std::vector<Preset> &factoryPresets()
@@ -276,6 +278,8 @@ inline const std::vector<Preset> &factoryPresets()
                 out.push_back(std::move(p));
             }
         appendSignaturePresets(out);
+        applyReferenceCharacter(out);
+        appendSolitudePresets(out);
         return out;
     }();
     return bank;

@@ -1,0 +1,2715 @@
+{
+  "reviewState": "v0.4.0 engine/stability update; musical-reference likeness remains unverified outside stated user feedback",
+  "presets": [
+    {
+      "index": 97,
+      "name": "Wonder Rubber",
+      "reference": "Stevie Wonder / Boogie On Reggae Woman",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 98,
+      "name": "Herbie Chameleon",
+      "reference": "Herbie Hancock / Chameleon",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 99,
+      "name": "Thriller Night Bass",
+      "reference": "Michael Jackson / Thriller",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 100,
+      "name": "Billie Pocket",
+      "reference": "Michael Jackson / Billie Jean",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 101,
+      "name": "Flashlight Bounce",
+      "reference": "Parliament / Flash Light",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 102,
+      "name": "Giorgio Midnight",
+      "reference": "Giorgio Moroder / I Feel Love",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 103,
+      "name": "Good Times Circuit",
+      "reference": "Chic / disco-funk vocabulary",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 104,
+      "name": "Da Funk Squelch",
+      "reference": "Daft Punk / Da Funk",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 105,
+      "name": "Around the Groove",
+      "reference": "Daft Punk / Around the World",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 106,
+      "name": "Voyager Satin",
+      "reference": "Daft Punk / Voyager",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 107,
+      "name": "Chromeo Night Drive",
+      "reference": "Chromeo / electro-funk",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 108,
+      "name": "Dua Disco Pulse",
+      "reference": "Dua Lipa / modern disco-pop",
+      "category": "Basses",
+      "family": "Funk & Disco Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono articulation",
+        "filter/envelope character",
+        "oscillator/sub balance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 109,
+      "name": "Sweet Voltage",
+      "reference": "Eurythmics / Sweet Dreams",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 110,
+      "name": "Blue Monday Floor",
+      "reference": "New Order / Blue Monday",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 111,
+      "name": "West End Underpass",
+      "reference": "Pet Shop Boys / West End Girls",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 112,
+      "name": "Enjoy the Basement",
+      "reference": "Depeche Mode / Enjoy the Silence",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 113,
+      "name": "Just Enough Bass",
+      "reference": "Depeche Mode / Just Can't Get Enough",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 114,
+      "name": "Fade to Grey Pulse",
+      "reference": "Visage / Fade to Grey",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 115,
+      "name": "Cars in Motion",
+      "reference": "Gary Numan / Cars",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 116,
+      "name": "Tainted Circuit",
+      "reference": "Soft Cell / Tainted Love",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 117,
+      "name": "Don't You Want Bass",
+      "reference": "The Human League / Don't You Want Me",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 118,
+      "name": "Rio Lowline",
+      "reference": "Duran Duran / new-wave bass palette",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 119,
+      "name": "Blinding Midnight",
+      "reference": "The Weeknd / Blinding Lights",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 120,
+      "name": "Midnight City Low",
+      "reference": "M83 / Midnight City palette",
+      "category": "Basses",
+      "family": "Synthpop Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "filter contour",
+        "dry articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 121,
+      "name": "Phuture Warehouse",
+      "reference": "Phuture / Acid Tracks palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 122,
+      "name": "Hardfloor Spiral",
+      "reference": "Hardfloor / Acperience palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 123,
+      "name": "Josh Wink Rise",
+      "reference": "Josh Wink / Higher State of Consciousness",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 124,
+      "name": "Richie Minimal",
+      "reference": "Richie Hawtin / Plastikman palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 125,
+      "name": "Bam Bam Acid",
+      "reference": "Bam Bam / acid-house vocabulary",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 126,
+      "name": "A Guy Called Squelch",
+      "reference": "A Guy Called Gerald / Voodoo Ray palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 127,
+      "name": "Chemical Resonator",
+      "reference": "The Chemical Brothers / acid palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 128,
+      "name": "Fatboy Filter Funk",
+      "reference": "Fatboy Slim / big-beat palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 129,
+      "name": "Orbital Acid Orbit",
+      "reference": "Orbital / acid-techno vocabulary",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 130,
+      "name": "Underworld Basement",
+      "reference": "Underworld / driving techno palette",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 131,
+      "name": "Charlotte Dark Pulse",
+      "reference": "Charlotte de Witte / peak-time techno",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 132,
+      "name": "Beyer Warehouse Bite",
+      "reference": "Adam Beyer / rolling techno",
+      "category": "Basses",
+      "family": "Acid & Techno Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "accent behavior",
+        "nonlinear resonant filter"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 133,
+      "name": "Reese Origin",
+      "reference": "Kevin Saunderson / Reese vocabulary",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 134,
+      "name": "Inner City Low",
+      "reference": "Inner City / Detroit house palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 135,
+      "name": "Pendulum Turbine",
+      "reference": "Pendulum / drum-and-bass palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 136,
+      "name": "Noisia Alloy",
+      "reference": "Noisia / neuro-bass palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 137,
+      "name": "Chase Heavyweight",
+      "reference": "Chase & Status / rolling bass",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 138,
+      "name": "Skrillex Vowel",
+      "reference": "Skrillex / growl-bass vocabulary",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 139,
+      "name": "Skream Sub Room",
+      "reference": "Skream / early dubstep palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 140,
+      "name": "Benga Wobble",
+      "reference": "Benga / wobble-bass vocabulary",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 141,
+      "name": "Burial Shadow",
+      "reference": "Burial / nocturnal bass palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 142,
+      "name": "Flume Elastic",
+      "reference": "Flume / elastic electronic bass",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 143,
+      "name": "Justice Grind",
+      "reference": "Justice / distorted electro bass",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 144,
+      "name": "Gesaffelstein Iron",
+      "reference": "Gesaffelstein / dark electro palette",
+      "category": "Basses",
+      "family": "Reese & Modern Bass",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "beating/phase relationships",
+        "distortion and filtering",
+        "sub separation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 145,
+      "name": "Lucky Solo",
+      "reference": "Emerson Lake & Palmer / Lucky Man",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 146,
+      "name": "Shine Diamond",
+      "reference": "Pink Floyd / Shine On You Crazy Diamond",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 147,
+      "name": "Wakeman Gold",
+      "reference": "Rick Wakeman / progressive solo palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 148,
+      "name": "Jan Hammer Chase",
+      "reference": "Jan Hammer / Miami Vice palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 149,
+      "name": "Duke Solo",
+      "reference": "George Duke / funk-fusion lead",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 150,
+      "name": "Chick Galactic",
+      "reference": "Chick Corea / Return to Forever palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 151,
+      "name": "Zawinul Bird",
+      "reference": "Joe Zawinul / fusion synth palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 152,
+      "name": "Popcorn Kernel",
+      "reference": "Gershon Kingsley / Popcorn palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 153,
+      "name": "Funk Worm",
+      "reference": "Ohio Players / Funky Worm palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 154,
+      "name": "Portishead Whistle",
+      "reference": "Portishead / haunting lead palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 155,
+      "name": "Boards Worn Lead",
+      "reference": "Boards of Canada / tape-colored leads",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 156,
+      "name": "Air Moon Solo",
+      "reference": "Air / Moon Safari palette",
+      "category": "Leads",
+      "family": "Classic Mono Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "mono glide/legato",
+        "pitch bend/vibrato",
+        "oscillator/filter color"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 157,
+      "name": "Jump Arena Brass",
+      "reference": "Van Halen / Jump",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 158,
+      "name": "Final Countdown Horn",
+      "reference": "Europe / The Final Countdown",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 159,
+      "name": "Africa Copper",
+      "reference": "Toto / Africa keyboard palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 160,
+      "name": "Prince Royal Stab",
+      "reference": "Prince / 1999 palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 161,
+      "name": "Kiss Minimal Stab",
+      "reference": "Prince / minimalist funk palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 162,
+      "name": "Sledgehammer Horn",
+      "reference": "Peter Gabriel / Sledgehammer palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 163,
+      "name": "Axel Street Brass",
+      "reference": "Harold Faltermeyer / Axel F palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 164,
+      "name": "Take On Bright",
+      "reference": "a-ha / Take On Me palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 165,
+      "name": "Europe Carrie Glow",
+      "reference": "Europe / 1980s ballad keys",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 166,
+      "name": "Howard New Song",
+      "reference": "Howard Jones / New Song palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 167,
+      "name": "Roxy Avalon Brass",
+      "reference": "Roxy Music / Avalon palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 168,
+      "name": "Killers Human Poly",
+      "reference": "The Killers / Human palette",
+      "category": "Brass & Strings",
+      "family": "Poly Brass & Pop Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter attack shape",
+        "oscillator balance",
+        "voice detuning"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 169,
+      "name": "Adagio Skyline",
+      "reference": "Tiesto / Adagio for Strings palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 170,
+      "name": "Armin Blue Horizon",
+      "reference": "Armin van Buuren / uplifting trance",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 171,
+      "name": "Ferry Out of Blue",
+      "reference": "Ferry Corsten / Out of the Blue palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 172,
+      "name": "Sash Encore Lead",
+      "reference": "Sash! / Encore Une Fois palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 173,
+      "name": "Darude Sandstorm Edge",
+      "reference": "Darude / Sandstorm palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 174,
+      "name": "Faithless Insomnia Stab",
+      "reference": "Faithless / Insomnia palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 175,
+      "name": "Avicii Levels Lift",
+      "reference": "Avicii / Levels palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 176,
+      "name": "Swedish House Skyline",
+      "reference": "Swedish House Mafia / festival palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 177,
+      "name": "Garrix Big Room",
+      "reference": "Martin Garrix / big-room palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 178,
+      "name": "Deadmau5 Strobe Lead",
+      "reference": "deadmau5 / Strobe palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 179,
+      "name": "Above Beyond Air",
+      "reference": "Above & Beyond / melodic trance",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 180,
+      "name": "Eric Prydz Opus Glow",
+      "reference": "Eric Prydz / Opus palette",
+      "category": "Leads",
+      "family": "Festival & Trance Leads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "unison spectrum/phase",
+        "filter/envelope timing",
+        "effect timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 181,
+      "name": "Children Dream Pluck",
+      "reference": "Robert Miles / Children palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 182,
+      "name": "Better Off Droplet",
+      "reference": "Alice Deejay / Better Off Alone palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 183,
+      "name": "9PM Glass Wire",
+      "reference": "ATB / 9 PM palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 184,
+      "name": "Animals Wooden Drop",
+      "reference": "Martin Garrix / Animals palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 185,
+      "name": "Strobe Dawn Pluck",
+      "reference": "deadmau5 / Strobe intro palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 186,
+      "name": "I Remember Ember",
+      "reference": "deadmau5 and Kaskade / I Remember palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 187,
+      "name": "Lane Eight River",
+      "reference": "Lane 8 / melodic-house palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 188,
+      "name": "Ben Bohmer Bloom",
+      "reference": "Ben Bohmer / melodic-house palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 189,
+      "name": "Yotto North Star",
+      "reference": "Yotto / progressive-house palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 190,
+      "name": "Tinlicker Copper Rain",
+      "reference": "Tinlicker / progressive palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 191,
+      "name": "Bicep Apricot",
+      "reference": "Bicep / Glue and Apricots palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 192,
+      "name": "Jon Hopkins Open Eye",
+      "reference": "Jon Hopkins / Open Eye Signal palette",
+      "category": "Plucks",
+      "family": "Melodic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "filter/amp decay",
+        "source architecture",
+        "delay timing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 193,
+      "name": "Mr Fingers Deep",
+      "reference": "Mr. Fingers / Can You Feel It palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 194,
+      "name": "Inner City Good Life",
+      "reference": "Inner City / Good Life palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 195,
+      "name": "MK Garage Stab",
+      "reference": "MK / garage-house vocabulary",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 196,
+      "name": "Kerri Chandler Velvet",
+      "reference": "Kerri Chandler / deep-house keys",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 197,
+      "name": "Disclosure Latch Keys",
+      "reference": "Disclosure / Latch palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 198,
+      "name": "Duke Dumont Ocean",
+      "reference": "Duke Dumont / Ocean Drive palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 199,
+      "name": "Robin S Organ House",
+      "reference": "Robin S / Show Me Love palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 200,
+      "name": "Crystal Waters Stab",
+      "reference": "Crystal Waters / Gypsy Woman palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 201,
+      "name": "Stardust Filter Chord",
+      "reference": "Stardust / Music Sounds Better With You palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 202,
+      "name": "Modjo Lady Glow",
+      "reference": "Modjo / Lady palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 203,
+      "name": "Fred Again Soft Key",
+      "reference": "Fred again.. / intimate electronic keys",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 204,
+      "name": "Peggy Gou Neon Key",
+      "reference": "Peggy Gou / modern house palette",
+      "category": "Keys",
+      "family": "House & Garage Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "transient/source architecture",
+        "chord voicing",
+        "short envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 205,
+      "name": "Whitney Saving Tines",
+      "reference": "Whitney Houston / Saving All My Love palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 206,
+      "name": "A-ha FM Crystal",
+      "reference": "a-ha / digital-pop keys",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 207,
+      "name": "Enya Orinoco Bell",
+      "reference": "Enya / Orinoco Flow palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 208,
+      "name": "Twin Peaks Tines",
+      "reference": "Angelo Badalamenti / Twin Peaks palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 209,
+      "name": "Hardcastle Rain",
+      "reference": "Paul Hardcastle / Rain Forest palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 210,
+      "name": "Lately Electric",
+      "reference": "Stevie Wonder / ballad-key palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 211,
+      "name": "Vangelis Glass Bell",
+      "reference": "Vangelis / metallic bell vocabulary",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 212,
+      "name": "Aphex Ice Tines",
+      "reference": "Aphex Twin / crystalline digital palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 213,
+      "name": "Autechre Ceramic",
+      "reference": "Autechre / inharmonic percussion palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 214,
+      "name": "Four Tet Thumb Key",
+      "reference": "Four Tet / delicate electronic keys",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 215,
+      "name": "Bonobo Silver Mallet",
+      "reference": "Bonobo / melodic mallet palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 216,
+      "name": "Tycho Digital Sun",
+      "reference": "Tycho / luminous keyboard palette",
+      "category": "Keys",
+      "family": "FM Keys & Bells",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "independent operator envelopes",
+        "operator topology/feedback",
+        "velocity-dependent brightness"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 217,
+      "name": "Doors Light Organ",
+      "reference": "The Doors / Light My Fire palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 218,
+      "name": "Deep Purple Smoke",
+      "reference": "Deep Purple / saturated rock organ",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 219,
+      "name": "Booker Green Circuit",
+      "reference": "Booker T. / Green Onions palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 220,
+      "name": "Procol Pale Organ",
+      "reference": "Procol Harum / A Whiter Shade of Pale palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 221,
+      "name": "Steve Winwood Glow",
+      "reference": "Steve Winwood / soulful organ palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 222,
+      "name": "House Hollow M1",
+      "reference": "1990s house-organ vocabulary",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 223,
+      "name": "Garage Organ Bite",
+      "reference": "UK garage organ-bass vocabulary",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 224,
+      "name": "Daft Digital Church",
+      "reference": "Daft Punk / organ and digital-key palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 225,
+      "name": "Air Playground Organ",
+      "reference": "Air / Playground Love palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 226,
+      "name": "Stereolab Motor Organ",
+      "reference": "Stereolab / motorik organ palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 227,
+      "name": "Metronomy Riviera",
+      "reference": "Metronomy / The Bay palette",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 228,
+      "name": "Tame Psychedelic Organ",
+      "reference": "Tame Impala / psychedelic keys",
+      "category": "Keys",
+      "family": "Organ & Hollow Keys",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "partial mixture",
+        "percussion articulation",
+        "chorus/rotary behavior"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 229,
+      "name": "Juno Midnight Silk",
+      "reference": "Roland Juno-inspired chorus-pad vocabulary",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 230,
+      "name": "Jupiter Wide Horizon",
+      "reference": "Roland Jupiter-inspired poly-pad vocabulary",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 231,
+      "name": "Prophet Polaroid",
+      "reference": "Sequential Prophet-inspired warm poly palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 232,
+      "name": "OB Dream Theater",
+      "reference": "Oberheim-inspired broad pad vocabulary",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 233,
+      "name": "Cure Disintegration",
+      "reference": "The Cure / Disintegration palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 234,
+      "name": "Talk Talk Soft Light",
+      "reference": "Talk Talk / atmospheric synth-pop palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 235,
+      "name": "Tears Head Over Pad",
+      "reference": "Tears for Fears / Head Over Heels palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 236,
+      "name": "Tangerine Amber Pad",
+      "reference": "Tangerine Dream / analog ensemble palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 237,
+      "name": "OMD Souvenir Clouds",
+      "reference": "OMD / Souvenir palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 238,
+      "name": "New Order Elegia",
+      "reference": "New Order / Elegia palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 239,
+      "name": "Pet Shop Dreaming",
+      "reference": "Pet Shop Boys / lush synth-pop palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 240,
+      "name": "Weeknd Afterglow",
+      "reference": "The Weeknd / After Hours palette",
+      "category": "Pads",
+      "family": "Vintage Poly Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "phase relationships",
+        "chorus character",
+        "filter and envelope shape"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 241,
+      "name": "Blade Neon Rain",
+      "reference": "Vangelis / Blade Runner atmosphere",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 242,
+      "name": "Chariots Warm Light",
+      "reference": "Vangelis / Chariots of Fire palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 243,
+      "name": "Zimmer Distant Sand",
+      "reference": "Hans Zimmer / cinematic drone palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 244,
+      "name": "Eno Airport Haze",
+      "reference": "Brian Eno / ambient-pad vocabulary",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 245,
+      "name": "Jarre Equinoxe Sky",
+      "reference": "Jean-Michel Jarre / Equinoxe palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 246,
+      "name": "Klaus Schulze Horizon",
+      "reference": "Klaus Schulze / Berlin-school atmosphere",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 247,
+      "name": "Aphex Stone Cloud",
+      "reference": "Aphex Twin / Selected Ambient Works palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 248,
+      "name": "BoC Turquoise Fog",
+      "reference": "Boards of Canada / ambient palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 249,
+      "name": "Nils Frahm Felt Air",
+      "reference": "Nils Frahm / intimate ambient palette",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 250,
+      "name": "Hammock Endless Blue",
+      "reference": "Hammock / expansive ambient texture",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 251,
+      "name": "Carbon Based Orbit",
+      "reference": "Carbon Based Lifeforms / space ambience",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 252,
+      "name": "Trent Reznor Ash",
+      "reference": "Trent Reznor and Atticus Ross / score atmosphere",
+      "category": "Pads",
+      "family": "Cinematic & Ambient Pads",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "layer balance",
+        "long envelope shape",
+        "spatial processing"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 253,
+      "name": "Kraftwerk Formant",
+      "reference": "Kraftwerk / The Robots palette",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 254,
+      "name": "Daft Human Vowel",
+      "reference": "Daft Punk / vocal-synth vocabulary",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 255,
+      "name": "Laurie O Superman Air",
+      "reference": "Laurie Anderson / O Superman atmosphere",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 256,
+      "name": "Bjork Digital Bloom",
+      "reference": "Bjork / organic-electronic palette",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 257,
+      "name": "Imogen Harmonic Halo",
+      "reference": "Imogen Heap / vocal-layer atmosphere",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 258,
+      "name": "Grimes Crystal Voice",
+      "reference": "Grimes / ethereal electronic palette",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 259,
+      "name": "Oneohtrix Prism",
+      "reference": "Oneohtrix Point Never / digital abstraction",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 260,
+      "name": "Arca Liquid Metal",
+      "reference": "Arca / experimental electronic texture",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 261,
+      "name": "Sophie Glass Polymer",
+      "reference": "SOPHIE / synthetic-material vocabulary",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 262,
+      "name": "FKA Twigs Breath",
+      "reference": "FKA twigs / intimate digital texture",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 263,
+      "name": "M83 Midnight Choir",
+      "reference": "M83 / cinematic vocal-like synths",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 264,
+      "name": "Radiohead Everything",
+      "reference": "Radiohead / Everything in Its Right Place palette",
+      "category": "Textures",
+      "family": "Digital & Vocal Textures",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "appropriate source/formants",
+        "layer balance",
+        "modulation articulation"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 265,
+      "name": "Baba Pulse Field",
+      "reference": "The Who / Baba O'Riley rhythmic-key vocabulary",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 266,
+      "name": "Won't Get Fooled Gate",
+      "reference": "The Who / Won't Get Fooled Again palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 267,
+      "name": "Kraftwerk Autobahn",
+      "reference": "Kraftwerk / Autobahn palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 268,
+      "name": "Jarre Oxygene Pulse",
+      "reference": "Jean-Michel Jarre / Oxygene palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 269,
+      "name": "Tangerine Ruby Steps",
+      "reference": "Tangerine Dream / Rubycon palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 270,
+      "name": "Giorgio Chase Motor",
+      "reference": "Giorgio Moroder / Chase palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 271,
+      "name": "Orbital Halcyon Pulse",
+      "reference": "Orbital / Halcyon palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 272,
+      "name": "Underworld Born Pulse",
+      "reference": "Underworld / Born Slippy palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 273,
+      "name": "Chemical Star Guitar",
+      "reference": "The Chemical Brothers / Star Guitar palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 274,
+      "name": "Daft Aerodynamic Rotor",
+      "reference": "Daft Punk / Aerodynamic palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 275,
+      "name": "Jon Hopkins Emerald",
+      "reference": "Jon Hopkins / Emerald Rush palette",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 276,
+      "name": "Floating Points Orbit",
+      "reference": "Floating Points / intricate electronic motion",
+      "category": "Motion",
+      "family": "Rhythmic Motion",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "tempo and phase relationship",
+        "gate/filter shape",
+        "source architecture"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 277,
+      "name": "Oxygene Glass Harp",
+      "reference": "Jean-Michel Jarre / delicate electronic plucks",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 278,
+      "name": "Vangelis Bamboo",
+      "reference": "Vangelis / organic synthetic plucks",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 279,
+      "name": "Sakamoto Rain Wire",
+      "reference": "Ryuichi Sakamoto / lyrical electronic keys",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 280,
+      "name": "YMO Technopolis Wire",
+      "reference": "Yellow Magic Orchestra / Technopolis palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 281,
+      "name": "Kraftwerk Pocket Calculator",
+      "reference": "Kraftwerk / Pocket Calculator palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 282,
+      "name": "Four Tet Lattice",
+      "reference": "Four Tet / interlocking pluck vocabulary",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 283,
+      "name": "Bonobo Bamboo Grove",
+      "reference": "Bonobo / organic-electronic palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 284,
+      "name": "Nicolas Jaar Dust Wire",
+      "reference": "Nicolas Jaar / intimate experimental palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 285,
+      "name": "Trentemoller Polar Harp",
+      "reference": "Trentemoller / nocturnal pluck palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 286,
+      "name": "Apparat Fractured Nylon",
+      "reference": "Apparat / textured electronic plucks",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 287,
+      "name": "Nujabes Gentle Wire",
+      "reference": "Nujabes / mellow instrumental atmosphere",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 288,
+      "name": "ODESZA Sunlit Pluck",
+      "reference": "ODESZA / bright melodic-electronic palette",
+      "category": "Plucks",
+      "family": "Strings & Organic Plucks",
+      "status": "Unverified interpretation \u2014 full reference comparison required",
+      "reviewFocus": [
+        "excitation/decay model",
+        "source suitability",
+        "body resonance"
+      ],
+      "characterPass": "Architecture corrections applied; reference likeness still unverified"
+    },
+    {
+      "index": 289,
+      "name": "Solitude / Original Lead",
+      "reference": "M83 - Solitude (original solo)",
+      "category": "Leads",
+      "status": "User feedback: very close; refine timbre and movement",
+      "reviewFocus": [
+        "oscillator/filter focus",
+        "glide and vibrato timing"
+      ]
+    },
+    {
+      "index": 290,
+      "name": "Solitude / Reinterpretation Swell",
+      "reference": "M83 - Solitude (Felsmann + Tiley)",
+      "category": "Pads",
+      "status": "User feedback: very close; refine timbre and movement",
+      "reviewFocus": [
+        "oscillator/filter focus",
+        "swell timing"
+      ]
+    }
+  ]
+}

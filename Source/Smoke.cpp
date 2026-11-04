@@ -10,6 +10,7 @@ using namespace juce;
 AudioProcessor *JUCE_CALLTYPE createPluginFilter();
 bool norynTelemetryActive(AudioProcessor *);
 var norynControl(AudioProcessor *, const var &);
+var norynPerformanceTelemetry(AudioProcessor *);
 void norynRefreshEditor(AudioProcessorEditor *);
 bool norynScopeMatches(AudioProcessor *, const AudioBuffer<float> &);
 static void require(bool condition, const String &message)
@@ -137,6 +138,41 @@ struct Harness
             value("cutoff", 700);
             value("envamount", 0);
         }
+        if (target == "envcurve")
+        {
+            value("attack", .2f);
+            value("decay", .4f);
+            value("sustain", .5f);
+        }
+        if (target == "subshape")
+        {
+            value("sub", 1);
+            value("octavea", -1);
+        }
+        if (target == "choruscharacter")
+            value("chorus", .9f);
+        if (target == "oscbsemi")
+            value("balance", 1);
+        if (target == "filtercharacter")
+        {
+            value("cutoff", 900);
+            value("resonance", .65f);
+        }
+        if (target == "analogdrift")
+            value("engine", 4);
+        if (target == "fmprofile")
+        {
+            value("engine", 1);
+            value("fm", .5f);
+            value("balance", 0);
+        }
+        if (target == "osclink")
+        {
+            value("engine", 4);
+            value("detune", 19);
+            value("balance", .6f);
+            value("shape", 1);
+        }
         if (target == "size")
             value("reverb", .85f);
     }
@@ -172,8 +208,288 @@ int main(int argc, char **argv)
         directory.createDirectory();
         testScaleEngine();
         testSequencer();
+        testSequencerSafety();
+        testEnvelopeReleaseReference();
+        if (argc > 2 && String(argv[2]) == "--sequencer")
+        {
+            std::cout << "PASS: per-note recording, exact gates, stop/clear, five-minute loop, ADSR release "
+                         "regression.\n";
+            return 0;
+        }
+
         Harness h;
-        require(h.p->getNumPrograms() == 289, "Expected 288 factory presets plus Init");
+        require(h.p->getNumPrograms() == 291, "Expected 290 factory presets plus Init");
+
+        // Verify the shipped chord-study MIDI and native presets, not just their filenames.
+        const auto exampleRoot = File::getCurrentWorkingDirectory();
+        auto midiPath = exampleRoot.getChildFile("examples/Solitude Chord Study.mid");
+        if (midiPath.existsAsFile())
+        {
+            FileInputStream midiStream(midiPath);
+            MidiFile midiFile;
+            require(midiFile.readFrom(midiStream), "Chord study MIDI is invalid");
+            int ons = 0, offs = 0;
+            for (int track = 0; track < midiFile.getNumTracks(); ++track)
+                for (int event = 0; event < midiFile.getTrack(track)->getNumEvents(); ++event)
+                {
+                    const auto &msg = midiFile.getTrack(track)->getEventPointer(event)->message;
+                    if (msg.isNoteOn())
+                        ++ons;
+                    else if (msg.isNoteOff())
+                        ++offs;
+                }
+            require(ons == 45 && offs == 45, "Chord study MIDI has unbalanced notes");
+            for (const auto &name :
+                 StringArray{"M83 Solitude - Swell Chord Test", "M83 Solitude - Electric Piano Test"})
+            {
+                MemoryBlock patch;
+                require(exampleRoot.getChildFile("presets/" + name + ".noryn").loadFileAsData(patch),
+                        "Missing public test preset");
+                h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+                const auto state = norynControl(h.p.get(), JSON::parse("{\"op\":\"state\"}"));
+                require(std::abs(float(state["parameters"]["bpm"]["value"]) - 61) < .001f &&
+                            state["steps"][0]["notes"].size() == 5 &&
+                            std::abs(float(state["steps"][0]["noteDetails"][1]["length"]) - 7.8f) < .01f,
+                        "Public chord-test preset did not recall its per-note pattern");
+            }
+        }
+        auto burialPath = exampleRoot.getChildFile("presets/Burial Stolen Dog - Hazy Keys.noryn");
+        if (burialPath.existsAsFile())
+        {
+            MemoryBlock patch;
+            require(burialPath.loadFileAsData(patch), "Missing Burial study preset");
+            h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+            auto state = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            require(std::abs(float(state["parameters"]["bpm"]["value"]) - 115.5f) < .001f &&
+                        int(state["parameters"]["fmprofile"]["value"]) == 12 &&
+                        float(state["steps"][0]["noteDetails"][0]["length"]) == 15,
+                    "Burial study lost its sound or independent bass gate");
+            h.prepare();
+            norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+            const int loopSamples = int(16 * 60.0 / 115.5 * 48000);
+            const int total = loopSamples + 48000 * 3;
+            AudioBuffer<float> rendered(2, total), block(2, 256);
+            MidiBuffer midi;
+            for (int offset = 0; offset < total; offset += 256)
+            {
+                if (offset >= loopSamples && offset - 256 < loopSamples)
+                    norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":false}})"));
+                int count = jmin(256, total - offset);
+                block.setSize(2, count, false, false, true);
+                midi.clear();
+                h.p->processBlock(block, midi);
+                for (int c = 0; c < 2; ++c)
+                    rendered.copyFrom(c, offset, block, c, 0, count);
+            }
+            require(energy(rendered) > .01, "Burial study produced no sound");
+            require(norynPerformanceTelemetry(h.p.get()).size() == 0, "Burial study held voices after Stop");
+            wav(directory.getChildFile("stolen-dog-study.wav"), rendered);
+            std::cout << "PASS: Burial study recalls its sound/gates, renders bounded audio and releases after Stop.\n";
+        }
+        if (argc > 2 && String(argv[2]) == "--verify-solitude-exports")
+        {
+            std::cout << "PASS: shipped Solitude MIDI and both native test presets.\n";
+            return 0;
+        }
+        h.p->setCurrentProgram(1);
+        MemoryBlock legacyMemory;
+        h.p->getStateInformation(legacyMemory);
+        auto legacyXML =
+            AudioProcessor::getXmlFromBinary(legacyMemory.getData(), int(legacyMemory.getSize()));
+        auto legacyTree = ValueTree::fromXml(*legacyXML);
+        const StringArray addedParameters{"filtercharacter", "voicemode",   "choruscharacter", "envcurve",
+                                          "phasefree",       "analogdrift", "subshape",        "oscbsemi",
+                                          "glidetime",       "bendrange",   "pitchfine",       "fmprofile",
+                                          "osclink",         "seqrelease",  "seqfollowrelease"};
+        for (int i = legacyTree.getNumChildren() - 1; i >= 0; --i)
+            if (addedParameters.contains(legacyTree.getChild(i).getProperty("id").toString()))
+                legacyTree.removeChild(i, nullptr);
+        MemoryBlock legacyPatch;
+        auto stripped = legacyTree.createXml();
+        AudioProcessor::copyXmlToBinary(*stripped, legacyPatch);
+        h.p->setCurrentProgram(290);
+        h.value("seqrelease", 1.5f);
+        h.value("seqfollowrelease", 1);
+        h.p->setStateInformation(legacyPatch.getData(), int(legacyPatch.getSize()));
+        for (const auto &id : addedParameters)
+            require(std::abs(h.parameters.at(id)->getValue() - h.parameters.at(id)->getDefaultValue()) <
+                        .00001f,
+                    "Older patch inherited a new model instead of its legacy default: " + id);
+        // Low sustain must not stretch release into seconds; changing sustain during
+        // release must not restart or replace its calibrated rate.
+        for (float sustain : {0.f, .001f, .02f, .3f, .8f, 1.f})
+        {
+            h.p->setCurrentProgram(0);
+            h.value("attack", .001f);
+            h.value("decay", 1);
+            h.value("sustain", sustain);
+            h.value("release", .08f);
+            h.value("frelease", .08f);
+            auto releaseCheck = h.render(.6, .8f, {60});
+            energy(releaseCheck);
+            require(norynPerformanceTelemetry(h.p.get()).size() == 0, "Low sustain caused a runaway release");
+        }
+
+        h.p->setCurrentProgram(0);
+        h.value("attack", .001f);
+        h.value("decay", 1);
+        h.value("sustain", .5f);
+        h.value("release", .08f);
+        h.value("frelease", .08f);
+        h.prepare();
+        AudioBuffer<float> tailBlock(2, 256);
+        MidiBuffer tailMidi;
+        tailMidi.addEvent(MidiMessage::noteOn(1, 60, .8f), 0);
+        h.p->processBlock(tailBlock, tailMidi);
+        tailMidi.clear();
+        tailMidi.addEvent(MidiMessage::noteOff(1, 60), 0);
+        h.p->processBlock(tailBlock, tailMidi);
+        tailMidi.clear();
+        for (int i = 0; i < 50; ++i)
+        {
+            h.value("sustain", i % 2 == 0 ? 0.f : .001f);
+            h.p->processBlock(tailBlock, tailMidi);
+        }
+        require(norynPerformanceTelemetry(h.p.get()).size() == 0,
+                "Changing sustain during release created an endless tail");
+        // A fast sequence with a long-release, near-zero-sustain patch must not accumulate voices.
+        h.p->setCurrentProgram(0);
+        h.value("attack", .001f);
+        h.value("decay", 1);
+        h.value("sustain", .001f);
+        h.value("release", 4);
+        h.value("seqrelease", .06f);
+        h.value("seqfollowrelease", 0);
+        h.value("bpm", 120);
+        h.value("seqdivision", 2);
+        h.value("seqgate", .25f);
+        h.value("seqlength", 4);
+        h.value("chorus", 0);
+        h.value("delay", 0);
+        h.value("reverb", 0);
+        norynControl(
+            h.p.get(),
+            JSON::parse(
+                "{\"op\":\"sequence\",\"args\":{\"replace\":true,\"steps\":[{\"index\":0,\"notes\":[60]},{"
+                "\"index\":1,\"notes\":[62]},{\"index\":2,\"notes\":[64]},{\"index\":3,\"notes\":[67]}]}}"));
+        norynControl(h.p.get(), JSON::parse("{\"op\":\"transport\",\"args\":{\"playing\":true}}"));
+        auto loopAudio = h.render(3, .8f, {}, 48000, false);
+        energy(loopAudio);
+        require(norynPerformanceTelemetry(h.p.get()).size() == 0,
+                "Sequence release tails accumulated between short gates");
+        norynControl(h.p.get(), JSON::parse("{\"op\":\"transport\",\"args\":{\"playing\":false}}"));
+
+        for (const auto &pair : h.parameters)
+            if (pair.first.startsWith("seq") || pair.first == "bpm")
+                pair.second->setValueNotifyingHost(pair.second->getDefaultValue());
+        norynControl(h.p.get(),
+                     JSON::parse("{\"op\":\"sequence\",\"args\":{\"replace\":true,\"steps\":[]}}"));
+        // Verify actual mono/legato pitch behavior, not a single-note preset render.
+        h.p->setCurrentProgram(0);
+        h.value("voicemode", 2);
+        h.value("glidetime", .2f);
+        h.value("release", .03f);
+        h.prepare();
+        AudioBuffer<float> performanceAudio(2, 256);
+        MidiBuffer performanceMidi;
+        performanceMidi.addEvent(MidiMessage::noteOn(1, 60, .8f), 0);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        performanceMidi.clear();
+        performanceMidi.addEvent(MidiMessage::noteOn(1, 72, .8f), 0);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        auto voices = norynPerformanceTelemetry(h.p.get());
+        require(voices.size() == 1, "Mono legato allocated more than one voice");
+        require(float(voices[0]["frequency"]) > 261 && float(voices[0]["frequency"]) < 300 &&
+                    std::abs(float(voices[0]["target"]) - 523.251f) < .1f,
+                "Portamento did not interpolate pitch");
+        performanceMidi.clear();
+        performanceMidi.addEvent(MidiMessage::noteOff(1, 72), 0);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        voices = norynPerformanceTelemetry(h.p.get());
+        require(voices.size() == 1 && std::abs(float(voices[0]["target"]) - 261.626f) < .1f,
+                "Mono last-note return failed");
+        performanceMidi.clear();
+        performanceMidi.addEvent(MidiMessage::noteOff(1, 60), 0);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        performanceMidi.clear();
+        for (int i = 0; i < 30; ++i)
+            h.p->processBlock(performanceAudio, performanceMidi);
+        require(norynPerformanceTelemetry(h.p.get()).size() == 0, "Mono note-off left a stuck voice");
+        h.p->setCurrentProgram(0);
+        h.value("bendrange", 12);
+        h.prepare();
+        performanceMidi.clear();
+        performanceMidi.addEvent(MidiMessage::noteOn(1, 60, .8f), 0);
+        performanceMidi.addEvent(MidiMessage::pitchWheel(1, 16383), 1);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        voices = norynPerformanceTelemetry(h.p.get());
+        require(voices.size() == 1 && std::abs(float(voices[0]["bendRatio"]) - 2.f) < .001f,
+                "Bend range was not applied");
+        h.value("bendrange", 2);
+        performanceMidi.clear();
+        h.p->processBlock(performanceAudio, performanceMidi);
+        voices = norynPerformanceTelemetry(h.p.get());
+        require(std::abs(float(voices[0]["bendRatio"]) - std::exp2(2.f / 12)) < .001f,
+                "Changing bend range ignored a held wheel");
+        performanceMidi.clear();
+        performanceMidi.addEvent(MidiMessage::pitchWheel(1, 8192), 0);
+        h.p->processBlock(performanceAudio, performanceMidi);
+        h.p->setCurrentProgram(0);
+        if (argc > 2 && String(argv[2]) == "--solitude")
+        {
+            auto renderPerformance =
+                [&](int program, int seconds, const std::vector<std::pair<double, MidiMessage>> &events)
+            {
+                h.p->setCurrentProgram(program);
+                h.prepare();
+                const int length = 48000 * seconds;
+                AudioBuffer<float> result(2, length), block(2, 256);
+                MidiBuffer midi;
+                for (int offset = 0; offset < length; offset += 256)
+                {
+                    const int count = jmin(256, length - offset);
+                    block.setSize(2, count, false, false, true);
+                    midi.clear();
+                    for (const auto &event : events)
+                    {
+                        int at = roundToInt(event.first * 48000);
+                        if (at >= offset && at < offset + count)
+                            midi.addEvent(event.second, at - offset);
+                    }
+                    h.p->processBlock(block, midi);
+                    for (int c = 0; c < 2; ++c)
+                        result.copyFrom(c, offset, block, c, 0, count);
+                }
+                require(energy(result) > .01, "Silent Solitude candidate");
+                return result;
+            };
+            std::vector<std::pair<double, MidiMessage>> lead;
+            int previous = -1;
+            int notes[] = {67, 72, 70, 68, 65, 67};
+            for (int i = 0; i < 6; ++i)
+            {
+                lead.push_back({i * 1.35, MidiMessage::noteOn(1, notes[i], .8f)});
+                if (previous >= 0)
+                    lead.push_back({i * 1.35 + .08, MidiMessage::noteOff(1, previous)});
+                previous = notes[i];
+            }
+            lead.push_back({8.2, MidiMessage::noteOff(1, previous)});
+            auto solo = renderPerformance(289, 12, lead);
+            wav(directory.getChildFile("solitude-original-candidate.wav"), solo);
+            std::vector<std::pair<double, MidiMessage>> chords;
+            const int voicings[][4] = {{48, 55, 60, 63}, {44, 51, 56, 60}, {46, 53, 58, 62}};
+            for (int i = 0; i < 3; ++i)
+                for (int note : voicings[i])
+                {
+                    chords.push_back({i * 4.2, MidiMessage::noteOn(1, note, .8f)});
+                    chords.push_back({i * 4.2 + 3.2, MidiMessage::noteOff(1, note)});
+                }
+            auto swell = renderPerformance(290, 17, chords);
+            wav(directory.getChildFile("solitude-reinterpretation-candidate.wav"), swell);
+            std::cout << "PASS: mono/legato/glide/note-off checks; rendered both Solitude candidates.\n";
+            return 0;
+        }
+
         auto started = Time::getMillisecondCounterHiRes();
         String csv = "parameter,normalized_low,normalized_high,relative_audio_difference\n";
         float minimumDifference = 100;
@@ -181,7 +497,8 @@ int main(int argc, char **argv)
         int audibleControls = 0;
         for (const auto &pair : h.parameters)
         {
-            if (pair.first.startsWith("seq") || pair.first == "bpm" || pair.first == "clicklevel" ||
+            if (pair.first == "voicemode" || pair.first == "glidetime" || pair.first == "bendrange" ||
+                pair.first.startsWith("seq") || pair.first == "bpm" || pair.first == "clicklevel" ||
                 pair.first == "metronome" || pair.first == "scale" || pair.first == "root" ||
                 pair.first == "customscale" || pair.first.startsWith("quantize"))
                 continue;
@@ -227,7 +544,7 @@ int main(int argc, char **argv)
         double quietest = 1.e10, loudest = 0;
         std::set<String> signatureStates;
         String levels = "index,name,category,rms,peak\n";
-        String catalog = "# NORYN factory bank\n\n288 factory sounds plus Init. All patches are "
+        String catalog = "# NORYN factory bank\n\n290 factory sounds plus Init. All patches are "
                          "editable.\n\n192 original signature patches reference songs, artists and classic "
                          "synthesis palettes. They are interpretations, not extracted artist patches, "
                          "samples, exact recreations or endorsements. The original programs 0-96 retain "
@@ -260,7 +577,8 @@ int main(int argc, char **argv)
                 for (const auto &pair : h.parameters)
                     signature += pair.first + ":" + String(pair.second->getValue(), 7) + ";";
                 require(signatureStates.insert(signature).second, "Duplicate signature sound: " + name);
-                require(preset.description.startsWith("Inspired by "), "Missing signature reference");
+                require(i >= 289 || preset.description.startsWith("Inspired by "),
+                        "Missing signature reference");
             }
             auto sound =
                 h.render(i >= 97 ? 2.5 : .9, .8f,
@@ -283,7 +601,7 @@ int main(int argc, char **argv)
         require(testedEngines.size() == 5, "Factory sounds do not cover all five voice engines");
         directory.getChildFile("PRESETS.md").replaceWithText(catalog);
         const auto listed = norynControl(h.p.get(), JSON::parse("{\"op\":\"presets\"}"));
-        require(listed["factory"].size() == 289, "MCP omitted new presets");
+        require(listed["factory"].size() == 291, "MCP omitted new presets");
         require(listed["factory"][288]["description"].toString().contains("ODESZA"),
                 "MCP omitted signature reference/description");
         require(h.p->getProgramName(1) == "Cinematic Horizon" &&
@@ -395,10 +713,11 @@ int main(int argc, char **argv)
                 if (h.parameters.count(combo->getName()))
                 {
                     boundParameters.insert(combo->getName());
-                    combo->setSelectedItemIndex(2, sendNotificationSync);
+                    int selected = jmin(2, combo->getNumItems() - 1);
+                    combo->setSelectedItemIndex(selected, sendNotificationSync);
                     require(std::abs(h.parameters.at(combo->getName())
                                          ->convertFrom0to1(h.parameters.at(combo->getName())->getValue()) -
-                                     2) < .01f,
+                                     selected) < .01f,
                             "Unbound selector");
                 }
                 if (combo->getName() == "categories")
@@ -513,7 +832,7 @@ int main(int argc, char **argv)
         routeMidi.addEvent(MidiMessage::noteOn(1, 60, .8f), 0);
         AudioBuffer<float> routeAudio(2, 256);
         h.p->processBlock(routeAudio, routeMidi);
-        for (int destination : {1, 3, 6, 0})
+        for (int destination : {1, 3, 6, 15, 0})
         {
             h.value("lfo1dest", float(destination));
             routeMidi.clear();
@@ -523,11 +842,12 @@ int main(int argc, char **argv)
                 if (auto *knob = dynamic_cast<Slider *>(child))
                 {
                     String id = knob->getName();
-                    if (id == "cutoff" || id == "position" || id == "pulsewidth")
+                    if (id == "cutoff" || id == "position" || id == "pulsewidth" || id=="pitchfine")
                     {
                         bool expected = destination == 1   ? id == "cutoff"
                                         : destination == 3 ? id == "position"
                                         : destination == 6 ? id == "pulsewidth"
+                                        : destination == 15 ? id == "pitchfine"
                                                            : false;
                         require(bool(knob->getProperties()["showModulation"]) == expected,
                                 "LFO routed/indicated the wrong destination: " + id);
@@ -537,6 +857,9 @@ int main(int argc, char **argv)
         h.p->setCurrentProgram(1);
         h.prepare();
         norynRefreshEditor(editor.get());
+        h.value("seqfollowrelease", 0);
+        h.value("seqrelease", .08f);
+        h.value("seqnotelength", 1);
         auto beforePlayback = editor->createComponentSnapshot(editor->getLocalBounds());
         auto live = h.render(.9, .8f, {48, 55, 60, 64});
         require(norynTelemetryActive(h.p.get()), "Missing audio telemetry");
@@ -599,7 +922,7 @@ int main(int argc, char **argv)
         require(presetBox->getNumItems() == 0, "Empty search results failed");
         search->clear();
         search->onTextChange();
-        require(presetBox->getNumItems() >= 289, "Clearing search did not restore bank");
+        require(presetBox->getNumItems() >= 291, "Clearing search did not restore bank");
         h.p->setCurrentProgram(193); // House & Garage signature bank.
         norynRefreshEditor(editor.get());
         search->setText("Fingers");
@@ -623,8 +946,11 @@ int main(int argc, char **argv)
         stream.reset();
         for (const auto &page : std::vector<std::pair<String, String>>{{"64 STEP SEQUENCER", "sequencer.png"},
                                                                        {"4 LFO ROUTING", "lfos.png"},
-                                                                       {"SCALE ENGINE", "scales.png"}})
+                                                                       {"SCALE ENGINE", "scales.png"},
+                                                                       {"VOICE DESIGN", "character.png"}})
         {
+            if (page.first == "VOICE DESIGN")
+                h.p->setCurrentProgram(205);
             button(page.first)->onClick();
             norynRefreshEditor(editor.get());
             auto pageImage = editor->createComponentSnapshot(editor->getLocalBounds());
@@ -684,8 +1010,9 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.4.0\",\n  \"factory_presets\": 288,\n  \"signature_presets\": "
-                        "192,\n  \"unique_signature_states\": " +
+        String report = "{\n  \"version\": \"0.4.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+                        "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
+                        "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +
                         ",\n  \"tested_controls\": " + String(audibleControls) +
                         ",\n  \"weakest_control\": \"" + weakest +
@@ -693,13 +1020,15 @@ int main(int argc, char **argv)
                         ",\n  \"quietest_preset_rms\": " + String(quietest, 6) +
                         ",\n  \"loudest_preset_rms\": " + String(loudest, 6) +
                         ",\n  \"state_recall\": true,\n  \"gui_bindings\": true,\n  \"audio_telemetry\": "
-                        "true,\n  \"stress_sample_rates\": [44100, 48000, 96000],\n  \"stress_block_sizes\": "
+                        "true,\n  \"low_sustain_release\": true,\n  \"per_note_sequence_gates\": true,\n  "
+                        "\"five_minute_note_balance\": true,\n  \"stress_sample_rates\": [44100, 48000, "
+                        "96000],\n  \"stress_block_sizes\": "
                         "[16, 64, 127, 512],\n  \"elapsed_seconds\": " +
                         String(elapsed, 2) +
                         ",\n  \"dense_16_voice_realtime_ratio\": " + String(realtimeRatio, 4) + "\n}\n";
         directory.getChildFile("validation.json").replaceWithText(report);
         std::cout << "PASS: " << audibleControls
-                  << " audible synthesis controls, 288 presets, GUI bindings, live telemetry, state recall, "
+                  << " audible synthesis controls, 290 presets, GUI bindings, live telemetry, state recall, "
                      "stress checks ("
                   << elapsed << " s)\n";
         h.p->releaseResources();

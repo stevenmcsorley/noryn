@@ -512,8 +512,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
                              {"delaytime", 0.31f}, {"feedback", 0.32f},  {"reverb", 0.18f},
                              {"width", 1.12f},     {"unison", 0.19f},    {"velfilter", 0.22f}};
         add("Lucky Solo", "Leads", "Emerson Lake & Palmer / Lucky Man",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 2400.0f},
              {"position", 0.45f},
@@ -523,8 +523,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", 5.0f},
              {"pulsewidth", 0.41f}});
         add("Shine Diamond", "Leads", "Pink Floyd / Shine On You Crazy Diamond",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 1700.0f},
              {"position", 0.31f},
@@ -534,8 +534,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", -4.0f},
              {"attack", 0.04f}});
         add("Wakeman Gold", "Leads", "Rick Wakeman / progressive solo palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 3800.0f},
              {"position", 0.82f},
@@ -545,8 +545,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", 9.0f},
              {"resonance", 0.37f}});
         add("Jan Hammer Chase", "Leads", "Jan Hammer / Miami Vice palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 3200.0f},
              {"position", 0.94f},
@@ -556,8 +556,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", 12.0f},
              {"drive", 0.23f}});
         add("Duke Solo", "Leads", "George Duke / funk-fusion lead",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 2100.0f},
              {"position", 0.59f},
@@ -567,8 +567,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", -7.0f},
              {"pulsewidth", 0.28f}});
         add("Chick Galactic", "Leads", "Chick Corea / Return to Forever palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 4600.0f},
              {"position", 0.76f},
@@ -578,8 +578,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", 6.0f},
              {"delaytime", 0.19f}});
         add("Zawinul Bird", "Leads", "Joe Zawinul / fusion synth palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 2800.0f},
              {"position", 0.38f},
@@ -589,8 +589,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", -11.0f},
              {"fattack", 0.075f}});
         add("Popcorn Kernel", "Leads", "Gershon Kingsley / Popcorn palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 1300.0f},
              {"position", 0.19f},
@@ -601,8 +601,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"sustain", 0.05f},
              {"release", 0.08f}});
         add("Funk Worm", "Leads", "Ohio Players / Funky Worm palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 1900.0f},
              {"position", 0.28f},
@@ -612,8 +612,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"detune", 3.0f},
              {"resonance", 0.48f}});
         add("Portishead Whistle", "Leads", "Portishead / haunting lead palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 980.0f},
              {"position", 0.06f},
@@ -624,8 +624,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"balance", 0.12f},
              {"delay", 0.35f}});
         add("Boards Worn Lead", "Leads", "Boards of Canada / tape-colored leads",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 1500.0f},
              {"position", 0.41f},
@@ -638,8 +638,8 @@ inline void appendSignaturePresets(std::vector<Preset> &out)
              {"lfo1amount", 0.045f},
              {"rate", 0.37f}});
         add("Air Moon Solo", "Leads", "Air / Moon Safari palette",
-            "Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, "
-            "no glide.",
+            "Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans "
+            "twelve semitones.",
             base,
             {{"cutoff", 2200.0f},
              {"position", 0.64f},

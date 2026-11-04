@@ -23,7 +23,7 @@ def plugin_files():
 
 
 def project_files():
-    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "run.sh", ".gitignore", ".gitattributes", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]
+    fixed = ["CMakeLists.txt", "README.md", "LICENSE", "THIRD_PARTY.md", "AUTHENTICITY.md", "character.png", "sequencer-verification.json", "run.sh", ".gitignore", ".gitattributes", ".clang-format", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "preview-small.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "stolen-dog-study.wav", "signature-bank.png", "preset-levels.csv"]
     files = [ROOT / name for name in fixed]
     for folder in ["Source", "scripts", "licenses", "presets", "examples", ".github"]:
         files += [p for p in (ROOT / folder).rglob("*") if p.is_file() and not p.is_symlink()]
@@ -42,7 +42,7 @@ with zipfile.ZipFile(native, "w", zipfile.ZIP_DEFLATED, compresslevel=8) as arch
     for file in (base / "VST3/NORYN.vst3").rglob("*"):
         if file.is_file():
             archive.write(file, "NORYN/VST3/" + file.relative_to(base / "VST3").as_posix())
-    for name in ["README.md", "LICENSE", "THIRD_PARTY.md", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "sequencer.png", "lfos.png", "scales.png", "preview-small.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]:
+    for name in ["README.md", "LICENSE", "THIRD_PARTY.md", "AUTHENTICITY.md", "character.png", "sequencer-verification.json", "PRESETS.md", "validation.json", "control-sensitivity.csv", "native-knob-verification.json", "mcp-verification.json", "preview.png", "sequencer.png", "lfos.png", "scales.png", "preview-small.png", "demo.wav", "signature-demo.wav", "stolen-dog-study.wav", "signature-bank.png", "preset-levels.csv"]:
         if name == "README.md":
             archive.writestr("NORYN/README.md", (ROOT / name).read_text().replace("](mcp/README.md)", "](noryn-control/README.md)"))
         else:
@@ -88,7 +88,7 @@ with tarfile.open(source) as archive:
     assert f"NORYN-{VERSION}/vendor/JUCE/modules/juce_core/juce_core.h" in archive.getnames()
     assert not any(name.endswith((".mcp-token", ".bridge-token", ".dev.vars", "WORKPLAN.md")) for name in archive.getnames())
 
-assets = [native, plugin, source] + [ROOT / name for name in ["preview.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "signature-bank.png", "preset-levels.csv"]]
+assets = [native, plugin, source] + [ROOT / name for name in ["preview.png", "sequencer.png", "lfos.png", "scales.png", "demo.wav", "signature-demo.wav", "stolen-dog-study.wav", "signature-bank.png", "character.png", "preset-levels.csv"]]
 checksums = DIST / "SHA256SUMS.txt"
 checksums.write_text("".join(f"{hashlib.sha256(file.read_bytes()).hexdigest()}  {file.name}\n" for file in assets))
 print("\n".join(f"{file.name}: {file.stat().st_size:,} bytes" for file in [native, plugin, source, checksums]))

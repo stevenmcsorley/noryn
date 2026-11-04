@@ -4,10 +4,10 @@
   "stdioVerified": true,
   "signatureBank": {
     "version": "0.4.0",
-    "presets": 289,
+    "presets": 291,
     "signaturePresets": 192,
     "daftPunkMatches": 6,
-    "parameters": 72,
+    "parameters": 87,
     "steps": 64
   },
   "nativeRoundTrip": {
@@ -21,5 +21,19 @@
       "destination": "Filter cutoff",
       "rate": 0.129999980330467
     }
+  },
+  "solitudeStudy": {
+    "verified": true,
+    "bpm": 61,
+    "steps": 64,
+    "perNoteDurations": true,
+    "presets": 2
+  },
+  "stolenDogStudy": {
+    "verified": true,
+    "bpm": 115.5,
+    "steps": 64,
+    "perNoteDurations": true,
+    "preset": "Burial Stolen Dog - Hazy Keys"
   }
 }

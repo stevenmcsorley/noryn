@@ -8,7 +8,12 @@ juce_add_plugin(Noryn COMPANY_NAME "Noryn Audio" BUNDLE_ID "audio.noryn.synth" P
     FORMATS VST3 Standalone PRODUCT_NAME "NORYN" IS_SYNTH TRUE NEEDS_MIDI_INPUT TRUE EDITOR_WANTS_KEYBOARD_FOCUS TRUE
     NEEDS_MIDI_OUTPUT FALSE IS_MIDI_EFFECT FALSE COPY_PLUGIN_AFTER_BUILD FALSE)
 juce_generate_juce_header(Noryn)
-target_sources(Noryn PRIVATE Source/Plugin.cpp)
+target_sources(Noryn PRIVATE Source/Plugin.cpp Source/SixOperator.cpp
+    Source/ThirdParty/msfa/fm_core.cc Source/ThirdParty/msfa/fm_op_kernel.cc Source/ThirdParty/msfa/sin.cc)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    set_source_files_properties(Source/ThirdParty/msfa/fm_core.cc Source/ThirdParty/msfa/fm_op_kernel.cc
+        Source/ThirdParty/msfa/sin.cc PROPERTIES COMPILE_OPTIONS "-fwrapv")
+endif()
 target_compile_definitions(Noryn PUBLIC JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
 target_link_libraries(Noryn PRIVATE juce::juce_audio_utils juce::juce_dsp PUBLIC juce::juce_recommended_config_flags)
 juce_add_console_app(NorynSmoke PRODUCT_NAME "NorynSmoke")

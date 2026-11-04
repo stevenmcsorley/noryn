@@ -1,6 +1,6 @@
 # NORYN factory bank
 
-288 factory sounds plus Init. All patches are editable.
+290 factory sounds plus Init. All patches are editable.
 
 192 original signature patches reference songs, artists and classic synthesis palettes. They are interpretations, not extracted artist patches, samples, exact recreations or endorsements. The original programs 0-96 retain their numbers. Search the browser by name, song, artist or playing tip.
 
@@ -611,51 +611,51 @@
 
 ### 145: Lucky Solo
 
-**Leads** — Inspired by Emerson Lake & Palmer / Lucky Man. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Emerson Lake & Palmer / Lucky Man. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 146: Shine Diamond
 
-**Leads** — Inspired by Pink Floyd / Shine On You Crazy Diamond. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Pink Floyd / Shine On You Crazy Diamond. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 147: Wakeman Gold
 
-**Leads** — Inspired by Rick Wakeman / progressive solo palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Rick Wakeman / progressive solo palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 148: Jan Hammer Chase
 
-**Leads** — Inspired by Jan Hammer / Miami Vice palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Jan Hammer / Miami Vice palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 149: Duke Solo
 
-**Leads** — Inspired by George Duke / funk-fusion lead. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by George Duke / funk-fusion lead. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 150: Chick Galactic
 
-**Leads** — Inspired by Chick Corea / Return to Forever palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Chick Corea / Return to Forever palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 151: Zawinul Bird
 
-**Leads** — Inspired by Joe Zawinul / fusion synth palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Joe Zawinul / fusion synth palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 152: Popcorn Kernel
 
-**Leads** — Inspired by Gershon Kingsley / Popcorn palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Gershon Kingsley / Popcorn palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 153: Funk Worm
 
-**Leads** — Inspired by Ohio Players / Funky Worm palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Ohio Players / Funky Worm palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 154: Portishead Whistle
 
-**Leads** — Inspired by Portishead / haunting lead palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Portishead / haunting lead palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 155: Boards Worn Lead
 
-**Leads** — Inspired by Boards of Canada / tape-colored leads. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Boards of Canada / tape-colored leads. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 156: Air Moon Solo
 
-**Leads** — Inspired by Air / Moon Safari palette. Play a single-note melody in the middle register; CC1 opens the tone. Polyphonic voice engine, no glide.
+**Leads** — Inspired by Air / Moon Safari palette. Play a single-note melody; overlap notes for legato glide. CC1 opens the tone; pitch bend spans twelve semitones.
 
 ### 157: Jump Arena Brass
 
@@ -1184,3 +1184,11 @@
 ### 288: ODESZA Sunlit Pluck
 
 **Plucks** — Inspired by ODESZA / bright melodic-electronic palette. The plucked-string engine uses noise excitation and tuned feedback, with no recorded samples.
+
+### 289: Solitude / Original Lead
+
+**Leads** — M83 - Solitude (original): lead study. Play a single-note line with overlapping notes for glide; pitch wheel spans 12 semitones. Candidate for listening comparison, not a verified reconstruction.
+
+### 290: Solitude / Reinterpretation Swell
+
+**Pads** — M83 - Solitude (Felsmann + Tiley): dark brass-swell study. Hold low, widely spaced chords for 3-4 seconds. Candidate for listening comparison; the full recording also contains other layers.

@@ -26,3 +26,9 @@ cmake --build build --target Noryn_All NorynSmoke -j2
 ```
 
 The optional MCP plugin installs its locked npm dependencies with `npm ci`. No public Cloudflare account or deployment is required for the local workerd setup.
+
+## Google MSFA FM core
+
+The optional six-operator FM structures use the operator kernels, sine lookup and algorithm router from [Google Music Synthesizer for Android](https://github.com/google/music-synthesizer-for-android), commit `f67d41d313b7dc85f6fb99e79e515cc9d208cfff`. Copyright 2012–2013 Google Inc., Apache License 2.0. The original notices are retained in `Source/ThirdParty/msfa`, with the full license in `licenses/MSFA-APACHE-2.0.txt`. `NORYN-NOTICE.md` records the small portability changes. The source archive includes this code.
+
+NORYN supplies its own six independent operator envelope generators and original voice designs. No DX7 ROM/factory banks, artist preset files or reference recordings are bundled. This integration does not claim component-accurate DX7 emulation.

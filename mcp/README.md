@@ -24,7 +24,7 @@ For development, `./start.sh` runs the broker at `127.0.0.1:8788` and Code Mode 
 ## Operations
 
 - `get_state`: actual parameters, ranges, labels, choices, transport and 64 steps.
-- `list_presets`, `load_preset`: 288 factory sounds plus Init.
+- `list_presets`, `load_preset`: 290 factory sounds plus Init.
 - `set_parameters`: actual native values, validated before application.
 - `save_preset`, `load_user_preset`: named local sound/pattern/scale states.
 - `write_sequence`: polyphonic steps, velocity and duration; preserve or replace.
@@ -63,7 +63,7 @@ async () => {
 }
 ```
 
-The bank contains 288 editable sounds plus Init, including 192 original musical-reference interpretations. Descriptions include artist/song references and playing tips. They are not extracted artist patches or exact recreations. Existing indices 0–96 remain stable.
+The bank contains 290 editable sounds plus Init, including 192 original musical-reference interpretations. Descriptions include artist/song references and playing tips. They are not extracted artist patches or exact recreations. Existing indices 0–96 remain stable.
 
 ## Verify
 

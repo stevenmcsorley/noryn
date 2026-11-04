@@ -8,7 +8,7 @@ struct SequencePad : juce::Button
     int step;
     std::function<int()> entryNote;
     std::function<float()> entryVelocity, entryLength;
-    std::function<void(int, float)> select;
+    std::function<void(int, float, float)> select;
     SequencePad(Sequencer &s, int i) : Button("step" + juce::String(i + 1)), sequence(s), step(i)
     {
         onClick = [this]
@@ -26,7 +26,7 @@ struct SequencePad : juce::Button
             auto &cell = sequence.steps[size_t(step)];
             int n = cell.first();
             if (n >= 0)
-                select(n, cell.velocity.load());
+                select(n, cell.velocityFor(n), cell.lengthFor(n));
             repaint();
             return;
         }
@@ -61,12 +61,25 @@ struct SequencePad : juce::Button
         g.setColour(Colour(0xffbaa789));
         g.drawText(String(step + 1), 8, 5, getWidth() - 16, 18, Justification::centredLeft);
         int first = cell.first();
+        String help = "Step " + String(step + 1);
+        for (int note = 0; note < 128; ++note)
+            if (cell.has(note))
+                help += "\n" + MidiMessage::getMidiNoteName(note, true, true, 3) + " / " +
+                        String(cell.lengthFor(note), 2) + " steps / " +
+                        String(roundToInt(cell.velocityFor(note) * 100)) + "%";
+        setTooltip(help);
+
         String label = first < 0 ? "-" : MidiMessage::getMidiNoteName(first, true, true, 3);
         if (cell.count() > 1)
             label += " +" + String(cell.count() - 1);
         g.setFont(FontOptions(17.f));
         g.setColour(active ? Colour(0xffb6e9ec) : Colour(0xff405667));
         g.drawText(label, 4, 27, getWidth() - 8, 24, Justification::centred);
+        g.setColour(Colour(0xff8ca5ae));
+        g.setFont(FontOptions(9.f));
+        if (active)
+            g.drawText("LEN " + String(cell.lengthFor(first), 2), 4, 54, getWidth() - 8, 16,
+                       Justification::centred);
         g.setColour(Colour(0xffa88ece));
         if (active)
             g.fillRoundedRectangle(9, float(getHeight() - 15), float(getWidth() - 18) * cell.velocity.load(),

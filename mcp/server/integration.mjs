@@ -23,7 +23,7 @@ try {
    const signature=await codemode.load_preset({index:288,instanceId});
    if(signature.presetName!=='ODESZA Sunlit Pluck')throw new Error('Expanded preset index not loaded');
    await codemode.load_preset({index:37,instanceId});
-   await codemode.set_parameters({values:{reverb:0.3,chorus:0.18,delay:0.18,seqgate:0.95,lfo1dest:0,seqlength:64,seqdivision:2,seqnote:60,seqvelocity:0.8,seqnotelength:16,clicklevel:0.4,customscale:2741},instanceId});
+   await codemode.set_parameters({values:{reverb:0.3,chorus:0.18,delay:0.18,seqgate:0.95,lfo1dest:0,seqlength:64,seqdivision:2,seqnote:60,seqvelocity:0.8,seqnotelength:1,clicklevel:0.4,customscale:2741},instanceId});
    await codemode.map_lfo({lfo:2,destination:1,amount:0.25,rate:0.13,shape:0,instanceId});
    await codemode.set_scale({scale:1,root:2,direction:0,live:false,instanceId});
    await codemode.chord_progression({degrees:[1,6,4,5],tonic:50,stepsPerChord:16,seventh:false,velocity:0.8,replace:true,instanceId});

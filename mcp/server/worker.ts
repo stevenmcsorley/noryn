@@ -47,7 +47,7 @@ function upstream(env: Env) {
     "list_presets",
     {
       description:
-        "List all 288 factory sounds plus Init and locally saved user patches.",
+        "List all 290 factory sounds plus Init and locally saved user patches.",
       inputSchema: { instanceId },
     },
     async ({ instanceId }) => call("presets", {}, instanceId),
@@ -70,7 +70,7 @@ function upstream(env: Env) {
     {
       description:
         "Load a factory sound by index, preserving sequence, scale and tempo.",
-      inputSchema: { index: z.number().int().min(0).max(288), instanceId },
+      inputSchema: { index: z.number().int().min(0).max(290), instanceId },
     },
     async ({ index, instanceId }) => call("loadPreset", { index }, instanceId),
   );
@@ -95,6 +95,8 @@ function upstream(env: Env) {
   const step = z.object({
     index: z.number().int().min(0).max(63),
     notes: z.array(z.number().int().min(0).max(127)).max(16),
+    noteDetails:z.array(z.object({note:z.number().int().min(0).max(127),
+      length:z.number().min(.05).max(64),velocity:z.number().min(.01).max(1)})).max(16).optional(),
     velocity: z.number().min(0.01).max(1).optional(),
     length: z
       .number()
@@ -205,7 +207,7 @@ function upstream(env: Env) {
         lfo: z.number().int().min(1).max(4),
         rate: z.number().min(0.03).max(30).optional(),
         shape: z.number().int().min(0).max(3).optional(),
-        destination: z.number().int().min(0).max(14).optional(),
+        destination: z.number().int().min(0).max(15).optional(),
         amount: z.number().min(-1).max(1).optional(),
         instanceId,
       },
