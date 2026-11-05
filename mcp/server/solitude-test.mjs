@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { runtimeDir } from './runtime-paths.mjs';
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const token=(await fs.readFile(path.join(runtimeDir,'mcp-token'),'utf8')).trim();
-const client=new Client({name:'noryn-solitude-pattern',version:'0.5.0'});
+const client=new Client({name:'noryn-solitude-pattern',version:'0.6.0'});
 await client.connect(new StreamableHTTPClientTransport(new URL('http://127.0.0.1:8787/mcp'),{requestInit:{headers:{Authorization:`Bearer ${token}`}}}));
 try {
  const result=await client.callTool({name:'code',arguments:{code:`async()=>{

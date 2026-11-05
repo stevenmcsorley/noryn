@@ -1297,7 +1297,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.5.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"0.6.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +

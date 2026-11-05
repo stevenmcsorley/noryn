@@ -1,6 +1,12 @@
-# NORYN 0.5 — Hybrid Synthesizer
+# NORYN 0.6 — Hybrid Synthesizer
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
+
+## v0.6.0 changes
+
+- **Section-medley song demos.** All 46 transcription-based demos now run through the whole song: each fills the 256-step sequencer with slices of the song's distinct sections in order (start, middle, end) instead of one excerpt. Daydreaming moves to 1/16 steps so it gets 16 bars. Details under *Song-reference demo sequences*.
+- **MIDI control** (introduced in 0.5.0): plug-and-play MIDI inputs in the standalone app, a MIDI panel, and MIDI learn for every knob plus PLAY and RECORD, saved across presets and sessions. Tested with a first-generation KORG microKEY, which connects automatically.
+- Loudness rebalanced for the new demos; all 64 user presets pass the render check.
 
 ## v0.5.0 changes
 
@@ -207,9 +213,9 @@ Four User patches include original 64-step arrangements: **The Palace - Warm Pia
 
 ## Song-reference demo sequences
 
-60 Depeche Mode, Radiohead, Thom Yorke, Father John Misty and Burial user patches recall song-specific demos of up to 256 steps (16 bars of sixteenths or 32 bars of eighths; *Everything in Its Right Place* uses six 10/4 bars, *Policy of Truth - Glass Hook* eight bars because the hook is not continuous in its source). They replace the earlier generic arrangements described above, and no two share a pitch pattern. Select one under User patches, open **256 STEP SEQUENCER** and press **PLAY**.
+60 Depeche Mode, Radiohead, Thom Yorke, Father John Misty and Burial user patches recall song-specific demos of up to 256 steps (16 bars of sixteenths or 32 bars of eighths; *Everything in Its Right Place* uses six 10/4 bars and *Black Celebration - Shadow Choir* 24 bars because its part only plays in three regions). They replace the earlier generic arrangements described above, and no two share a pitch pattern. Select one under User patches, open **256 STEP SEQUENCER** and press **PLAY**.
 
-- **46 note-level excerpts** (all Depeche Mode, Radiohead and Thom Yorke patches, plus Burial *Archangel*): quantized excerpts of community MIDI or Online Sequencer transcriptions, matched to the patch role (bass part for bass patches, hook, piano or pad part for others). Each window is the 16-bar span with continuous playing and the most distinct bars, so most demos move through the song's progression rather than repeating one bar. Sources, tracks, windows and file hashes: `examples/song-sequence-replacements.json`; rebuild with `scripts/replace_song_sequences.py`.
+- **46 note-level excerpts** (all Depeche Mode, Radiohead and Thom Yorke patches, plus Burial *Archangel*): quantized excerpts of community MIDI or Online Sequencer transcriptions, matched to the patch role (bass part for bass patches, hook, piano or pad part for others). Each demo is a **section medley**: `scripts/plan_medleys.py` fingerprints every 4-bar phrase of the whole arrangement (bar-by-bar harmony plus which instruments play), groups similar phrases into section types, splits the stretch where the preset's own part plays into four regions from start to end, and takes the most representative phrase from each, preferring section types not yet used. The slices are stitched in song order (4 × 4 bars at 1/16; 4 × 8 bars for the 1/8 patches; three 2-bar sections for *Everything in Its Right Place*). Section boundaries are detected, not hand-marked, and a slice can start mid-phrase in songs with pickups or irregular bars. Sources, tracks, windows and file hashes: `examples/song-sequence-replacements.json`; rebuild with `scripts/replace_song_sequences.py`.
 - **14 chord studies**: the four Father John Misty patches use 32-bar intro/verse/chorus progressions from cited chord charts. The other ten Burial patches use progressions estimated from the official preview audio and are low confidence; their second eight bars vary the rhythm. Data: `examples/chord-study-sequences.json`; rebuild with `scripts/write_chord_studies.py`.
 - **13 new patches**: Radiohead *No Surprises - Music Box Bells*, *Pyramid Song - Sunken Piano*, *Videotape - Tape Piano*, *Reckoner - Falling Strings*, *Nude - Round Bass*, *Lotus Flower - Rubber Bass*; Thom Yorke *The Eraser - Loop Piano*; Depeche Mode *Master and Servant - Whip Riff*, *Stripped - Analog Bass*, *Halo - Choir Strings*, *New Life - Synthpop Lead*, *Photographic - Early Sequence*, *A Question of Time - Drive Bass*. Each starts from a related patch's sound with its own changes (`examples/new-reference-presets.json`, `scripts/add_reference_presets.py`).
 - Loudness is balanced from rendered measurements (`scripts/balance_levels.py`); run `NorynSmoke <dir> --user-presets` to re-render every demo and write `user-preset-levels.csv`.

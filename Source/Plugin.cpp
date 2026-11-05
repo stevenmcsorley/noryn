@@ -641,7 +641,7 @@ class NorynProcessor : public AudioProcessor
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "0.5.0");
+        result->setProperty("version", "0.6.0");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
@@ -2578,7 +2578,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("MIDI / sustain / mod wheel / bend", 28, 879, 210, 16, Justification::centredLeft);
         g.setColour(amber);
         g.setFont(FontOptions(10.f));
-        g.drawText("NORYN 0.5 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
+        g.drawText("NORYN 0.6 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
                    Justification::centredLeft);
         g.setColour(muted);
         g.drawText(String(p.visual.sampleRate.load() / 1000, 1) + " kHz", 1310, 903, 108, 22,

@@ -63,8 +63,17 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('manifest');ap.add_argument('--source-dir',required=True);args=ap.parse_args()
     repo=Path(__file__).resolve().parents[1];manifest=json.loads(Path(args.manifest).read_text());backup=Path('/tmp')/('noryn-pattern-backup-'+str(time.time_ns()))
     for spec in manifest['replacements']:
-        source=Path(args.source_dir)/spec['file'];pattern=extract(source,spec['tracks'],spec['startBeat'],spec['beats'],spec['grid'],spec.get('transpose',0),spec.get('channels'))
-        steps=round(spec['beats']*spec['grid']);assert 1<=steps<=256
+        source=Path(args.source_dir)/spec['file']
+        # A medley stitches several song sections end to end; a plain spec is one slice.
+        slices=spec.get('slices') or [dict(startBeat=spec['startBeat'],beats=spec['beats'])]
+        pattern=[];offset=0
+        for part in slices:
+            try:cells=extract(source,spec['tracks'],part['startBeat'],part['beats'],spec['grid'],spec.get('transpose',0),spec.get('channels'))
+            except ValueError:cells=[]
+            for cell in cells:pattern.append(dict(cell,index=cell['index']+offset))
+            offset+=round(part['beats']*spec['grid'])
+        if not pattern:raise ValueError('Empty source excerpt')
+        steps=offset;assert 1<=steps<=256
         spec['pattern']=pattern;spec['sourceSha256']=hashlib.sha256(source.read_bytes()).hexdigest()
         spec['status']='community-transcription-excerpt';spec['listeningVerified']=False
         for folder in [repo/'presets',Path.home()/'.config/NORYN/presets']:

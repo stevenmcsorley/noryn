@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 DIST.mkdir(exist_ok=True)
 
 
@@ -58,7 +58,7 @@ with zipfile.ZipFile(native, "w", zipfile.ZIP_DEFLATED, compresslevel=8) as arch
     launcher = zipfile.ZipInfo("NORYN/run.sh")
     launcher.external_attr = 0o100755 << 16
     archive.writestr(launcher, (ROOT / "run.sh").read_text())
-    archive.writestr("NORYN/START-HERE.txt", "NORYN 0.5 for Linux x86_64\n\nRun ./run.sh or Standalone/NORYN. MIDI inputs are enabled automatically; the MIDI button lists inputs, opens Audio/MIDI settings and maps controllers (right-click a knob for MIDI Learn).\nCopy the complete VST3/NORYN.vst3 bundle into ~/.vst3/ and rescan your DAW.\nSee README.md for the synth, sequencer, scale engine and four LFOs.\nThe noryn-control directory is the optional local Cloudflare Code Mode MCP plugin.\nAGPL-3.0 license and matching source are provided with this release.\n")
+    archive.writestr("NORYN/START-HERE.txt", "NORYN 0.6 for Linux x86_64\n\nRun ./run.sh or Standalone/NORYN. MIDI inputs are enabled automatically; the MIDI button lists inputs, opens Audio/MIDI settings and maps controllers (right-click a knob for MIDI Learn).\nCopy the complete VST3/NORYN.vst3 bundle into ~/.vst3/ and rescan your DAW.\nSee README.md for the synth, sequencer, scale engine and four LFOs.\nThe noryn-control directory is the optional local Cloudflare Code Mode MCP plugin.\nAGPL-3.0 license and matching source are provided with this release.\n")
 
 source = DIST / f"NORYN-{VERSION}-source.tar.gz"
 juce = ROOT / "build/_deps/juce-src"
