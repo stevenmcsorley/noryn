@@ -1,5 +1,9 @@
 #include "ControlBridge.h"
 #include "Engine.h"
+#include "MidiMap.h"
+#if JucePlugin_Build_Standalone
+#include <juce_audio_plugin_client/Standalone/juce_StandaloneFilterWindow.h>
+#endif
 #include "Performance.h"
 #include "Presets.h"
 #include "ScaleEngine.h"
@@ -27,7 +31,12 @@ class NorynProcessor : public AudioProcessor
     dsp::Chorus<float> chorus;
     Reverb reverb;
     AudioBuffer<float> delay;
-    MidiBuffer scaledMidi, sequenceMidi, quantizedMidi;
+    MidiBuffer scaledMidi, sequenceMidi, quantizedMidi, splitMidi;
+    int preparedBlock = 0;
+    std::atomic<int> audioRecoveries{0}, voiceFaults{0};
+    MidiMap midiMap;
+    std::vector<RangedAudioParameter *> mappable;
+    StringArray mappableIds;
     ScaleEngine scaleEngine;
     Sequencer sequencer;
     AudioBuffer<float> clickAudio;
@@ -49,7 +58,15 @@ class NorynProcessor : public AudioProcessor
         synth.setMinimumRenderingSubdivisionSize(1, true);
         scaledMidi.ensureSize(8192);
         sequenceMidi.ensureSize(8192);
+        splitMidi.ensureSize(8192);
         quantizedMidi.ensureSize(8192);
+        for (auto *item : getParameters())
+            if (auto *parameter = dynamic_cast<RangedAudioParameter *>(item))
+            {
+                mappable.push_back(parameter);
+                mappableIds.add(parameter->paramID);
+            }
+        loadMidiMap();
         setCurrentProgram(1);
         if (SystemStats::getEnvironmentVariable("NORYN_NO_MCP", {}) != "1")
             bridge = std::make_unique<ControlBridge>([this](const var &request)
@@ -57,6 +74,8 @@ class NorynProcessor : public AudioProcessor
     }
     ~NorynProcessor() override
     {
+        if (midiMap.dirty.load())
+            saveMidiMap();
         bridge.reset();
     }
     static AudioProcessorValueTreeState::ParameterLayout layout()
@@ -228,9 +247,9 @@ class NorynProcessor : public AudioProcessor
         p.add(std::make_unique<AudioParameterBool>(ParameterID("seqfollowrelease", 1),
                                                    "Sequence Uses Patch Release", false));
         add("seqvelocity", "Step Velocity", .1f, 1, .8f);
-        add("seqnotelength", "Entry Length in Steps", .05f, 64, 1, true);
+        add("seqnotelength", "Entry Length in Steps", .05f, maxStepLength, 1, true);
         add("clicklevel", "Metronome Level", 0, 1, .4f);
-        p.add(std::make_unique<AudioParameterInt>(ParameterID("seqlength", 1), "Sequence Length", 1, 64, 64));
+        p.add(std::make_unique<AudioParameterInt>(ParameterID("seqlength", 1), "Sequence Length", 1, maxSequenceSteps, 64));
         p.add(std::make_unique<AudioParameterInt>(ParameterID("seqnote", 1), "Step Entry Note", 0, 127, 60));
         p.add(std::make_unique<AudioParameterChoice>(ParameterID("seqdivision", 1), "Step Division",
                                                      StringArray{"1/4", "1/8", "1/16", "1/32"}, 2));
@@ -286,6 +305,7 @@ class NorynProcessor : public AudioProcessor
     }
     void prepareToPlay(double sr, int block) override
     {
+        preparedBlock = jmax(1, block);
         synth.allNotesOff(0, false);
         sequencer.reset();
         scaleEngine.reset();
@@ -338,6 +358,48 @@ class NorynProcessor : public AudioProcessor
     void processBlock(AudioBuffer<float> &buffer, MidiBuffer &midi) override
     {
         ScopedNoDenormals noDenormals;
+        const int total = buffer.getNumSamples();
+        if (preparedBlock <= 0 || total <= preparedBlock)
+        {
+            renderBlock(buffer, midi);
+            return;
+        }
+        // Devices may deliver more samples than prepareToPlay announced. The oversampler, chorus and click
+        // buffers are sized for the prepared block, so larger blocks are rendered in prepared-size pieces.
+        for (int start = 0; start < total; start += preparedBlock)
+        {
+            const int count = jmin(preparedBlock, total - start);
+            AudioBuffer<float> part(buffer.getArrayOfWritePointers(), buffer.getNumChannels(), start, count);
+            splitMidi.clear();
+            splitMidi.addEvents(midi, start, count, -start);
+            renderBlock(part, splitMidi);
+        }
+    }
+    static bool finite(const AudioBuffer<float> &buffer)
+    {
+        float sum = 0;
+        for (int c = 0; c < buffer.getNumChannels(); ++c)
+        {
+            const float *data = buffer.getReadPointer(c);
+            for (int i = 0; i < buffer.getNumSamples(); ++i)
+                sum += std::abs(data[i]);
+        }
+        return std::isfinite(sum);
+    }
+    // A non-finite sample would otherwise live on in the delay, reverb and chorus state as constant noise.
+    void recoverAudio(AudioBuffer<float> &buffer)
+    {
+        buffer.clear();
+        synth.allNotesOff(0, false);
+        oversampling.reset();
+        chorus.reset();
+        ensemble.reset();
+        reverb.reset();
+        delay.clear();
+        audioRecoveries.fetch_add(1);
+    }
+    void renderBlock(AudioBuffer<float> &buffer, MidiBuffer &midi)
+    {
         buffer.clear();
         if (buffer.getNumSamples() == 0)
             return;
@@ -346,6 +408,7 @@ class NorynProcessor : public AudioProcessor
             synth.allNotesOff(0, false);
             lastVoiceMode = int(v("voicemode"));
         }
+        applyMidiMap(midi);
         keyboard.processNextMidiBuffer(midi, 0, buffer.getNumSamples(), true);
         if (panicRequested.exchange(false))
         {
@@ -382,6 +445,13 @@ class NorynProcessor : public AudioProcessor
         AudioBuffer<float> high(channels, 2, int(up.getNumSamples()));
         high.clear();
         synth.renderNextBlock(high, scaledMidi, 0, high.getNumSamples());
+        if (!finite(high))
+        {
+            // Stop the faulty voice output before it reaches the oversampler and effect state.
+            high.clear();
+            synth.allNotesOff(0, false);
+            voiceFaults.fetch_add(1);
+        }
         oversampling.processSamplesDown(base);
         chorus.setRate(v("chorusrate"));
         chorus.setMix(v("chorus") * .7f);
@@ -423,6 +493,8 @@ class NorynProcessor : public AudioProcessor
         rp.width = 1;
         reverb.setParameters(rp);
         reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), buffer.getNumSamples());
+        if (!finite(buffer) || !finite(clickAudio))
+            recoverAudio(buffer);
         float peakL = 0, peakR = 0;
         for (int i = 0; i < buffer.getNumSamples(); ++i)
         {
@@ -454,6 +526,73 @@ class NorynProcessor : public AudioProcessor
                     break;
                 }
         visual.voices.store(voices);
+    }
+    // The controller map belongs to the player's setup, not to a sound, so it is stored outside presets.
+    static File midiMapFile()
+    {
+        const auto overridePath = SystemStats::getEnvironmentVariable("NORYN_MIDI_MAP_FILE", {});
+        if (overridePath.isNotEmpty())
+            return File(overridePath);
+        return File::getSpecialLocation(File::userApplicationDataDirectory).getChildFile("NORYN/midi-map.xml");
+    }
+    void loadMidiMap()
+    {
+        if (auto xml = XmlDocument::parse(midiMapFile()))
+            midiMap.restore(ValueTree::fromXml(*xml), mappableIds);
+    }
+    void saveMidiMap()
+    {
+        midiMap.dirty.store(false);
+        midiMapFile().getParentDirectory().createDirectory();
+        if (auto xml = midiMap.save(mappableIds).createXml())
+            xml->writeTo(midiMapFile());
+    }
+    String midiTargetName(int target) const
+    {
+        if (target == MidiMap::playTarget)
+            return "Sequencer play / stop";
+        if (target == MidiMap::recordTarget)
+            return "Sequencer record";
+        return target >= 0 && target < int(mappable.size()) ? mappable[size_t(target)]->getName(40) : String();
+    }
+    // Learned controllers drive their control; channel-mode messages (CC 120+) are never mapped.
+    void applyMidiMap(const MidiBuffer &midi)
+    {
+        for (const auto metadata : midi)
+        {
+            const auto msg = metadata.getMessage();
+            if (!msg.isController() || msg.getControllerNumber() >= 120)
+                continue;
+            const int slot = MidiMap::slotFor(msg.getChannel(), msg.getControllerNumber()),
+                      value = msg.getControllerValue();
+            const int learn = midiMap.learning.exchange(MidiMap::none);
+            if (learn != MidiMap::none)
+            {
+                midiMap.assign(slot, learn);
+                midiMap.learnedSlot.store(slot);
+            }
+            const int target = midiMap.targets[size_t(slot)].load();
+            const bool pressed = value >= 64 && midiMap.lastValue[size_t(slot)] < 64;
+            midiMap.lastValue[size_t(slot)] = value;
+            if (learn != MidiMap::none || target == MidiMap::none)
+                continue;
+            if (target >= 0 && target < int(mappable.size()))
+                mappable[size_t(target)]->setValueNotifyingHost(value / 127.f);
+            else if (target == MidiMap::playTarget && pressed)
+            {
+                if (sequencer.playing.load())
+                    sequencer.stop();
+                else
+                    sequencer.playing.store(true);
+            }
+            else if (target == MidiMap::recordTarget && pressed)
+            {
+                const bool record = !sequencer.recording.load();
+                sequencer.recording.store(record);
+                if (record && !sequencer.stepRecord.load())
+                    sequencer.playing.store(true);
+            }
+        }
     }
     File userPresetDirectory() const
     {
@@ -502,10 +641,12 @@ class NorynProcessor : public AudioProcessor
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "0.4.0");
+        result->setProperty("version", "0.5.0");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
+        result->setProperty("audioRecoveries", audioRecoveries.load());
+        result->setProperty("voiceFaults", voiceFaults.load());
         result->setProperty("recording", sequencer.recording.load());
         result->setProperty("playhead", sequencer.playhead.load());
         auto *params = new DynamicObject();
@@ -531,7 +672,7 @@ class NorynProcessor : public AudioProcessor
         }
         result->setProperty("parameters", var(params));
         Array<var> steps;
-        for (int i = 0; i < 64; ++i)
+        for (int i = 0; i < maxSequenceSteps; ++i)
         {
             auto *cell = new DynamicObject();
             cell->setProperty("index", i);
@@ -639,7 +780,7 @@ class NorynProcessor : public AudioProcessor
             {
                 int index = int(entry["index"]);
                 auto *notes = entry["notes"].getArray();
-                if (index < 0 || index > 63 || !notes || notes->size() > 16)
+                if (index < 0 || index >= maxSequenceSteps || !notes || notes->size() > 16)
                     throw std::runtime_error("Invalid step");
                 for (const auto &note : *notes)
                     if (int(note) < 0 || int(note) > 127)
@@ -654,7 +795,7 @@ class NorynProcessor : public AudioProcessor
                 cell.clear();
                 for (const auto &note : *entry["notes"].getArray())
                     cell.add(int(note), jlimit(.01f, 1.f, float(entry.getProperty("velocity", .8f))));
-                cell.length.store(jlimit(.05f, 64.f, float(entry.getProperty("length", 1.f))));
+                cell.length.store(jlimit(.05f, maxStepLength, float(entry.getProperty("length", 1.f))));
                 if (auto *details = entry["noteDetails"].getArray())
                     for (const auto &detail : *details)
                     {
@@ -662,12 +803,48 @@ class NorynProcessor : public AudioProcessor
                         if (note < 0 || note > 127 || !cell.has(note))
                             continue;
                         cell.noteLengths[size_t(note)].store(
-                            jlimit(.05f, 64.f, float(detail.getProperty("length", cell.length.load()))));
+                            jlimit(.05f, maxStepLength, float(detail.getProperty("length", cell.length.load()))));
                         cell.noteVelocities[size_t(note)].store(
                             jlimit(.01f, 1.f, float(detail.getProperty("velocity", cell.velocity.load()))));
                     }
             }
             return result();
+        }
+        if (op == "midiMap")
+        {
+            // args: {learn: parameterId | "transport:play" | "transport:record"} or {clear: id} or {clearAll: true}
+            auto targetFor = [this](const String &id)
+            {
+                return id == "transport:play"     ? MidiMap::playTarget
+                       : id == "transport:record" ? MidiMap::recordTarget
+                                                  : mappableIds.indexOf(id);
+            };
+            if (args.hasProperty("learn"))
+            {
+                const int target = targetFor(args["learn"].toString());
+                if (target == MidiMap::none)
+                    throw std::runtime_error("Unknown MIDI map target");
+                midiMap.learning.store(target);
+            }
+            if (args.hasProperty("clear"))
+                midiMap.clearTarget(targetFor(args["clear"].toString()));
+            if (bool(args.getProperty("clearAll", false)))
+                midiMap.clearAll();
+            if (midiMap.dirty.load())
+                saveMidiMap();
+            auto *map = new DynamicObject();
+            Array<var> entries;
+            for (const auto entry : midiMap.save(mappableIds))
+            {
+                auto *item = new DynamicObject();
+                item->setProperty("channel", entry["channel"]);
+                item->setProperty("cc", entry["cc"]);
+                item->setProperty("target", entry["target"]);
+                entries.add(var(item));
+            }
+            map->setProperty("mappings", entries);
+            map->setProperty("learning", midiMap.learning.load() != MidiMap::none);
+            return var(map);
         }
         if (op == "transport")
         {
@@ -882,25 +1059,70 @@ class HardwareLook : public LookAndFeel_V4
                    c.x + std::sin(angle) * radius * .82f, c.y - std::cos(angle) * radius * .82f, 2);
     }
 };
-class ResponsiveKnob : public Slider
+// Right-click menu shared by knobs and transport buttons: MIDI learn / clear, plus optional reset.
+struct MidiLearnMenu
+{
+    std::function<void()> resetAction, learnAction, clearMidiAction;
+    std::function<String()> midiLabel;
+    void show(Component *target)
+    {
+        PopupMenu menu;
+        if (resetAction)
+            menu.addItem(1, "Reset to default");
+        menu.addItem(2, "MIDI Learn");
+        const String mapped = midiLabel ? midiLabel() : String();
+        menu.addItem(3, mapped.isEmpty() ? "Clear MIDI mapping" : "Clear MIDI mapping (" + mapped + ")",
+                     mapped.isNotEmpty());
+        auto safe = Component::SafePointer<Component>(target);
+        menu.showMenuAsync(PopupMenu::Options().withTargetComponent(target),
+                           [safe, reset = resetAction, learn = learnAction, clear = clearMidiAction](int result)
+                           {
+                               if (!safe)
+                                   return;
+                               if (result == 1 && reset)
+                                   reset();
+                               else if (result == 2 && learn)
+                                   learn();
+                               else if (result == 3 && clear)
+                                   clear();
+                           });
+    }
+};
+class LearnableButton : public TextButton, public MidiLearnMenu
 {
   public:
-    std::function<void()> resetAction;
+    using TextButton::TextButton;
     bool popupGesture = false;
     void mouseDown(const MouseEvent &e) override
     {
         if (e.mods.isRightButtonDown())
         {
             popupGesture = true;
-            PopupMenu menu;
-            menu.addItem(1, "Reset to default");
-            auto safe = Component::SafePointer<ResponsiveKnob>(this);
-            menu.showMenuAsync(PopupMenu::Options().withTargetComponent(this),
-                               [safe](int result)
-                               {
-                                   if (safe && result == 1 && safe->resetAction)
-                                       safe->resetAction();
-                               });
+            show(this);
+            return;
+        }
+        TextButton::mouseDown(e);
+    }
+    void mouseUp(const MouseEvent &e) override
+    {
+        if (popupGesture)
+        {
+            popupGesture = false;
+            return;
+        }
+        TextButton::mouseUp(e);
+    }
+};
+class ResponsiveKnob : public Slider, public MidiLearnMenu
+{
+  public:
+    bool popupGesture = false;
+    void mouseDown(const MouseEvent &e) override
+    {
+        if (e.mods.isRightButtonDown())
+        {
+            popupGesture = true;
+            show(this);
             return;
         }
         setMouseDragSensitivity(e.mods.isShiftDown() ? 2000 : 250);
@@ -915,6 +1137,192 @@ class ResponsiveKnob : public Slider
         }
         Slider::mouseUp(e);
         setMouseDragSensitivity(250);
+    }
+};
+// Standalone MIDI inputs: every device is enabled unless the player switched it off here.
+struct StandaloneMidi
+{
+#if JucePlugin_Build_Standalone
+    static StandalonePluginHolder *holder()
+    {
+        return JUCEApplicationBase::isStandaloneApp() ? StandalonePluginHolder::getInstance() : nullptr;
+    }
+    static StringArray disabled()
+    {
+        auto *h = holder();
+        return h && h->settings ? StringArray::fromLines(h->settings->getValue("norynDisabledMidiInputs"))
+                                : StringArray();
+    }
+    static void setEnabled(const MidiDeviceInfo &device, bool enabled)
+    {
+        auto *h = holder();
+        if (!h)
+            return;
+        auto off = disabled();
+        off.removeString(device.identifier);
+        if (!enabled)
+            off.add(device.identifier);
+        off.removeEmptyStrings();
+        if (h->settings)
+            h->settings->setValue("norynDisabledMidiInputs", off.joinIntoString("\n"));
+        h->deviceManager.setMidiInputDeviceEnabled(device.identifier, enabled);
+    }
+    static bool isEnabled(const MidiDeviceInfo &device)
+    {
+        auto *h = holder();
+        return h && h->deviceManager.isMidiInputDeviceEnabled(device.identifier);
+    }
+    static void sync()
+    {
+        auto *h = holder();
+        if (!h)
+            return;
+        const auto off = disabled();
+        for (const auto &device : MidiInput::getAvailableDevices())
+            if (!off.contains(device.identifier) && !h->deviceManager.isMidiInputDeviceEnabled(device.identifier))
+                h->deviceManager.setMidiInputDeviceEnabled(device.identifier, true);
+    }
+    static void showSettings()
+    {
+        if (auto *h = holder())
+            h->showAudioSettingsDialog();
+    }
+#else
+    static void sync() {}
+    static void showSettings() {}
+#endif
+    static bool active()
+    {
+#if JucePlugin_Build_Standalone
+        return holder() != nullptr;
+#else
+        return false;
+#endif
+    }
+};
+class MidiPanel : public Component, private Timer
+{
+    NorynProcessor &p;
+    OwnedArray<Component> rows;
+    String signature;
+    std::function<void(int)> learn;
+
+  public:
+    MidiPanel(NorynProcessor &processor, std::function<void(int)> learnTarget)
+        : p(processor), learn(std::move(learnTarget))
+    {
+        rebuild();
+        startTimerHz(4);
+    }
+
+  private:
+    String currentSignature() const
+    {
+        String sig = p.midiMap.save(p.mappableIds).toXmlString();
+#if JucePlugin_Build_Standalone
+        for (const auto &device : MidiInput::getAvailableDevices())
+            sig << device.identifier << (StandaloneMidi::isEnabled(device) ? "1" : "0");
+#endif
+        return sig;
+    }
+    void timerCallback() override
+    {
+        if (currentSignature() != signature)
+            rebuild();
+    }
+    Label &heading(const String &text, int &y)
+    {
+        auto *label = new Label({}, text);
+        rows.add(label);
+        label->setFont(FontOptions(12.f, Font::bold));
+        label->setColour(Label::textColourId, Colour(0xffffc47b));
+        label->setBounds(12, y, 396, 20);
+        addAndMakeVisible(label);
+        y += 24;
+        return *label;
+    }
+    Label &note(const String &text, int &y, int height = 20)
+    {
+        auto *label = new Label({}, text);
+        rows.add(label);
+        label->setFont(FontOptions(12.f));
+        label->setColour(Label::textColourId, Colour(0xffbac2db));
+        label->setBounds(12, y, 396, height);
+        addAndMakeVisible(label);
+        y += height + 2;
+        return *label;
+    }
+    TextButton &button(const String &text, Rectangle<int> r, std::function<void()> action)
+    {
+        auto *b = new TextButton(text);
+        rows.add(b);
+        b->setBounds(r);
+        b->onClick = std::move(action);
+        addAndMakeVisible(b);
+        return *b;
+    }
+    void rebuild()
+    {
+        signature = currentSignature();
+        rows.clear();
+        int y = 10;
+        heading("MIDI INPUT", y);
+        if (StandaloneMidi::active())
+        {
+#if JucePlugin_Build_Standalone
+            const auto devices = MidiInput::getAvailableDevices();
+            if (devices.isEmpty())
+                note("No MIDI input devices found. Connect one; it is enabled automatically.", y, 34)
+                    .setJustificationType(Justification::topLeft);
+            for (const auto &device : devices)
+            {
+                auto *toggle = new ToggleButton(device.name);
+                rows.add(toggle);
+                toggle->setToggleState(StandaloneMidi::isEnabled(device), dontSendNotification);
+                toggle->setBounds(12, y, 396, 24);
+                toggle->onClick = [device, toggle] { StandaloneMidi::setEnabled(device, toggle->getToggleState()); };
+                addAndMakeVisible(toggle);
+                y += 26;
+            }
+            button("Audio / MIDI settings...", {12, y + 2, 190, 26}, [] { StandaloneMidi::showSettings(); });
+            y += 36;
+#endif
+        }
+        else
+            note("Notes and controllers arrive through your host's MIDI routing.", y);
+        y += 6;
+        heading("CONTROLLER MAP", y);
+        auto map = p.midiMap.save(p.mappableIds);
+        if (map.getNumChildren() == 0)
+            note("No mappings yet.", y);
+        for (const auto entry : map)
+        {
+            const int slot = MidiMap::slotFor(int(entry["channel"]), int(entry["cc"]));
+            const int target = p.midiMap.targets[size_t(slot)].load();
+            auto &label = note(p.midiTargetName(target) + "   <-   " + MidiMap::describe(slot), y, 24);
+            label.setSize(300, 24);
+            button("Clear", {320, y - 26, 88, 24},
+                   [this, target]
+                   {
+                       p.midiMap.clearTarget(target);
+                       p.saveMidiMap();
+                   });
+        }
+        button("Learn PLAY", {12, y + 4, 120, 26}, [this] { learn(MidiMap::playTarget); });
+        button("Learn RECORD", {140, y + 4, 130, 26}, [this] { learn(MidiMap::recordTarget); });
+        auto &clearAll = button("Clear all", {320, y + 4, 88, 26},
+                                [this]
+                                {
+                                    p.midiMap.clearAll();
+                                    p.saveMidiMap();
+                                });
+        clearAll.setEnabled(map.getNumChildren() > 0);
+        y += 40;
+        note("Right-click any knob, PLAY or RECORD and choose MIDI Learn, then move a controller. "
+             "Mappings are saved for every sound and session.",
+             y, 50)
+            .setJustificationType(Justification::topLeft);
+        setSize(420, y + 6);
     }
 };
 class NorynEditor : public AudioProcessorEditor, private Timer
@@ -953,15 +1361,24 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     std::map<Component *, int> widgetPages;
     TextButton routeShortcut{"ROUTE LFO"};
     TextButton characterTab{"VOICE DESIGN"};
-    TextButton synthTab{"SYNTH"}, sequenceTab{"64 STEP SEQUENCER"}, modTab{"4 LFO ROUTING"},
+    TextButton synthTab{"SYNTH"}, sequenceTab{"256 STEP SEQUENCER"}, modTab{"4 LFO ROUTING"},
         scaleTab{"SCALE ENGINE"};
-    TextButton seqPlay{"PLAY"}, seqStop{"STOP SEQ"}, seqRecord{"RECORD"}, seqClear{"CLEAR"};
+    LearnableButton seqPlay{"PLAY"}, seqRecord{"RECORD"};
+    TextButton seqStop{"STOP SEQ"}, seqClear{"CLEAR"};
+    TextButton midiButton{"MIDI"};
+    String lastMidiSignature;
+    int midiDeviceCountdown = 0;
     ComboBox recordMode, patterns;
     ToggleButton seqFollowRelease{"PATCH RELEASE"};
     std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> seqReleaseAttachment;
     ToggleButton metroToggle{"METRONOME"}, liveQuantize{"QUANTIZE LIVE MIDI"};
     std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> metroAttachment, liveQuantizeAttachment;
-    std::array<std::unique_ptr<SequencePad>, 64> stepPads;
+    static constexpr int padsPerPage = 64;
+    std::array<std::unique_ptr<SequencePad>, padsPerPage> stepPads;
+    std::array<TextButton, maxSequenceSteps / padsPerPage> stepPageButtons;
+    int stepPage = 0;
+    ToggleButton stepFollow{"FOLLOW PLAYHEAD"};
+    std::unique_ptr<StepOverview> stepOverview;
     std::array<std::unique_ptr<TextButton>, 12> customNotes;
     static constexpr int designWidth = 1440, designHeight = 930;
     void knob(const char *id, const char *name, int x, int y, Colour accent, int w = 84)
@@ -977,6 +1394,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         s.setTextBoxStyle(Slider::TextBoxBelow, false, w - 6, 17);
         s.setColour(Slider::rotarySliderFillColourId, accent);
         s.setDoubleClickReturnValue(false, 0);
+        bindMidiLearn(static_cast<ResponsiveKnob &>(s), p.mappableIds.indexOf(String(id)));
         static_cast<ResponsiveKnob &>(s).resetAction = [this, key = String(id)]
         {
             auto *parameter = p.state.getParameter(key);
@@ -985,7 +1403,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             parameter->endChangeGesture();
         };
         s.setTooltip(p.state.getParameter(id)->getName(60) +
-                     ". Full sweep: 250 pixels. Right-click to reset. Type values with units.");
+                     ". Full sweep: 250 pixels. Right-click to reset or MIDI learn. Type values with units.");
         String help;
         String key(id);
         if (key == "pulsewidth" || key == "shape" || key == "detune" || key == "octaveb")
@@ -1027,6 +1445,26 @@ class NorynEditor : public AudioProcessorEditor, private Timer
                       param->getText(param->convertTo0to1(float(slider->getValue())), 32);
         };
         controls.push_back(std::move(c));
+    }
+    void bindMidiLearn(MidiLearnMenu &menu, int target)
+    {
+        menu.learnAction = [this, target]
+        {
+            p.midiMap.learning.store(target);
+            touched = "MIDI LEARN: move a knob, fader or button on your controller to assign " +
+                      p.midiTargetName(target) + ".";
+        };
+        menu.clearMidiAction = [this, target]
+        {
+            p.midiMap.clearTarget(target);
+            p.saveMidiMap();
+            touched = "Cleared MIDI mapping for " + p.midiTargetName(target) + ".";
+        };
+        menu.midiLabel = [this, target]
+        {
+            auto found = p.midiMap.slotsFor(target);
+            return found.isEmpty() ? String() : MidiMap::describe(found[0]);
+        };
     }
     void choice(const char *id, const StringArray &options, Rectangle<int> r)
     {
@@ -1134,6 +1572,20 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     }
     void timerCallback() override
     {
+        const int learnedSlot = p.midiMap.learnedSlot.exchange(-1);
+        if (learnedSlot >= 0)
+            touched = p.midiTargetName(p.midiMap.targets[size_t(learnedSlot)].load()) + "  <-  " +
+                      MidiMap::describe(learnedSlot);
+        if (p.midiMap.dirty.load())
+            p.saveMidiMap();
+        const bool learning = p.midiMap.learning.load() != MidiMap::none;
+        midiButton.setButtonText(learning ? "LEARN..." : "MIDI");
+        midiButton.setToggleState(learning, dontSendNotification);
+        if (--midiDeviceCountdown <= 0)
+        {
+            StandaloneMidi::sync(); // picks up controllers plugged in while running
+            midiDeviceCountdown = 60;
+        }
         if (lastUser != p.userLoaded.load())
             fillPresets();
         if (lastProgram != p.getCurrentProgram() || lastUser != p.userLoaded.load())
@@ -1155,9 +1607,15 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         meterR = jmax(p.visual.peakR.load(), meterR * .88f);
         seqPlay.setToggleState(p.sequencer.playing.load(), dontSendNotification);
         seqRecord.setToggleState(p.sequencer.recording.load(), dontSendNotification);
-        for (auto &pad : stepPads)
-            if (pad && activePage == 1)
-                pad->repaint();
+        if (activePage == 1)
+        {
+            followStepPage();
+            for (auto &pad : stepPads)
+                if (pad)
+                    pad->repaint();
+            if (stepOverview)
+                stepOverview->repaint();
+        }
         const uint64_t modulationMask = p.visual.modMask.load();
         for (auto &control : controls)
         {
@@ -1514,6 +1972,10 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         seqPlay.setClickingTogglesState(true);
         seqRecord.setClickingTogglesState(true);
         seqPlay.onClick = [this] { p.sequencer.playing.store(seqPlay.getToggleState()); };
+        bindMidiLearn(seqPlay, MidiMap::playTarget);
+        bindMidiLearn(seqRecord, MidiMap::recordTarget);
+        seqPlay.setTooltip("Start or stop the sequence. Right-click for MIDI learn.");
+        seqRecord.setTooltip("Record into the sequence. Right-click for MIDI learn.");
         seqStop.onClick = [this] { p.sequencer.stop(); };
         seqRecord.onClick = [this]
         {
@@ -1564,7 +2026,18 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         pageWidget(seqFollowRelease, 1);
         choice("seqdivision", {"Quarter / 1/4", "Eighth / 1/8", "Sixteenth / 1/16", "Thirty-second / 1/32"},
                {905, 209, 195, 30});
-        for (int i = 0; i < 64; ++i)
+        for (int page = 0; page < int(stepPageButtons.size()); ++page)
+        {
+            auto &button = stepPageButtons[size_t(page)];
+            button.setButtonText(String(page * padsPerPage + 1) + "-" + String((page + 1) * padsPerPage));
+            button.setTooltip("Show steps " + button.getButtonText());
+            button.setClickingTogglesState(false);
+            button.setBounds(1000 + page * 102, 784, 96, 28);
+            button.onClick = [this, page] { chooseStepPage(page); };
+            button.setWantsKeyboardFocus(false);
+            pageWidget(button, 1);
+        }
+        for (int i = 0; i < padsPerPage; ++i)
         {
             auto pad = std::make_unique<SequencePad>(p.sequencer, i);
             pad->entryNote = [this] { return int(p.v("seqnote")); };
@@ -1580,6 +2053,52 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             pageWidget(*pad, 1);
             stepPads[size_t(i)] = std::move(pad);
         }
+        stepFollow.setToggleState(true, dontSendNotification);
+        stepFollow.setBounds(300, 784, 190, 28);
+        stepFollow.setWantsKeyboardFocus(false);
+        stepFollow.setTooltip("While playing or step recording, show the page holding the current step. "
+                              "Choosing a page during playback turns this off so you can edit the other page.");
+        pageWidget(stepFollow, 1);
+        stepOverview = std::make_unique<StepOverview>(p.sequencer);
+        stepOverview->pageSize = padsPerPage;
+        stepOverview->length = [this] { return int(p.v("seqlength")); };
+        stepOverview->visiblePage = [this] { return stepPage; };
+        stepOverview->jump = [this](int page) { chooseStepPage(page); };
+        stepOverview->setBounds(28, 815, 1376, 12);
+        pageWidget(*stepOverview, 1);
+        showStepPage(0);
+    }
+    // A manual page choice while the transport runs would be undone by following, so it pauses follow.
+    void chooseStepPage(int page)
+    {
+        if (p.sequencer.playing.load() || (p.sequencer.recording.load() && p.sequencer.stepRecord.load()))
+            stepFollow.setToggleState(false, dontSendNotification);
+        showStepPage(page);
+    }
+    void followStepPage()
+    {
+        if (!stepFollow.getToggleState())
+            return;
+        int target = -1;
+        if (p.sequencer.recording.load() && p.sequencer.stepRecord.load())
+            target = p.sequencer.recordCursor.load();
+        else if (p.sequencer.playing.load())
+            target = p.sequencer.playhead.load();
+        if (target >= 0 && target / padsPerPage != stepPage)
+            showStepPage(target / padsPerPage);
+    }
+    void showStepPage(int page)
+    {
+        stepPage = jlimit(0, int(stepPageButtons.size()) - 1, page);
+        for (int i = 0; i < padsPerPage; ++i)
+            if (auto &pad = stepPads[size_t(i)])
+            {
+                pad->step = stepPage * padsPerPage + i;
+                pad->setName("step" + String(pad->step + 1));
+                pad->repaint();
+            }
+        for (int b = 0; b < int(stepPageButtons.size()); ++b)
+            stepPageButtons[size_t(b)].setToggleState(b == stepPage, dontSendNotification);
     }
     void buildModulationPage()
     {
@@ -1640,14 +2159,18 @@ class NorynEditor : public AudioProcessorEditor, private Timer
                    30, 296, 1370, 24, Justification::centredLeft);
         g.setColour(text);
         g.setFont(FontOptions(13.f));
-        g.drawText("64 STEPS / " + String(p.sequencer.effectiveBpm.load(), 1) + " BPM / " +
-                       (p.sequencer.recording.load() ? "RECORDING" : "READY"),
-                   1120, 200, 280, 55, Justification::centred);
+        const int head = p.sequencer.playhead.load();
+        g.drawText(String(int(p.v("seqlength"))) + " STEPS / " + String(p.sequencer.effectiveBpm.load(), 1) +
+                       " BPM / " +
+                       (p.sequencer.recording.load() ? "RECORDING"
+                        : head >= 0                  ? "PLAYING STEP " + String(head + 1)
+                                                     : "READY"),
+                   500, 784, 490, 28, Justification::centredRight);
         g.setColour(muted);
         g.drawText("Scale: " + ScaleEngine::names()[int(p.v("scale"))] + " / " +
                        StringArray{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#",
                                    "B"}[int(p.v("root"))],
-                   30, 790, 1360, 25, Justification::centredLeft);
+                   30, 786, 260, 25, Justification::centredLeft);
     }
     void paintModulation(Graphics &g)
     {
@@ -1882,7 +2405,23 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         status.setBounds(265, 903, 1010, 22);
         addAndMakeVisible(status);
         presetSearch.setName("presetSearch");
-        presetSearch.setBounds(1090, 83, 334, 22);
+        presetSearch.setBounds(1090, 83, 250, 22);
+        midiButton.setBounds(1346, 83, 78, 22);
+        midiButton.setWantsKeyboardFocus(false);
+        midiButton.setTooltip("MIDI inputs and controller mappings");
+        midiButton.onClick = [this]
+        {
+            auto panel = std::make_unique<MidiPanel>(p,
+                                                     [this](int target)
+                                                     {
+                                                         p.midiMap.learning.store(target);
+                                                         touched = "MIDI LEARN: move a controller to assign " +
+                                                                   p.midiTargetName(target) + ".";
+                                                     });
+            CallOutBox::launchAsynchronously(std::move(panel), midiButton.getScreenBounds(), nullptr);
+        };
+        addAndMakeVisible(midiButton);
+        StandaloneMidi::sync();
         presetSearch.setTextToShowWhenEmpty("Search sounds, artists, songs...", muted);
         presetSearch.setFont(FontOptions(12.f));
         presetSearch.setColour(TextEditor::backgroundColourId, Colour(0xff0b151b));
@@ -2039,7 +2578,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("MIDI / sustain / mod wheel / bend", 28, 879, 210, 16, Justification::centredLeft);
         g.setColour(amber);
         g.setFont(FontOptions(10.f));
-        g.drawText("NORYN 0.4 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
+        g.drawText("NORYN 0.5 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
                    Justification::centredLeft);
         g.setColour(muted);
         g.drawText(String(p.visual.sampleRate.load() / 1000, 1) + " kHz", 1310, 903, 108, 22,

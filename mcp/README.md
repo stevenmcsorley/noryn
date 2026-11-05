@@ -23,7 +23,8 @@ For development, `./start.sh` runs the broker at `127.0.0.1:8788` and Code Mode 
 
 ## Operations
 
-- `get_state`: actual parameters, ranges, labels, choices, transport and 64 steps.
+- `get_state`: actual parameters, ranges, labels, choices, transport and 256 steps.
+- `midi_map`: list MIDI controller mappings, arm MIDI learn for a parameter ID or `transport:play` / `transport:record`, or clear mappings.
 - `list_presets`, `load_preset`: 290 factory sounds plus Init.
 - `set_parameters`: actual native values, validated before application.
 - `save_preset`, `load_user_preset`: named local sound/pattern/scale states.

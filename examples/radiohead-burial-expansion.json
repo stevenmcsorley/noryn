@@ -1,0 +1,3232 @@
+{
+  "description": "Mixed review status: entries with sourceUrl use selected community song-transcription excerpts; other entries remain original generic demos requiring replacement.",
+  "presets": [
+    {
+      "name": "Radiohead Idioteque - Frozen Chords",
+      "bpm": 138,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            38,
+            43,
+            50,
+            55,
+            58
+          ],
+          "velocity": 0.65354,
+          "length": 13.95,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.54331,
+              "length": 13.95
+            },
+            {
+              "note": 43,
+              "velocity": 0.41732,
+              "length": 13.95
+            },
+            {
+              "note": 50,
+              "velocity": 0.40157,
+              "length": 13.95
+            },
+            {
+              "note": 55,
+              "velocity": 0.65354,
+              "length": 13.95
+            },
+            {
+              "note": 58,
+              "velocity": 0.40157,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            34,
+            39,
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.65354,
+          "length": 17.95,
+          "noteDetails": [
+            {
+              "note": 34,
+              "velocity": 0.54331,
+              "length": 17.95
+            },
+            {
+              "note": 39,
+              "velocity": 0.54331,
+              "length": 17.95
+            },
+            {
+              "note": 55,
+              "velocity": 0.40157,
+              "length": 17.7
+            },
+            {
+              "note": 58,
+              "velocity": 0.65354,
+              "length": 17.95
+            },
+            {
+              "note": 62,
+              "velocity": 0.40157,
+              "length": 17.95
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            38,
+            43,
+            58,
+            67,
+            70
+          ],
+          "velocity": 0.66929,
+          "length": 13.95,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.66929,
+              "length": 13.95
+            },
+            {
+              "note": 43,
+              "velocity": 0.66929,
+              "length": 13.95
+            },
+            {
+              "note": 58,
+              "velocity": 0.40157,
+              "length": 13.7
+            },
+            {
+              "note": 67,
+              "velocity": 0.65354,
+              "length": 13.95
+            },
+            {
+              "note": 70,
+              "velocity": 0.40157,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            34,
+            39,
+            63,
+            70,
+            74
+          ],
+          "velocity": 0.65354,
+          "length": 18.0,
+          "noteDetails": [
+            {
+              "note": 34,
+              "velocity": 0.54331,
+              "length": 18.0
+            },
+            {
+              "note": 39,
+              "velocity": 0.54331,
+              "length": 18.0
+            },
+            {
+              "note": 63,
+              "velocity": 0.40157,
+              "length": 18.0
+            },
+            {
+              "note": 70,
+              "velocity": 0.65354,
+              "length": 18.0
+            },
+            {
+              "note": 74,
+              "velocity": 0.40157,
+              "length": 18.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2000-kid_a/08-radiohead_2000-idioteque.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Radiohead Kid A - Glass Music Box",
+      "bpm": 111.5,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            58,
+            64,
+            65
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 64,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 65,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            74,
+            81
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 74,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 81,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            57,
+            65
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 65,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            77,
+            86
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 77,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 86,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            50,
+            57,
+            60
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 57,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 60,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            72,
+            82
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 82,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            53,
+            58,
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 53,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 58,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            77,
+            81,
+            86,
+            89
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 77,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 81,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 86,
+              "velocity": 0.74803,
+              "length": 7.95
+            },
+            {
+              "note": 89,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            52,
+            55
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 55,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            76,
+            77
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 77,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            55,
+            58
+          ],
+          "velocity": 0.59843,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.59843,
+              "length": 7.95
+            },
+            {
+              "note": 58,
+              "velocity": 0.59843,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            76,
+            82
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 82,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            53,
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 53,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            79,
+            84
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 79,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 84,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            52,
+            55
+          ],
+          "velocity": 0.74803,
+          "length": 7.95,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.3937,
+              "length": 7.95
+            },
+            {
+              "note": 55,
+              "velocity": 0.74803,
+              "length": 7.95
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            81,
+            86
+          ],
+          "velocity": 0.74803,
+          "length": 3.95,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.3937,
+              "length": 3.95
+            },
+            {
+              "note": 86,
+              "velocity": 0.74803,
+              "length": 3.95
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2000-kid_a/02-radiohead_2000-kid_a.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Radiohead All I Need - Low Gravity",
+      "bpm": 90,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            36
+          ],
+          "velocity": 0.66142,
+          "length": 11.98333,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.66142,
+              "length": 11.98333
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            43
+          ],
+          "velocity": 0.66142,
+          "length": 1.98333,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.66142,
+              "length": 1.98333
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            40
+          ],
+          "velocity": 0.66142,
+          "length": 13.98333,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.66142,
+              "length": 13.98333
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            47
+          ],
+          "velocity": 0.66142,
+          "length": 1.98333,
+          "noteDetails": [
+            {
+              "note": 47,
+              "velocity": 0.66142,
+              "length": 1.98333
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            43
+          ],
+          "velocity": 0.66142,
+          "length": 5.98333,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.66142,
+              "length": 5.98333
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            50
+          ],
+          "velocity": 0.66142,
+          "length": 1.98333,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.66142,
+              "length": 1.98333
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            36
+          ],
+          "velocity": 0.66142,
+          "length": 13.98333,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.66142,
+              "length": 13.98333
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            43
+          ],
+          "velocity": 0.66142,
+          "length": 1.98333,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.66142,
+              "length": 1.98333
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            40
+          ],
+          "velocity": 0.66142,
+          "length": 10.0,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.66142,
+              "length": 10.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2007-in_rainbow/cd1/05-radiohead_2007-all_i_need.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Radiohead Motion Picture Soundtrack - Organ",
+      "bpm": 47.6,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            43,
+            47,
+            50,
+            55
+          ],
+          "velocity": 0.70866,
+          "length": 64,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 47,
+              "velocity": 0.70866,
+              "length": 15.9
+            },
+            {
+              "note": 50,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 55,
+              "velocity": 0.70866,
+              "length": 64
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            43,
+            48,
+            52
+          ],
+          "velocity": 0.70866,
+          "length": 15.9,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.70866,
+              "length": 15.9
+            },
+            {
+              "note": 48,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 15.9
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            60
+          ],
+          "velocity": 0.7874,
+          "length": 1.825,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.7874,
+              "length": 1.825
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            62
+          ],
+          "velocity": 0.7874,
+          "length": 1.9,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.7874,
+              "length": 1.9
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            66
+          ],
+          "velocity": 0.7874,
+          "length": 1.9,
+          "noteDetails": [
+            {
+              "note": 66,
+              "velocity": 0.7874,
+              "length": 1.9
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            60
+          ],
+          "velocity": 0.7874,
+          "length": 3.825,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.7874,
+              "length": 3.825
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            43,
+            47,
+            50,
+            62
+          ],
+          "velocity": 0.7874,
+          "length": 15.9,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.70866,
+              "length": 15.9
+            },
+            {
+              "note": 47,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 50,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 62,
+              "velocity": 0.7874,
+              "length": 2.825
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            66
+          ],
+          "velocity": 0.7874,
+          "length": 6.95,
+          "noteDetails": [
+            {
+              "note": 66,
+              "velocity": 0.7874,
+              "length": 6.95
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            64
+          ],
+          "velocity": 0.7874,
+          "length": 3.9,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.7874,
+              "length": 3.9
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            62
+          ],
+          "velocity": 0.7874,
+          "length": 3.7,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.7874,
+              "length": 3.7
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            47,
+            48,
+            52
+          ],
+          "velocity": 0.70866,
+          "length": 15.9,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.70866,
+              "length": 15.9
+            },
+            {
+              "note": 47,
+              "velocity": 0.70866,
+              "length": 15.9
+            },
+            {
+              "note": 48,
+              "velocity": 0.56693,
+              "length": 15.9
+            },
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 15.9
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            59
+          ],
+          "velocity": 0.7874,
+          "length": 13.325,
+          "noteDetails": [
+            {
+              "note": 59,
+              "velocity": 0.7874,
+              "length": 13.325
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2000-kid_a/10-radiohead_2000-motion_picture_soundtrack-[k].mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Radiohead Weird Fishes - Interlocking Pluck",
+      "bpm": 152,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 23,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 25,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 27,
+          "notes": [
+            62
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            55
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 55,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 29,
+          "notes": [
+            52
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 31,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 33,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 37,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 39,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 41,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 43,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 45,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 47,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 49,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 53,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 55,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 57,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 59,
+          "notes": [
+            54
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            64
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 61,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            61
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 63,
+          "notes": [
+            69
+          ],
+          "velocity": 0.56693,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.56693,
+              "length": 0.96667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2007-in_rainbow/cd1/04-radiohead_2007-weird_fishes-arpegi.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Radiohead Daydreaming - Distant Keys",
+      "bpm": 50,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            33,
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.67717,
+              "length": 4.96667
+            },
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "notes": [
+            33,
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "notes": [
+            33,
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "notes": [
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            33,
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "notes": [
+            33,
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 27,
+          "notes": [
+            33,
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 29,
+          "notes": [
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            33,
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.67717,
+              "length": 4.96667
+            },
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 37,
+          "notes": [
+            33,
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 43,
+          "notes": [
+            33,
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 45,
+          "notes": [
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            33,
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 53,
+          "notes": [
+            33,
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            69
+          ],
+          "velocity": 0.74803,
+          "length": 7.8,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.74803,
+              "length": 7.8
+            }
+          ]
+        },
+        {
+          "index": 59,
+          "notes": [
+            33,
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 5.33333,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.59055,
+              "length": 4.96667
+            },
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 5.33333
+            }
+          ]
+        },
+        {
+          "index": 61,
+          "notes": [
+            64
+          ],
+          "velocity": 0.74803,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.74803,
+              "length": 2.66667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.rppmf.com/radiohead/2016-a_moon_shaped_pool/02-radiohead_2016-daydreaming.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Burial Untrue - Hollow Choir",
+      "bpm": 134,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 7,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 12,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 23,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 28,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 39,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 44,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 55,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 60,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        }
+      ]
+    },
+    {
+      "name": "Burial Shell of Light - Amber Keys",
+      "bpm": 133,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 5,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.8
+        },
+        {
+          "index": 11,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 21,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.8
+        },
+        {
+          "index": 27,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 37,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 3.8
+        },
+        {
+          "index": 43,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        },
+        {
+          "index": 53,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 3.8
+        },
+        {
+          "index": 59,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 3.8
+        }
+      ]
+    },
+    {
+      "name": "Burial Etched Headplate - Rain Bells",
+      "bpm": 136,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 6,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 10,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 15,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 22,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 26,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 31,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 38,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 42,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 47,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 54,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        },
+        {
+          "index": 58,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2.2
+        },
+        {
+          "index": 63,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2.2
+        }
+      ]
+    },
+    {
+      "name": "Burial Ashtray Wasp - Fractured Stab",
+      "bpm": 132,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 3,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 9,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 14,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 19,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 25,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 30,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 35,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 41,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 46,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 51,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2
+        },
+        {
+          "index": 57,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2
+        },
+        {
+          "index": 62,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2
+        }
+      ]
+    },
+    {
+      "name": "Burial Rival Dealer - Signal Flare",
+      "bpm": 135,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 7,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 10,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 14,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 23,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 26,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 30,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 39,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 42,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 46,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 55,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        },
+        {
+          "index": 58,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 2.5
+        },
+        {
+          "index": 62,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 2.5
+        }
+      ]
+    },
+    {
+      "name": "Burial Night Bus - Empty Streets",
+      "bpm": 80,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            58,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 14
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 14
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.68,
+          "length": 14
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 14
+        }
+      ]
+    }
+  ]
+}

@@ -101,12 +101,32 @@ inline void testSequencer()
             "Step-record chord entry failed");
     step.steps[63].add(127, .6f);
     step.steps[63].length.store(16);
+    step.steps[255].add(31, .5f, 192);
     auto saved = step.save();
     Sequencer restored;
     restored.restore(saved);
     require(restored.steps[63].has(127) && restored.steps[0].count() == 2 &&
-                restored.steps[63].length.load() == 16,
-            "64-step pattern recall failed");
+                restored.steps[63].length.load() == 16 && restored.steps[255].has(31) &&
+                std::abs(restored.steps[255].lengthFor(31) - 192) < .001f,
+            "256-step pattern recall failed");
+    // A 256-step loop must reach its final step and wrap back to the first.
+    Sequencer full;
+    full.reset();
+    full.steps[0].add(60, .8f);
+    full.steps[255].add(72, .8f);
+    full.playing.store(true);
+    std::vector<int> fullNotes;
+    const int fullStep = 48000 * 60 / (120 * 4);
+    for (int at = 0; at < fullStep * 257; at += 256)
+    {
+        AudioBuffer<float> fullClick(1, 256);
+        MidiBuffer fullIn, fullOut;
+        full.process(fullIn, fullOut, fullClick, 256, 48000, 120, maxSequenceSteps, 2, .5f, false, .4f);
+        for (const auto event : fullOut)
+            if (event.getMessage().isNoteOn())
+                fullNotes.push_back(event.getMessage().getNoteNumber());
+    }
+    require(fullNotes == std::vector<int>{60, 72, 60}, "256-step loop did not reach its last step");
 }
 inline void testEnvelopeReleaseReference()
 {

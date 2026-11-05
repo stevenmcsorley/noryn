@@ -1,0 +1,7028 @@
+{
+  "description": "Mixed review status: entries with sourceUrl use selected community song-transcription excerpts; other entries remain original generic demos requiring replacement.",
+  "presets": [
+    {
+      "name": "Depeche Mode Enjoy the Silence - Dark Bass",
+      "bpm": 113.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 25,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 27,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 37,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 41,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 43,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            36
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 53,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 55,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 61,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            39
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/enjoy3.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Enjoy the Silence - Cathedral Pad",
+      "bpm": 113.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            36,
+            48,
+            60,
+            72
+          ],
+          "velocity": 0.44094,
+          "length": 16.33333,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.44094,
+              "length": 16.28333
+            },
+            {
+              "note": 48,
+              "velocity": 0.44094,
+              "length": 16.33333
+            },
+            {
+              "note": 60,
+              "velocity": 0.37008,
+              "length": 3.23333
+            },
+            {
+              "note": 72,
+              "velocity": 0.37008,
+              "length": 3.23333
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            39,
+            51,
+            58,
+            70
+          ],
+          "velocity": 0.44094,
+          "length": 16.13333,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.44094,
+              "length": 15.93333
+            },
+            {
+              "note": 51,
+              "velocity": 0.44094,
+              "length": 16.13333
+            },
+            {
+              "note": 58,
+              "velocity": 0.37008,
+              "length": 2.75
+            },
+            {
+              "note": 70,
+              "velocity": 0.37008,
+              "length": 2.75
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            36,
+            48,
+            60,
+            72
+          ],
+          "velocity": 0.44094,
+          "length": 15.9,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.44094,
+              "length": 15.9
+            },
+            {
+              "note": 48,
+              "velocity": 0.44094,
+              "length": 15.78333
+            },
+            {
+              "note": 60,
+              "velocity": 0.37008,
+              "length": 2.98333
+            },
+            {
+              "note": 72,
+              "velocity": 0.37008,
+              "length": 3.23333
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            39,
+            51,
+            58,
+            70
+          ],
+          "velocity": 0.44094,
+          "length": 16.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.44094,
+              "length": 15.95
+            },
+            {
+              "note": 51,
+              "velocity": 0.44094,
+              "length": 16.0
+            },
+            {
+              "note": 58,
+              "velocity": 0.37008,
+              "length": 3.23333
+            },
+            {
+              "note": 70,
+              "velocity": 0.37008,
+              "length": 3.25
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/ENJYSLNC.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Personal Jesus - Machine Bass",
+      "bpm": 130.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 3.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 3.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 3.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 3.0
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            30
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 30,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            33
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://midifind.com/files/d/depeche_mode/depeche_mode_personal_jesus/830-1-0-23755",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Personal Jesus - Metallic Strike",
+      "bpm": 130.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            54,
+            59,
+            66
+          ],
+          "velocity": 0.50394,
+          "length": 8.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 59,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 66,
+              "velocity": 0.50394,
+              "length": 8.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            54,
+            61,
+            66
+          ],
+          "velocity": 0.50394,
+          "length": 8.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 61,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 66,
+              "velocity": 0.50394,
+              "length": 8.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            54,
+            61,
+            66
+          ],
+          "velocity": 0.50394,
+          "length": 8.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 61,
+              "velocity": 0.50394,
+              "length": 8.0
+            },
+            {
+              "note": 66,
+              "velocity": 0.50394,
+              "length": 8.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            61
+          ],
+          "velocity": 0.50394,
+          "length": 8.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.50394,
+              "length": 8.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            61
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            54
+          ],
+          "velocity": 0.50394,
+          "length": 4.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.50394,
+              "length": 4.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://midifind.com/files/d/depeche_mode/depeche_mode_personal_jesus/830-1-0-23755",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Never Let Me Down Again - Driving Bass",
+      "bpm": 106.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            38
+          ],
+          "velocity": 0.34646,
+          "length": 3.73333,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.34646,
+              "length": 3.73333
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            50
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            38
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            38
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            50
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            36
+          ],
+          "velocity": 0.34646,
+          "length": 3.73333,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.34646,
+              "length": 3.73333
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            48
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 48,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            36
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            36
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            48
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 48,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            41
+          ],
+          "velocity": 0.34646,
+          "length": 3.73333,
+          "noteDetails": [
+            {
+              "note": 41,
+              "velocity": 0.34646,
+              "length": 3.73333
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            53
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 53,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            41
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 41,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            41
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 41,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            53
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 53,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            39
+          ],
+          "velocity": 0.34646,
+          "length": 3.73333,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.34646,
+              "length": 3.73333
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            51
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 51,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            39
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            39
+          ],
+          "velocity": 0.34646,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.34646,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            51
+          ],
+          "velocity": 0.34646,
+          "length": 3.5,
+          "noteDetails": [
+            {
+              "note": 51,
+              "velocity": 0.34646,
+              "length": 3.5
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/letmedwn.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Never Let Me Down Again - Wide Strings",
+      "bpm": 106.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 4,
+          "notes": [
+            60,
+            63,
+            67
+          ],
+          "velocity": 0.77165,
+          "length": 11.5,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 63,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 67,
+              "velocity": 0.77165,
+              "length": 11.5
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            58,
+            62,
+            65
+          ],
+          "velocity": 0.77165,
+          "length": 11.5,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 62,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 65,
+              "velocity": 0.77165,
+              "length": 11.5
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            58,
+            62,
+            67
+          ],
+          "velocity": 0.77165,
+          "length": 11.5,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 62,
+              "velocity": 0.77165,
+              "length": 11.5
+            },
+            {
+              "note": 67,
+              "velocity": 0.77165,
+              "length": 11.5
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            60,
+            65,
+            69
+          ],
+          "velocity": 0.77165,
+          "length": 5.73333,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.77165,
+              "length": 5.73333
+            },
+            {
+              "note": 65,
+              "velocity": 0.77165,
+              "length": 5.73333
+            },
+            {
+              "note": 69,
+              "velocity": 0.77165,
+              "length": 5.73333
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/letmedwn.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Strangelove - Bright Bell",
+      "bpm": 118.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            52
+          ],
+          "velocity": 0.66929,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.66929,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            52,
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            69
+          ],
+          "velocity": 0.66929,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.66929,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            52
+          ],
+          "velocity": 0.66929,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.66929,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            52,
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            69
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            52,
+            69
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 52,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 69,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            48
+          ],
+          "velocity": 0.66929,
+          "length": 2.95833,
+          "noteDetails": [
+            {
+              "note": 48,
+              "velocity": 0.66929,
+              "length": 2.95833
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            48,
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 48,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            69
+          ],
+          "velocity": 0.66929,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.66929,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            45
+          ],
+          "velocity": 0.66929,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 45,
+              "velocity": 0.66929,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            45,
+            64
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 45,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 64,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            74
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 74,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            74
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 74,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            71
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            50,
+            67
+          ],
+          "velocity": 0.66929,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.66929,
+              "length": 1.66667
+            },
+            {
+              "note": 67,
+              "velocity": 0.66929,
+              "length": 1.66667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/STRANGE.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Strangelove - Pulse Bass",
+      "bpm": 118.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            40,
+            52
+          ],
+          "velocity": 0.6378,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.6378,
+              "length": 3.33333
+            },
+            {
+              "note": 52,
+              "velocity": 0.6378,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            40,
+            52
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.6378,
+              "length": 1.66667
+            },
+            {
+              "note": 52,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            40,
+            52
+          ],
+          "velocity": 0.6378,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.6378,
+              "length": 3.33333
+            },
+            {
+              "note": 52,
+              "velocity": 0.6378,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            40,
+            52
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.6378,
+              "length": 1.66667
+            },
+            {
+              "note": 52,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            40,
+            52
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.6378,
+              "length": 1.66667
+            },
+            {
+              "note": 52,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            36,
+            48
+          ],
+          "velocity": 0.6378,
+          "length": 2.95833,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.6378,
+              "length": 2.95833
+            },
+            {
+              "note": 48,
+              "velocity": 0.6378,
+              "length": 2.95833
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            36,
+            48
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 36,
+              "velocity": 0.6378,
+              "length": 1.66667
+            },
+            {
+              "note": 48,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            45
+          ],
+          "velocity": 0.6378,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 45,
+              "velocity": 0.6378,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            45
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 45,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            43
+          ],
+          "velocity": 0.6378,
+          "length": 3.33333,
+          "noteDetails": [
+            {
+              "note": 43,
+              "velocity": 0.6378,
+              "length": 3.33333
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            50
+          ],
+          "velocity": 0.6378,
+          "length": 1.66667,
+          "noteDetails": [
+            {
+              "note": 50,
+              "velocity": 0.6378,
+              "length": 1.66667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/STRANGE.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Policy of Truth - Muted Bass",
+      "bpm": 114.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 1.25,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 1.25
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.71667,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.71667
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            39
+          ],
+          "velocity": 0.47244,
+          "length": 1.2,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.47244,
+              "length": 1.2
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.2,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.2
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            40
+          ],
+          "velocity": 0.47244,
+          "length": 1.96667,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.47244,
+              "length": 1.96667
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.2,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.2
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.2,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.2
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 0.96667,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 0.96667
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 0.71667,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 0.71667
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            33
+          ],
+          "velocity": 0.47244,
+          "length": 1.21667,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.47244,
+              "length": 1.21667
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.73333,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.73333
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            39
+          ],
+          "velocity": 0.47244,
+          "length": 1.48333,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 0.47244,
+              "length": 1.48333
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.5
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            40
+          ],
+          "velocity": 0.47244,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.47244,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            37
+          ],
+          "velocity": 0.47244,
+          "length": 1.5,
+          "noteDetails": [
+            {
+              "note": 37,
+              "velocity": 0.47244,
+              "length": 1.5
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/POLICY.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Policy of Truth - Glass Hook",
+      "bpm": 114.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 2,
+          "notes": [
+            73
+          ],
+          "velocity": 0.37795,
+          "length": 2.33333,
+          "noteDetails": [
+            {
+              "note": 73,
+              "velocity": 0.37795,
+              "length": 2.33333
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            76
+          ],
+          "velocity": 0.37795,
+          "length": 2.1,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.37795,
+              "length": 2.1
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            81
+          ],
+          "velocity": 0.37795,
+          "length": 3.21667,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.37795,
+              "length": 3.21667
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            81
+          ],
+          "velocity": 0.37795,
+          "length": 2.31667,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.37795,
+              "length": 2.31667
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            80
+          ],
+          "velocity": 0.37795,
+          "length": 2.15,
+          "noteDetails": [
+            {
+              "note": 80,
+              "velocity": 0.37795,
+              "length": 2.15
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            78
+          ],
+          "velocity": 0.37795,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 78,
+              "velocity": 0.37795,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            80
+          ],
+          "velocity": 0.37795,
+          "length": 3.93333,
+          "noteDetails": [
+            {
+              "note": 80,
+              "velocity": 0.37795,
+              "length": 3.93333
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            76
+          ],
+          "velocity": 0.37795,
+          "length": 3.98333,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.37795,
+              "length": 3.98333
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            73
+          ],
+          "velocity": 0.37795,
+          "length": 2.35,
+          "noteDetails": [
+            {
+              "note": 73,
+              "velocity": 0.37795,
+              "length": 2.35
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            76
+          ],
+          "velocity": 0.37795,
+          "length": 2.15,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.37795,
+              "length": 2.15
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            81
+          ],
+          "velocity": 0.37795,
+          "length": 2.45,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.37795,
+              "length": 2.45
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            81
+          ],
+          "velocity": 0.37795,
+          "length": 2.45,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.37795,
+              "length": 2.45
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            80
+          ],
+          "velocity": 0.37795,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 80,
+              "velocity": 0.37795,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            78
+          ],
+          "velocity": 0.37795,
+          "length": 1.6,
+          "noteDetails": [
+            {
+              "note": 78,
+              "velocity": 0.37795,
+              "length": 1.6
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            80
+          ],
+          "velocity": 0.37795,
+          "length": 3.95,
+          "noteDetails": [
+            {
+              "note": 80,
+              "velocity": 0.37795,
+              "length": 3.95
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            76
+          ],
+          "velocity": 0.37795,
+          "length": 3.43333,
+          "noteDetails": [
+            {
+              "note": 76,
+              "velocity": 0.37795,
+              "length": 3.43333
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/POLICY.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode World in My Eyes - Resonant Bass",
+      "bpm": 122,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            27
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            32
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            34
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 34,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            27
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            27
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 27,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            32
+          ],
+          "velocity": 1.0,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 1.0,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            32
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 32,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            34
+          ],
+          "velocity": 0.7874,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 34,
+              "velocity": 0.7874,
+              "length": 1.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.midi-karaoke.info/20df5dfd.html",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode World in My Eyes - Digital Air",
+      "bpm": 122,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            44,
+            56,
+            59,
+            63,
+            68,
+            80
+          ],
+          "velocity": 1.0,
+          "length": 16.0,
+          "noteDetails": [
+            {
+              "note": 44,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 56,
+              "velocity": 0.81102,
+              "length": 16.0
+            },
+            {
+              "note": 59,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 63,
+              "velocity": 0.89764,
+              "length": 16.0
+            },
+            {
+              "note": 68,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 80,
+              "velocity": 0.7874,
+              "length": 16.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            46,
+            58,
+            61,
+            65,
+            70,
+            82
+          ],
+          "velocity": 1.0,
+          "length": 16.0,
+          "noteDetails": [
+            {
+              "note": 46,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 58,
+              "velocity": 0.70079,
+              "length": 16.0
+            },
+            {
+              "note": 61,
+              "velocity": 0.92913,
+              "length": 16.0
+            },
+            {
+              "note": 65,
+              "velocity": 0.98425,
+              "length": 16.0
+            },
+            {
+              "note": 70,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 82,
+              "velocity": 0.7874,
+              "length": 16.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            39,
+            51,
+            63,
+            66,
+            70,
+            82
+          ],
+          "velocity": 1.0,
+          "length": 16.0,
+          "noteDetails": [
+            {
+              "note": 39,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 51,
+              "velocity": 0.80315,
+              "length": 16.0
+            },
+            {
+              "note": 63,
+              "velocity": 0.86614,
+              "length": 16.0
+            },
+            {
+              "note": 66,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 70,
+              "velocity": 1.0,
+              "length": 16.0
+            },
+            {
+              "note": 82,
+              "velocity": 0.7874,
+              "length": 16.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            49,
+            61,
+            65,
+            68,
+            73,
+            82
+          ],
+          "velocity": 1.0,
+          "length": 16.0,
+          "noteDetails": [
+            {
+              "note": 49,
+              "velocity": 0.98425,
+              "length": 8.0
+            },
+            {
+              "note": 61,
+              "velocity": 0.85827,
+              "length": 8.0
+            },
+            {
+              "note": 65,
+              "velocity": 0.6378,
+              "length": 8.0
+            },
+            {
+              "note": 68,
+              "velocity": 0.94488,
+              "length": 8.0
+            },
+            {
+              "note": 73,
+              "velocity": 1.0,
+              "length": 8.0
+            },
+            {
+              "note": 82,
+              "velocity": 0.7874,
+              "length": 16.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            49,
+            61,
+            65,
+            68,
+            70
+          ],
+          "velocity": 1.0,
+          "length": 8.0,
+          "noteDetails": [
+            {
+              "note": 49,
+              "velocity": 0.92126,
+              "length": 8.0
+            },
+            {
+              "note": 61,
+              "velocity": 0.76378,
+              "length": 8.0
+            },
+            {
+              "note": 65,
+              "velocity": 0.70079,
+              "length": 8.0
+            },
+            {
+              "note": 68,
+              "velocity": 0.94488,
+              "length": 8.0
+            },
+            {
+              "note": 70,
+              "velocity": 1.0,
+              "length": 8.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.midi-karaoke.info/20df5dfd.html",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Everything Counts - Clockwork Pluck",
+      "bpm": 116.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 2.95833,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 2.95833
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 4.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 4.95833
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 5.95833,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 5.95833
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            72
+          ],
+          "velocity": 0.59055,
+          "length": 7.95833,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.59055,
+              "length": 7.95833
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 31,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 33,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 2.95833,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 2.95833
+            }
+          ]
+        },
+        {
+          "index": 43,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 4.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 4.95833
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 5.95833,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 5.95833
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 7.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 7.95833
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        },
+        {
+          "index": 63,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.95833
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/EVCOUNTS.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Everything Counts - Reed Organ",
+      "bpm": 116.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            67
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            67
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            69
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            64
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            64
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            64
+          ],
+          "velocity": 0.64567,
+          "length": 3.95833,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.64567,
+              "length": 3.95833
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            62
+          ],
+          "velocity": 0.64567,
+          "length": 1.95833,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.64567,
+              "length": 1.95833
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/EVCOUNTS.MID",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode People Are People - Iron Bell",
+      "bpm": 120,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "notes": [
+            69
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 25,
+          "notes": [
+            69
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 41,
+          "notes": [
+            69
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 57,
+          "notes": [
+            69
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            57
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.mididb.com/depeche-mode/people-are-people-midi/",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode People Are People - Punch Bass",
+      "bpm": 120,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 29,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 45,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            38
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            40
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 40,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            33
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 33,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            38
+          ],
+          "velocity": 0.89764,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 38,
+              "velocity": 0.89764,
+              "length": 1.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.mididb.com/depeche-mode/people-are-people-midi/",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Black Celebration - Shadow Choir",
+      "bpm": 108.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 4,
+          "notes": [
+            74
+          ],
+          "velocity": 0.69291,
+          "length": 4.06667,
+          "noteDetails": [
+            {
+              "note": 74,
+              "velocity": 0.69291,
+              "length": 4.06667
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            81
+          ],
+          "velocity": 0.67717,
+          "length": 2.08333,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.67717,
+              "length": 2.08333
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            74
+          ],
+          "velocity": 0.5748,
+          "length": 9.63333,
+          "noteDetails": [
+            {
+              "note": 74,
+              "velocity": 0.5748,
+              "length": 9.63333
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            72
+          ],
+          "velocity": 0.70079,
+          "length": 4.13333,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.70079,
+              "length": 4.13333
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            77
+          ],
+          "velocity": 0.66929,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 77,
+              "velocity": 0.66929,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            72
+          ],
+          "velocity": 0.66929,
+          "length": 9.78333,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.66929,
+              "length": 9.78333
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            70
+          ],
+          "velocity": 0.65354,
+          "length": 3.95,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.65354,
+              "length": 3.95
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            77
+          ],
+          "velocity": 0.67717,
+          "length": 2.2,
+          "noteDetails": [
+            {
+              "note": 77,
+              "velocity": 0.67717,
+              "length": 2.2
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            70
+          ],
+          "velocity": 0.66142,
+          "length": 10.03333,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.66142,
+              "length": 10.03333
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            69
+          ],
+          "velocity": 0.66142,
+          "length": 3.91667,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.66142,
+              "length": 3.91667
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            81
+          ],
+          "velocity": 0.70079,
+          "length": 2.21667,
+          "noteDetails": [
+            {
+              "note": 81,
+              "velocity": 0.70079,
+              "length": 2.21667
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            77
+          ],
+          "velocity": 0.66142,
+          "length": 6.0,
+          "noteDetails": [
+            {
+              "note": 77,
+              "velocity": 0.66142,
+              "length": 6.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/bcelebration.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Black Celebration - Low Pulse Bass",
+      "bpm": 108.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            26,
+            38
+          ],
+          "velocity": 0.64567,
+          "length": 14.61667,
+          "noteDetails": [
+            {
+              "note": 26,
+              "velocity": 0.64567,
+              "length": 14.3
+            },
+            {
+              "note": 38,
+              "velocity": 0.64567,
+              "length": 14.61667
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            29,
+            41
+          ],
+          "velocity": 0.69291,
+          "length": 15.6,
+          "noteDetails": [
+            {
+              "note": 29,
+              "velocity": 0.67717,
+              "length": 15.53333
+            },
+            {
+              "note": 41,
+              "velocity": 0.69291,
+              "length": 15.6
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            31,
+            43
+          ],
+          "velocity": 0.73228,
+          "length": 15.48333,
+          "noteDetails": [
+            {
+              "note": 31,
+              "velocity": 0.73228,
+              "length": 15.45
+            },
+            {
+              "note": 43,
+              "velocity": 0.73228,
+              "length": 15.48333
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            29,
+            41
+          ],
+          "velocity": 0.73228,
+          "length": 7.51667,
+          "noteDetails": [
+            {
+              "note": 29,
+              "velocity": 0.73228,
+              "length": 7.51667
+            },
+            {
+              "note": 41,
+              "velocity": 0.67717,
+              "length": 7.48333
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            28,
+            40
+          ],
+          "velocity": 0.73228,
+          "length": 7.26667,
+          "noteDetails": [
+            {
+              "note": 28,
+              "velocity": 0.73228,
+              "length": 7.25
+            },
+            {
+              "note": 40,
+              "velocity": 0.73228,
+              "length": 7.26667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/bcelebration.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Waiting for the Night - Quiet Arp",
+      "bpm": 94.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "notes": [
+            60
+          ],
+          "velocity": 0.55118,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.55118,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 25,
+          "notes": [
+            60
+          ],
+          "velocity": 0.55118,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.55118,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 27,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 35,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 41,
+          "notes": [
+            60
+          ],
+          "velocity": 0.55118,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.55118,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 43,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 51,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            67
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 57,
+          "notes": [
+            60
+          ],
+          "velocity": 0.55118,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.55118,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 59,
+          "notes": [
+            60
+          ],
+          "velocity": 0.70866,
+          "length": 1.0,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.70866,
+              "length": 1.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            70
+          ],
+          "velocity": 0.70866,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.70866,
+              "length": 2.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/night.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Clean - Sub Bass",
+      "bpm": 100,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            46
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 6,
+          "notes": [
+            46
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 8,
+          "notes": [
+            46
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 14,
+          "notes": [
+            46
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 16,
+          "notes": [
+            48
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 22,
+          "notes": [
+            48
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 24,
+          "notes": [
+            48
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 30,
+          "notes": [
+            48
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 32,
+          "notes": [
+            44
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 38,
+          "notes": [
+            44
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 40,
+          "notes": [
+            44
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 46,
+          "notes": [
+            44
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 48,
+          "notes": [
+            41
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 54,
+          "notes": [
+            41
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        },
+        {
+          "index": 56,
+          "notes": [
+            41
+          ],
+          "velocity": 0.68,
+          "length": 3.5
+        },
+        {
+          "index": 62,
+          "notes": [
+            41
+          ],
+          "velocity": 0.52,
+          "length": 3.5
+        }
+      ]
+    },
+    {
+      "name": "Depeche Mode Walking in My Shoes - Haunted Pad",
+      "bpm": 94.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            26,
+            38
+          ],
+          "velocity": 0.86614,
+          "length": 31.95,
+          "noteDetails": [
+            {
+              "note": 26,
+              "velocity": 0.81102,
+              "length": 27.95
+            },
+            {
+              "note": 38,
+              "velocity": 0.86614,
+              "length": 31.95
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            57
+          ],
+          "velocity": 0.56693,
+          "length": 27.95,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.56693,
+              "length": 27.95
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            62
+          ],
+          "velocity": 0.74803,
+          "length": 27.95,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.74803,
+              "length": 27.95
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            60,
+            65
+          ],
+          "velocity": 0.74803,
+          "length": 25.95,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.74803,
+              "length": 25.95
+            },
+            {
+              "note": 65,
+              "velocity": 0.72441,
+              "length": 25.95
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            31,
+            43
+          ],
+          "velocity": 0.92126,
+          "length": 15.95,
+          "noteDetails": [
+            {
+              "note": 31,
+              "velocity": 0.92126,
+              "length": 15.95
+            },
+            {
+              "note": 43,
+              "velocity": 0.76378,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            58
+          ],
+          "velocity": 0.44094,
+          "length": 13.95,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.44094,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            65
+          ],
+          "velocity": 0.70079,
+          "length": 11.95,
+          "noteDetails": [
+            {
+              "note": 65,
+              "velocity": 0.70079,
+              "length": 11.95
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            69
+          ],
+          "velocity": 0.70079,
+          "length": 9.95,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.70079,
+              "length": 9.95
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            34,
+            46
+          ],
+          "velocity": 0.98425,
+          "length": 15.95,
+          "noteDetails": [
+            {
+              "note": 34,
+              "velocity": 0.98425,
+              "length": 15.95
+            },
+            {
+              "note": 46,
+              "velocity": 0.90551,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            62
+          ],
+          "velocity": 0.70079,
+          "length": 13.95,
+          "noteDetails": [
+            {
+              "note": 62,
+              "velocity": 0.70079,
+              "length": 13.95
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            69
+          ],
+          "velocity": 0.72441,
+          "length": 11.95,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.72441,
+              "length": 11.95
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            72
+          ],
+          "velocity": 0.72441,
+          "length": 9.95,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.72441,
+              "length": 9.95
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/wims.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Precious - Silver Keys",
+      "bpm": 110.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            51
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 51,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            66
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 66,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            63
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 63,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            49
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 49,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            61
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            65
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 65,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            61
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            51
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 51,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 34,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            66
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 66,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            63
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 63,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            54
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 54,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            49
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 49,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            61
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 54,
+          "notes": [
+            65
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 65,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            61
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 61,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            56
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 56,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        },
+        {
+          "index": 62,
+          "notes": [
+            58
+          ],
+          "velocity": 0.62992,
+          "length": 2.0,
+          "noteDetails": [
+            {
+              "note": 58,
+              "velocity": 0.62992,
+              "length": 2.0
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://midifind.com/files/d/depeche_mode/depeche_mode_precious/830-1-0-23762",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Just Cant Get Enough - Bright Lead",
+      "bpm": 128.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 23,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 25,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 26,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 30,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 32,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 36,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 39,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 41,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 0.66667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 0.66667
+            }
+          ]
+        },
+        {
+          "index": 42,
+          "notes": [
+            67
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 1.33333,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 1.33333
+            }
+          ]
+        },
+        {
+          "index": 48,
+          "notes": [
+            72
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            69
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 69,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        },
+        {
+          "index": 60,
+          "notes": [
+            71
+          ],
+          "velocity": 0.59055,
+          "length": 2.66667,
+          "noteDetails": [
+            {
+              "note": 71,
+              "velocity": 0.59055,
+              "length": 2.66667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/Jstcantgt.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    },
+    {
+      "name": "Depeche Mode Shake the Disease - Cold Pluck",
+      "bpm": 108.0,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 6,
+          "notes": [
+            65,
+            77
+          ],
+          "velocity": 0.94488,
+          "length": 2.26667,
+          "noteDetails": [
+            {
+              "note": 65,
+              "velocity": 0.94488,
+              "length": 2.26667
+            },
+            {
+              "note": 77,
+              "velocity": 0.94488,
+              "length": 2.26667
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "notes": [
+            64,
+            76
+          ],
+          "velocity": 0.94488,
+          "length": 3.9,
+          "noteDetails": [
+            {
+              "note": 64,
+              "velocity": 0.94488,
+              "length": 3.9
+            },
+            {
+              "note": 76,
+              "velocity": 0.94488,
+              "length": 3.9
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "notes": [
+            57,
+            69
+          ],
+          "velocity": 0.88189,
+          "length": 4.63333,
+          "noteDetails": [
+            {
+              "note": 57,
+              "velocity": 0.88189,
+              "length": 4.63333
+            },
+            {
+              "note": 69,
+              "velocity": 0.88189,
+              "length": 4.63333
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "notes": [
+            68,
+            80
+          ],
+          "velocity": 0.94488,
+          "length": 1.06667,
+          "noteDetails": [
+            {
+              "note": 68,
+              "velocity": 0.94488,
+              "length": 1.06667
+            },
+            {
+              "note": 80,
+              "velocity": 0.94488,
+              "length": 1.06667
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "notes": [
+            67,
+            79
+          ],
+          "velocity": 0.88189,
+          "length": 3.96667,
+          "noteDetails": [
+            {
+              "note": 67,
+              "velocity": 0.88189,
+              "length": 3.96667
+            },
+            {
+              "note": 79,
+              "velocity": 0.88189,
+              "length": 3.96667
+            }
+          ]
+        },
+        {
+          "index": 28,
+          "notes": [
+            60,
+            72
+          ],
+          "velocity": 0.91339,
+          "length": 7.66667,
+          "noteDetails": [
+            {
+              "note": 60,
+              "velocity": 0.91339,
+              "length": 7.66667
+            },
+            {
+              "note": 72,
+              "velocity": 0.91339,
+              "length": 7.66667
+            }
+          ]
+        },
+        {
+          "index": 38,
+          "notes": [
+            70,
+            82
+          ],
+          "velocity": 0.94488,
+          "length": 2.2,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.94488,
+              "length": 2.2
+            },
+            {
+              "note": 82,
+              "velocity": 0.94488,
+              "length": 2.2
+            }
+          ]
+        },
+        {
+          "index": 40,
+          "notes": [
+            68,
+            80
+          ],
+          "velocity": 0.97638,
+          "length": 4.26667,
+          "noteDetails": [
+            {
+              "note": 68,
+              "velocity": 0.97638,
+              "length": 4.26667
+            },
+            {
+              "note": 80,
+              "velocity": 0.97638,
+              "length": 4.26667
+            }
+          ]
+        },
+        {
+          "index": 44,
+          "notes": [
+            65,
+            77
+          ],
+          "velocity": 0.91339,
+          "length": 2.13333,
+          "noteDetails": [
+            {
+              "note": 65,
+              "velocity": 0.91339,
+              "length": 2.13333
+            },
+            {
+              "note": 77,
+              "velocity": 0.91339,
+              "length": 2.13333
+            }
+          ]
+        },
+        {
+          "index": 46,
+          "notes": [
+            72,
+            84
+          ],
+          "velocity": 0.88189,
+          "length": 2.23333,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.88189,
+              "length": 2.23333
+            },
+            {
+              "note": 84,
+              "velocity": 0.88189,
+              "length": 2.23333
+            }
+          ]
+        },
+        {
+          "index": 50,
+          "notes": [
+            72,
+            84
+          ],
+          "velocity": 0.91339,
+          "length": 2.36667,
+          "noteDetails": [
+            {
+              "note": 72,
+              "velocity": 0.91339,
+              "length": 2.36667
+            },
+            {
+              "note": 84,
+              "velocity": 0.91339,
+              "length": 2.36667
+            }
+          ]
+        },
+        {
+          "index": 52,
+          "notes": [
+            70,
+            82
+          ],
+          "velocity": 0.97638,
+          "length": 3.83333,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.97638,
+              "length": 3.83333
+            },
+            {
+              "note": 82,
+              "velocity": 0.97638,
+              "length": 3.83333
+            }
+          ]
+        },
+        {
+          "index": 56,
+          "notes": [
+            68,
+            80
+          ],
+          "velocity": 0.97638,
+          "length": 2.26667,
+          "noteDetails": [
+            {
+              "note": 68,
+              "velocity": 0.97638,
+              "length": 2.26667
+            },
+            {
+              "note": 80,
+              "velocity": 0.97638,
+              "length": 2.26667
+            }
+          ]
+        },
+        {
+          "index": 58,
+          "notes": [
+            70,
+            82
+          ],
+          "velocity": 0.97638,
+          "length": 4.46667,
+          "noteDetails": [
+            {
+              "note": 70,
+              "velocity": 0.97638,
+              "length": 4.46667
+            },
+            {
+              "note": 82,
+              "velocity": 0.97638,
+              "length": 4.46667
+            }
+          ]
+        }
+      ],
+      "sourceUrl": "https://www.kalpol.com/depeche/midi/shake3.mid",
+      "sequenceStatus": "community-transcription-excerpt"
+    }
+  ]
+}

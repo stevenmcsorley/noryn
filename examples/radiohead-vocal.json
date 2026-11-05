@@ -1,0 +1,54 @@
+{
+  "name": "Radiohead Everything - Vocal Texture",
+  "bpm": 124,
+  "steps": 40,
+  "pattern": [
+    {
+      "index": 6,
+      "notes": [
+        65
+      ],
+      "velocity": 0.75591,
+      "length": 1.98333,
+      "noteDetails": [
+        {
+          "note": 65,
+          "velocity": 0.75591,
+          "length": 1.98333
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "notes": [
+        60
+      ],
+      "velocity": 0.75591,
+      "length": 1.98333,
+      "noteDetails": [
+        {
+          "note": 60,
+          "velocity": 0.75591,
+          "length": 1.98333
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "notes": [
+        65
+      ],
+      "velocity": 0.75591,
+      "length": 30.0,
+      "noteDetails": [
+        {
+          "note": 65,
+          "velocity": 0.75591,
+          "length": 30.0
+        }
+      ]
+    }
+  ],
+  "sourceUrl": "https://www.rppmf.com/radiohead/2000-kid_a/01-radiohead_2000-everything_in_its_right_place.mid",
+  "sequenceStatus": "community-transcription-excerpt"
+}

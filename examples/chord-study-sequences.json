@@ -1,0 +1,1202 @@
+{
+  "description": "Chord-progression demos for patches without a usable note-level transcription. Progressions are harmonic studies arranged per patch role, not transcriptions.",
+  "studies": [
+    {
+      "name": "Father John Misty The Palace - Warm Piano",
+      "bpm": 72,
+      "division": 8,
+      "source": "https://www.guitartabsexplorer.com/father-john-misty/the-palace-chords",
+      "reference": "Intro (6 bars), verse (8), chorus (10), verse (8) in the order of the community chart; key unstated by the chart",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 106,
+      "sections": [
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "E",
+              1
+            ],
+            [
+              "C#m",
+              1
+            ],
+            [
+              "D",
+              0.5
+            ],
+            [
+              "Dsus4",
+              0.5
+            ],
+            [
+              "A",
+              0.5
+            ],
+            [
+              "A6",
+              0.5
+            ],
+            [
+              "A",
+              0.5
+            ],
+            [
+              "A6",
+              0.5
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "C#m",
+              1
+            ],
+            [
+              "D",
+              0.5
+            ],
+            [
+              "Dsus4",
+              0.5
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "D",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "A",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano_flow",
+          "progression": [
+            [
+              "A",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "G",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "C#m",
+              1
+            ],
+            [
+              "D",
+              0.5
+            ],
+            [
+              "Dsus4",
+              0.5
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "D",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "A",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Chloe - Velvet Strings",
+      "bpm": 86,
+      "division": 8,
+      "source": "https://tabs.ultimate-guitar.com/tab/4144972",
+      "reference": "Chords named in the community chart (intro Bb13/Eb6/Cm7/Edim7, verse Bb7/Eb6, chorus Gm/D7) arranged intro-verse-chorus twice; section order and lengths approximated",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 40,
+      "sections": [
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Cm7",
+              1
+            ],
+            [
+              "Edim7",
+              1
+            ],
+            [
+              "Bb13",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "Gm",
+              1
+            ],
+            [
+              "D7",
+              1
+            ],
+            [
+              "Gm",
+              1
+            ],
+            [
+              "D7",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Cm7",
+              1
+            ],
+            [
+              "Edim7",
+              1
+            ],
+            [
+              "Bb13",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ],
+            [
+              "Eb6",
+              1
+            ],
+            [
+              "Bb7",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "Gm",
+              1
+            ],
+            [
+              "D7",
+              1
+            ],
+            [
+              "Gm",
+              1
+            ],
+            [
+              "D7",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Gods Favorite Customer - Sunday Organ",
+      "bpm": 80,
+      "division": 8,
+      "source": "https://www.guitartabsexplorer.com/father-john-misty/gods-favorite-customer-chords",
+      "reference": "Intro (7 bars), verse (17) and chorus (8) in the community chart order",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 72,
+      "sections": [
+        {
+          "style": "organ",
+          "progression": [
+            [
+              "G",
+              1
+            ],
+            [
+              "G/F#",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Bdim7",
+              1
+            ],
+            [
+              "C#m7b5",
+              1
+            ],
+            [
+              "Cm",
+              1
+            ],
+            [
+              "G",
+              0.5
+            ],
+            [
+              "D7",
+              0.5
+            ]
+          ]
+        },
+        {
+          "style": "organ",
+          "progression": [
+            [
+              "G",
+              1
+            ],
+            [
+              "G/F#",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Bdim7",
+              1
+            ],
+            [
+              "D7/F#",
+              0.5
+            ],
+            [
+              "D7",
+              0.5
+            ],
+            [
+              "Ebdim7",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "C#m7b5",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "organ",
+          "progression": [
+            [
+              "G",
+              1
+            ],
+            [
+              "G/F#",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Bdim7",
+              1
+            ],
+            [
+              "D7/F#",
+              0.5
+            ],
+            [
+              "D7",
+              0.5
+            ],
+            [
+              "Ebdim7",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "C#m7b5",
+              1
+            ],
+            [
+              "D/F#",
+              0.5
+            ],
+            [
+              "D7/F#",
+              0.5
+            ]
+          ]
+        },
+        {
+          "style": "organ_push",
+          "progression": [
+            [
+              "G",
+              1
+            ],
+            [
+              "G/F#",
+              1
+            ],
+            [
+              "Am",
+              1
+            ],
+            [
+              "Am/G",
+              1
+            ],
+            [
+              "D/F#",
+              1
+            ],
+            [
+              "D7/F#",
+              1
+            ],
+            [
+              "Am",
+              1
+            ],
+            [
+              "D/F#",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Mr Tillman - Soft Electric Keys",
+      "bpm": 90,
+      "division": 8,
+      "source": "https://www.hooktheory.com/theorytab/view/father-john-misty/mr-tillman",
+      "reference": "Verse I - bIII - V - I6 - iv in F (Hooktheory), four passes with a busier third pass; chord durations approximated",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 160,
+      "sections": [
+        {
+          "style": "comp",
+          "progression": [
+            [
+              "F",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "C",
+              2
+            ],
+            [
+              "F/A",
+              1
+            ],
+            [
+              "Bbm",
+              1
+            ],
+            [
+              "F",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "C",
+              2
+            ],
+            [
+              "F/A",
+              1
+            ],
+            [
+              "Bbm",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "comp_drive",
+          "progression": [
+            [
+              "F",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "C",
+              2
+            ],
+            [
+              "F/A",
+              1
+            ],
+            [
+              "Bbm",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "comp",
+          "progression": [
+            [
+              "F",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "C",
+              2
+            ],
+            [
+              "F/A",
+              1
+            ],
+            [
+              "Bbm",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Near Dark - Shadow Keys",
+      "bpm": 135,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Near Dark (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 80,
+      "sections": [
+        {
+          "style": "chops",
+          "progression": [
+            [
+              "Dm7",
+              2
+            ],
+            [
+              "Bbmaj7",
+              2
+            ],
+            [
+              "Am7",
+              2
+            ],
+            [
+              "Gm7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "chops_lift",
+          "progression": [
+            [
+              "Dm7",
+              2
+            ],
+            [
+              "Bbmaj7",
+              2
+            ],
+            [
+              "Am7",
+              2
+            ],
+            [
+              "Gm7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Raver - Night Organ",
+      "bpm": 135,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Raver (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 40,
+      "sections": [
+        {
+          "style": "organ",
+          "progression": [
+            [
+              "Dbmaj7",
+              2
+            ],
+            [
+              "Dbmaj7/C",
+              2
+            ],
+            [
+              "Dbmaj7",
+              2
+            ],
+            [
+              "D7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "organ_push",
+          "progression": [
+            [
+              "Dbmaj7",
+              2
+            ],
+            [
+              "Dbmaj7/C",
+              2
+            ],
+            [
+              "Dbmaj7",
+              2
+            ],
+            [
+              "D7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Kindred - Broken Chord",
+      "bpm": 134,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Kindred (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 80,
+      "sections": [
+        {
+          "style": "chops",
+          "progression": [
+            [
+              "F#maj7",
+              2
+            ],
+            [
+              "Ebm7",
+              2
+            ],
+            [
+              "C#m7",
+              2
+            ],
+            [
+              "Emaj7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "chops_lift",
+          "progression": [
+            [
+              "F#maj7",
+              2
+            ],
+            [
+              "Ebm7",
+              2
+            ],
+            [
+              "C#m7",
+              2
+            ],
+            [
+              "Emaj7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Come Down to Us - Warm Halo",
+      "bpm": 100,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Come Down to Us (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 24,
+      "sections": [
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Am",
+              2
+            ],
+            [
+              "F",
+              2
+            ],
+            [
+              "Am",
+              2
+            ],
+            [
+              "D7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "Am",
+              2
+            ],
+            [
+              "F",
+              2
+            ],
+            [
+              "Am",
+              2
+            ],
+            [
+              "D7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Untrue - Hollow Choir",
+      "bpm": 134,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Untrue (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 24,
+      "sections": [
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Ebmaj7",
+              2
+            ],
+            [
+              "F7",
+              2
+            ],
+            [
+              "Dm7",
+              2
+            ],
+            [
+              "Bb/D",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "Ebmaj7",
+              2
+            ],
+            [
+              "F7",
+              2
+            ],
+            [
+              "Dm7",
+              2
+            ],
+            [
+              "Bb/D",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Shell of Light - Amber Keys",
+      "bpm": 133,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Shell of Light (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 80,
+      "sections": [
+        {
+          "style": "chops",
+          "progression": [
+            [
+              "Am",
+              2
+            ],
+            [
+              "Bm",
+              2
+            ],
+            [
+              "F#m7",
+              2
+            ],
+            [
+              "Cmaj7/B",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "chops_lift",
+          "progression": [
+            [
+              "Am",
+              2
+            ],
+            [
+              "Bm",
+              2
+            ],
+            [
+              "F#m7",
+              2
+            ],
+            [
+              "Cmaj7/B",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Etched Headplate - Rain Bells",
+      "bpm": 136,
+      "division": 16,
+      "low": 67,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Etched Headplate (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 128,
+      "sections": [
+        {
+          "style": "bells",
+          "progression": [
+            [
+              "D",
+              2
+            ],
+            [
+              "Em7",
+              2
+            ],
+            [
+              "Bm",
+              2
+            ],
+            [
+              "Gmaj7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "bells_fall",
+          "progression": [
+            [
+              "D",
+              2
+            ],
+            [
+              "Em7",
+              2
+            ],
+            [
+              "Bm",
+              2
+            ],
+            [
+              "Gmaj7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Ashtray Wasp - Fractured Stab",
+      "bpm": 132,
+      "division": 16,
+      "low": 60,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Ashtray Wasp (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 56,
+      "sections": [
+        {
+          "style": "stab",
+          "progression": [
+            [
+              "Abm",
+              2
+            ],
+            [
+              "Abm/G",
+              2
+            ],
+            [
+              "Dm7/C",
+              2
+            ],
+            [
+              "Fmaj7/C",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "stab_sparse",
+          "progression": [
+            [
+              "Abm",
+              2
+            ],
+            [
+              "Abm/G",
+              2
+            ],
+            [
+              "Dm7/C",
+              2
+            ],
+            [
+              "Fmaj7/C",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Rival Dealer - Signal Flare",
+      "bpm": 135,
+      "division": 16,
+      "low": 60,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Rival Dealer (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 40,
+      "sections": [
+        {
+          "style": "flare",
+          "progression": [
+            [
+              "C",
+              2
+            ],
+            [
+              "Eb",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "Gm7",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "flare_rise",
+          "progression": [
+            [
+              "C",
+              2
+            ],
+            [
+              "Eb",
+              2
+            ],
+            [
+              "Ab",
+              2
+            ],
+            [
+              "Gm7",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burial Night Bus - Empty Streets",
+      "bpm": 80,
+      "division": 16,
+      "low": 55,
+      "source": "Official 30 s iTunes preview, chroma/NNLS chord estimate (scripts kept outside the repo); low confidence",
+      "reference": "Burial - Night Bus (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 24,
+      "sections": [
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Abm",
+              2
+            ],
+            [
+              "Db",
+              2
+            ],
+            [
+              "Abm",
+              2
+            ],
+            [
+              "E",
+              2
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "Abm",
+              2
+            ],
+            [
+              "Db",
+              2
+            ],
+            [
+              "Abm",
+              2
+            ],
+            [
+              "E",
+              2
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

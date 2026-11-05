@@ -93,6 +93,7 @@ export const operations = new Set([
   "sequence",
   "progression",
   "transport",
+  "midiMap",
   "scale",
   "lfo",
   "panic",

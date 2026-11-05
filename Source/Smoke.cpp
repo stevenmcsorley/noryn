@@ -1,3 +1,4 @@
+#include <fstream>
 #include "Presets.h"
 #include "ScaleEngine.h"
 #include "Sequencer.h"
@@ -200,6 +201,10 @@ static void wav(const File &path, const AudioBuffer<float> &buffer)
 }
 int main(int argc, char **argv)
 {
+    // Tests must never read or overwrite the player's controller map.
+    const auto testMap = File::getSpecialLocation(File::tempDirectory).getChildFile("noryn-test-midi-map.xml");
+    testMap.deleteFile();
+    setenv("NORYN_MIDI_MAP_FILE", testMap.getFullPathName().toRawUTF8(), 1);
     ScopedJuceInitialiser_GUI initialise;
     try
     {
@@ -285,6 +290,236 @@ int main(int argc, char **argv)
             require(norynPerformanceTelemetry(h.p.get()).size() == 0, "Burial study held voices after Stop");
             wav(directory.getChildFile("stolen-dog-study.wav"), rendered);
             std::cout << "PASS: Burial study recalls its sound/gates, renders bounded audio and releases after Stop.\n";
+        }
+        {
+            // Blocks larger than the prepared size must be split, not overrun the oversampler/chorus/click buffers.
+            h.p->setCurrentProgram(1);
+            norynControl(h.p.get(), JSON::parse(R"({"op":"sequence","args":{"replace":true,"steps":[{"index":0,"notes":[48,55,60]},{"index":4,"notes":[50,57,62]}]}})"));
+            norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+            h.prepare(48000, 64);
+            double energyLarge = 0;
+            for (int size : {4096, 37, 1500, 8192, 64})
+            {
+                AudioBuffer<float> big(2, size);
+                MidiBuffer bigMidi;
+                bigMidi.addEvent(MidiMessage::noteOn(1, 67, .8f), size - 1);
+                h.p->processBlock(big, bigMidi);
+                for (int c = 0; c < 2; ++c)
+                    for (int i = 0; i < size; ++i)
+                    {
+                        require(std::isfinite(big.getSample(c, i)) && std::abs(big.getSample(c, i)) < 1,
+                                "Oversized block produced invalid audio");
+                        energyLarge += big.getSample(c, i) * big.getSample(c, i);
+                    }
+            }
+            norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":false}})"));
+            const auto recovered = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            require(energyLarge > .01 && int(recovered["audioRecoveries"]) == 0,
+                    "Oversized blocks were silent or needed recovery");
+            std::cout << "PASS: blocks up to 128x the prepared size render safely.\n";
+        }
+        {
+            // MIDI learn: the next controller is assigned; later values drive the control or transport.
+            auto send = [&](int cc, int value)
+            {
+                AudioBuffer<float> learnBlock(2, 256);
+                MidiBuffer learnMidi;
+                learnMidi.addEvent(MidiMessage::controllerEvent(3, cc, value), 10);
+                h.p->processBlock(learnBlock, learnMidi);
+            };
+            h.prepare();
+            norynControl(h.p.get(), JSON::parse(R"({"op":"midiMap","args":{"clearAll":true,"learn":"cutoff"}})"));
+            send(21, 5);
+            send(21, 127);
+            require(h.parameters.at("cutoff")->getValue() > .999f, "Learned CC did not drive its parameter");
+            send(21, 0);
+            require(h.parameters.at("cutoff")->getValue() < .001f, "Learned CC did not reach the minimum");
+            norynControl(h.p.get(), JSON::parse(R"({"op":"midiMap","args":{"learn":"transport:play"}})"));
+            send(22, 0);
+            send(22, 127);
+            auto mapState = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            require(bool(mapState["playing"]), "Learned button did not start the sequencer");
+            send(22, 0);
+            send(22, 127);
+            mapState = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            require(!bool(mapState["playing"]), "Learned button did not stop the sequencer");
+            auto map = norynControl(h.p.get(), JSON::parse(R"({"op":"midiMap","args":{}})"));
+            require(map["mappings"].size() == 2 && int(map["mappings"][0]["channel"]) == 3, "MIDI map not listed");
+            require(testMap.existsAsFile() && testMap.loadFileAsString().contains("cutoff"),
+                    "MIDI map was not saved");
+            norynControl(h.p.get(), JSON::parse(R"({"op":"midiMap","args":{"clearAll":true}})"));
+            h.value("cutoff", 1200);
+            std::cout << "PASS: MIDI learn maps controllers to parameters and transport, and saves the map.\n";
+        }
+        if (argc > 2 && String(argv[2]) == "--fuzz")
+        {
+            // Simulated heavy live use. Every recovery would previously have been a stuck-noise event.
+            const int rounds = argc > 3 ? String(argv[3]).getIntValue() : 200;
+            Random rng(argc > 4 ? String(argv[4]).getLargeIntValue() : 1234);
+            auto users = exampleRoot.getChildFile("presets").findChildFiles(File::findFiles, false, "*.noryn");
+            std::vector<RangedAudioParameter *> all;
+            for (auto &entry : h.parameters)
+                all.push_back(entry.second);
+            int nonFinite = 0, stuck = 0;
+            for (int round = 0; round < rounds; ++round)
+            {
+                const double rates[] = {44100, 48000, 96000};
+                const int sizes[] = {32, 64, 256, 512, 1024};
+                const double sr = rates[rng.nextInt(3)];
+                const int size = sizes[rng.nextInt(5)];
+                if (rng.nextBool() && !users.isEmpty())
+                {
+                    MemoryBlock patch;
+                    users[rng.nextInt(users.size())].loadFileAsData(patch);
+                    h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+                }
+                else
+                    h.p->setCurrentProgram(rng.nextInt(h.p->getNumPrograms()));
+                h.p->releaseResources();
+                h.p->setPlayConfigDetails(0, 2, sr, size);
+                h.p->prepareToPlay(sr, size);
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+                AudioBuffer<float> block(2, size);
+                MidiBuffer midi;
+                const int blocks = int(sr * 3 / size);
+                for (int b = 0; b < blocks; ++b)
+                {
+                    midi.clear();
+                    if (rng.nextInt(6) == 0)
+                    {
+                        auto *param = all[size_t(rng.nextInt(int(all.size())))];
+                        const auto id = param->paramID;
+                        if (id != "master" && id != "seqlength")
+                            param->setValueNotifyingHost(rng.nextInt(4) == 0 ? float(rng.nextInt(2))
+                                                                              : rng.nextFloat());
+                    }
+                    const int at = rng.nextInt(size);
+                    switch (rng.nextInt(10))
+                    {
+                    case 0:
+                        midi.addEvent(MidiMessage::noteOn(1 + rng.nextInt(2), 24 + rng.nextInt(84),
+                                                          float(rng.nextInt(127) + 1) / 127.f), at);
+                        break;
+                    case 1:
+                        midi.addEvent(MidiMessage::noteOff(1 + rng.nextInt(2), 24 + rng.nextInt(84)), at);
+                        break;
+                    case 2:
+                        midi.addEvent(MidiMessage::controllerEvent(1, 1, rng.nextInt(128)), at);
+                        break;
+                    case 3:
+                        midi.addEvent(MidiMessage::pitchWheel(1, rng.nextInt(16384)), at);
+                        break;
+                    case 4:
+                        midi.addEvent(MidiMessage::controllerEvent(1, 64, rng.nextBool() ? 127 : 0), at);
+                        break;
+                    default:
+                        break;
+                    }
+                    h.p->processBlock(block, midi);
+                    for (int c = 0; c < 2; ++c)
+                        for (int i = 0; i < size; ++i)
+                            if (!std::isfinite(block.getSample(c, i)) || std::abs(block.getSample(c, i)) >= 1)
+                                ++nonFinite;
+                }
+                norynControl(h.p.get(), JSON::parse(R"({"op":"panic"})"));
+                double tail = 0;
+                const int tailBlocks = int(sr * 1.5 / size);
+                for (int b = 0; b < tailBlocks; ++b)
+                {
+                    midi.clear();
+                    h.p->processBlock(block, midi);
+                    if (b >= tailBlocks - int(sr * .25 / size))
+                        for (int c = 0; c < 2; ++c)
+                            for (int i = 0; i < size; ++i)
+                                tail += block.getSample(c, i) * block.getSample(c, i);
+                }
+                if (tail > .5)
+                {
+                    ++stuck;
+                    std::cout << "stuck audio after panic, round " << round << " program "
+                              << h.p->getCurrentProgram() << " energy " << tail << "\n";
+                }
+            }
+            const auto finalState = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            std::cout << "fuzz rounds " << rounds << " invalid samples " << nonFinite << " stuck " << stuck
+                      << " effect recoveries " << int(finalState["audioRecoveries"]) << " voice faults "
+                      << int(finalState["voiceFaults"]) << "\n";
+            require(nonFinite == 0 && stuck == 0, "Fuzzed live use produced invalid or stuck audio");
+            return 0;
+        }
+        if (argc > 2 && String(argv[2]) == "--user-presets")
+        {
+            // Play every shipped user preset's whole demo loop, then Stop: audio must stay finite and
+            // bounded, sound during the loop, and fall silent with no held voices afterwards.
+            auto files = exampleRoot.getChildFile("presets").findChildFiles(File::findFiles, false, "*.noryn");
+            files.sort();
+            std::ofstream levels(directory.getChildFile("user-preset-levels.csv").getFullPathName().toStdString());
+            levels << "preset,steps,seconds,loop_rms,loop_peak,tail_rms,cpu_mean,cpu_worst_block,worst_at_seconds\n";
+            int failures = 0;
+            for (const auto &file : files)
+            {
+                MemoryBlock patch;
+                require(file.loadFileAsData(patch), "Unreadable user preset");
+                h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+                const auto state = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+                const double bpm = float(state["parameters"]["bpm"]["value"]);
+                const int steps = int(state["parameters"]["seqlength"]["value"]);
+                const int division = int(state["parameters"]["seqdivision"]["value"]);
+                const double loopSeconds = jmin(48.0, steps * 60.0 / (bpm * (1 << division)));
+                const int loopSamples = int(loopSeconds * 48000), total = loopSamples + 48000 * 4;
+                h.prepare();
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+                AudioBuffer<float> block(2, 256);
+                MidiBuffer midi;
+                double loopEnergy = 0, tailEnergy = 0, peak = 0, busy = 0, worst = 0, worstAt = 0;
+                bool finite = true;
+                for (int offset = 0; offset < total; offset += 256)
+                {
+                    if (offset >= loopSamples && offset - 256 < loopSamples)
+                        norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":false}})"));
+                    const int count = jmin(256, total - offset);
+                    block.setSize(2, count, false, false, true);
+                    midi.clear();
+                    const double started = Time::getMillisecondCounterHiRes();
+                    h.p->processBlock(block, midi);
+                    // Fraction of the block's real-time budget spent rendering it.
+                    const double load = (Time::getMillisecondCounterHiRes() - started) / (count / 48.0);
+                    busy += load * count;
+                    if (load > worst)
+                    {
+                        worst = load;
+                        worstAt = offset / 48000.0;
+                    }
+                    for (int c = 0; c < 2; ++c)
+                        for (int i = 0; i < count; ++i)
+                        {
+                            const float x = block.getSample(c, i);
+                            finite = finite && std::isfinite(x) && std::abs(x) < 1;
+                            peak = jmax(peak, double(std::abs(x)));
+                            if (offset < loopSamples)
+                                loopEnergy += x * x;
+                            else if (offset >= total - 24000)
+                                tailEnergy += x * x;
+                        }
+                }
+                const double loopRms = std::sqrt(loopEnergy / (2.0 * loopSamples)),
+                             tailRms = std::sqrt(tailEnergy / (2.0 * 24000));
+                const bool held = norynPerformanceTelemetry(h.p.get()).size() != 0;
+                levels << '"' << file.getFileNameWithoutExtension() << "\"," << steps << ',' << loopSeconds << ','
+                       << loopRms << ',' << peak << ',' << tailRms << ',' << busy / total << ',' << worst << ',' << worstAt << '\n';
+                String problem = !finite ? "non-finite or unbounded audio"
+                                 : loopRms < .003 ? "silent demo"
+                                 : tailRms > .003 ? "sound continued after Stop"
+                                 : held ? "voices held after Stop"
+                                        : "";
+                std::cout << (problem.isEmpty() ? "ok   " : "FAIL ") << file.getFileNameWithoutExtension() << " rms "
+                          << loopRms << " peak " << peak << " tail " << tailRms << " cpu " << busy / total << " worst "
+                          << worst << ' ' << problem << '\n';
+                failures += problem.isNotEmpty();
+            }
+            require(failures == 0, "User preset demo check failed");
+            std::cout << "PASS: " << files.size() << " user preset demos render bounded and stop cleanly.\n";
+            return 0;
         }
         if (argc > 2 && String(argv[2]) == "--verify-solitude-exports")
         {
@@ -944,7 +1179,7 @@ int main(int argc, char **argv)
         PNGImageFormat png;
         require(stream && png.writeImageToStream(image, *stream), "Preview write failed");
         stream.reset();
-        for (const auto &page : std::vector<std::pair<String, String>>{{"64 STEP SEQUENCER", "sequencer.png"},
+        for (const auto &page : std::vector<std::pair<String, String>>{{"256 STEP SEQUENCER", "sequencer.png"},
                                                                        {"4 LFO ROUTING", "lfos.png"},
                                                                        {"SCALE ENGINE", "scales.png"},
                                                                        {"VOICE DESIGN", "character.png"}})
@@ -958,6 +1193,58 @@ int main(int argc, char **argv)
             file.deleteFile();
             auto out = file.createOutputStream();
             require(out && png.writeImageToStream(pageImage, *out), "Page preview write failed");
+        }
+        // The step grid follows the playhead onto later pages; choosing a page while playing pauses follow.
+        {
+            auto stepVisible = [&](int step)
+            {
+                for (auto *child : editor->getChildren())
+                    if (child->getName() == "step" + String(step) && child->isVisible())
+                        return true;
+                return false;
+            };
+            auto follow = [&]() -> ToggleButton *
+            {
+                for (auto *child : editor->getChildren())
+                    if (auto *candidate = dynamic_cast<ToggleButton *>(child))
+                        if (candidate->getButtonText() == "FOLLOW PLAYHEAD")
+                            return candidate;
+                throw std::runtime_error("Missing follow toggle");
+            };
+            button("256 STEP SEQUENCER")->onClick();
+            h.value("seqlength", 256);
+            h.value("bpm", 300);
+            h.value("seqdivision", 3); // 1/32 at 300 BPM: 1200 samples per step at 48 kHz
+            h.prepare();
+            auto *transport = button("PLAY");
+            transport->setToggleState(true, dontSendNotification);
+            transport->onClick();
+            AudioBuffer<float> run(2, 256);
+            MidiBuffer runMidi;
+            for (int at = 0; at < 1200 * 200 + 600; at += 256)
+            {
+                runMidi.clear();
+                h.p->processBlock(run, runMidi);
+            }
+            norynRefreshEditor(editor.get());
+            require(follow()->getToggleState() && stepVisible(201) && !stepVisible(1),
+                    "Step grid did not follow the playhead to steps 193-256");
+            button("1-64")->onClick();
+            norynRefreshEditor(editor.get());
+            require(!follow()->getToggleState() && stepVisible(1),
+                    "Choosing a page during playback did not pause follow");
+            follow()->setToggleState(true, dontSendNotification);
+            norynRefreshEditor(editor.get());
+            require(stepVisible(201), "Re-enabled follow did not return to the playing page");
+            button("STOP SEQ")->onClick();
+            runMidi.clear();
+            h.p->processBlock(run, runMidi);
+            norynRefreshEditor(editor.get());
+            button("1-64")->onClick();
+            require(follow()->getToggleState() && stepVisible(1), "Stopped grid did not return to page one");
+            h.value("seqlength", 64);
+            h.value("bpm", 120);
+            h.value("seqdivision", 2);
         }
         button("SYNTH")->onClick();
         editor->setSize(1008, 651);
@@ -1010,7 +1297,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.4.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"0.5.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +

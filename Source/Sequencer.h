@@ -5,6 +5,8 @@
 #include <cmath>
 namespace noryn
 {
+constexpr int maxSequenceSteps = 256;
+constexpr float maxStepLength = float(maxSequenceSteps);
 struct SequenceStep
 {
     std::atomic<uint64_t> low{0}, high{0};
@@ -33,7 +35,7 @@ struct SequenceStep
         if (note < 0 || note > 127 || (!has(note) && count() >= 16))
             return;
         noteVelocities[size_t(note)].store(juce::jlimit(.01f, 1.f, vel));
-        noteLengths[size_t(note)].store(duration > 0 ? juce::jlimit(.05f, 64.f, duration) : 0);
+        noteLengths[size_t(note)].store(duration > 0 ? juce::jlimit(.05f, maxStepLength, duration) : 0);
         (note < 64 ? low : high).fetch_or(uint64_t(1) << (note % 64));
         velocity.store(vel);
     }
@@ -74,7 +76,7 @@ struct SequenceStep
 };
 struct Sequencer
 {
-    std::array<SequenceStep, 64> steps;
+    std::array<SequenceStep, maxSequenceSteps> steps;
     std::atomic<bool> playing{false}, recording{false}, stepRecord{false};
     std::atomic<int> playhead{-1}, recordCursor{0};
     std::atomic<float> effectiveBpm{120};
@@ -129,7 +131,7 @@ struct Sequencer
             return;
         const int acid[] = {36, 36, 43, 36, 48, 36, 46, 43, 36, 39, 43, 48, 46, 43, 39, 34};
         const int dream[] = {48, 55, 60, 64, 55, 60, 67, 64, 50, 57, 62, 65, 57, 62, 69, 65};
-        for (int s = 0; s < 64; ++s)
+        for (int s = 0; s < maxSequenceSteps; ++s)
         {
             int at = s % 16;
             if (pattern == 1)
@@ -158,7 +160,7 @@ struct Sequencer
     {
         using namespace juce;
         bpm = jlimit(30.f, 300.f, bpm);
-        length = jlimit(1, 64, length);
+        length = jlimit(1, maxSequenceSteps, length);
         gate = jlimit(.05f, 1.f, gate);
         const int perBeat = 1 << jlimit(0, 3, division);
         const double stepSamples = sr * 60 / (bpm * perBeat), blockStart = sampleClock;
@@ -212,7 +214,7 @@ struct Sequencer
         {
             if (recordedAt[size_t(note)] >= 0 && recordedStep[size_t(note)] >= 0)
                 steps[size_t(recordedStep[size_t(note)])].noteLengths[size_t(note)].store(
-                    jlimit(.05f, 64.f, float((now - recordedAt[size_t(note)]) / stepSamples)));
+                    jlimit(.05f, maxStepLength, float((now - recordedAt[size_t(note)]) / stepSamples)));
             recordedAt[size_t(note)] = -1;
             recordedStep[size_t(note)] = -1;
             held[size_t(note)] = false;
@@ -326,9 +328,12 @@ struct Sequencer
     }
     juce::ValueTree save() const
     {
+        // The tag keeps its original name so existing patches and host sessions still load.
         juce::ValueTree tree("Sequence64");
-        for (int i = 0; i < 64; ++i)
+        for (int i = 0; i < maxSequenceSteps; ++i)
         {
+            if (steps[i].empty())
+                continue; // restore() clears first, so empty steps need no entry
             juce::ValueTree step("Step");
             step.setProperty("index", i, nullptr);
             step.setProperty("low", juce::String::toHexString(juce::int64(steps[i].low.load())), nullptr);
@@ -356,19 +361,19 @@ struct Sequencer
         for (const auto step : tree)
         {
             int i = int(step.getProperty("index", -1));
-            if (i < 0 || i >= 64)
+            if (i < 0 || i >= maxSequenceSteps)
                 continue;
             steps[i].low.store(uint64_t(step.getProperty("low").toString().getHexValue64()));
             steps[i].high.store(uint64_t(step.getProperty("high").toString().getHexValue64()));
             steps[i].velocity.store(juce::jlimit(.01f, 1.f, float(step.getProperty("velocity", .8f))));
-            steps[i].length.store(juce::jlimit(.05f, 64.f, float(step.getProperty("length", 1.f))));
+            steps[i].length.store(juce::jlimit(.05f, maxStepLength, float(step.getProperty("length", 1.f))));
             for (const auto &detail : step)
             {
                 const int n = int(detail.getProperty("note", -1));
                 if (n < 0 || n > 127 || !steps[i].has(n))
                     continue;
                 steps[i].noteLengths[size_t(n)].store(
-                    juce::jlimit(.05f, 64.f, float(detail.getProperty("length", steps[i].length.load()))));
+                    juce::jlimit(.05f, maxStepLength, float(detail.getProperty("length", steps[i].length.load()))));
                 steps[i].noteVelocities[size_t(n)].store(
                     juce::jlimit(.01f, 1.f, float(detail.getProperty("velocity", steps[i].velocity.load()))));
             }

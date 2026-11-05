@@ -1,0 +1,273 @@
+{
+  "name": "Radiohead Everything - Pulsing Keys",
+  "bpm": 124,
+  "steps": 40,
+  "pattern": [
+    {
+      "index": 0,
+      "notes": [
+        48,
+        52,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 9.73333,
+      "noteDetails": [
+        {
+          "note": 48,
+          "velocity": 0.59843,
+          "length": 9.73333
+        },
+        {
+          "note": 52,
+          "velocity": 0.59843,
+          "length": 9.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 9.73333
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "notes": [
+        48,
+        52,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 48,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 52,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "notes": [
+        48,
+        52,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 48,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 52,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "notes": [
+        49,
+        53,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 49,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 53,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "notes": [
+        49,
+        53,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 49,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 53,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "notes": [
+        51,
+        55,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 51,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 55,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "notes": [
+        51,
+        55,
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 11.73333,
+      "noteDetails": [
+        {
+          "note": 51,
+          "velocity": 0.59843,
+          "length": 11.73333
+        },
+        {
+          "note": 55,
+          "velocity": 0.59843,
+          "length": 7.73333
+        },
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 9.73333
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "notes": [
+        55
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 55,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "notes": [
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 7.73333,
+      "noteDetails": [
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 7.73333
+        }
+      ]
+    },
+    {
+      "index": 34,
+      "notes": [
+        58
+      ],
+      "velocity": 0.59843,
+      "length": 6.0,
+      "noteDetails": [
+        {
+          "note": 58,
+          "velocity": 0.59843,
+          "length": 6.0
+        }
+      ]
+    },
+    {
+      "index": 36,
+      "notes": [
+        60
+      ],
+      "velocity": 0.59843,
+      "length": 4.0,
+      "noteDetails": [
+        {
+          "note": 60,
+          "velocity": 0.59843,
+          "length": 4.0
+        }
+      ]
+    },
+    {
+      "index": 38,
+      "notes": [
+        48
+      ],
+      "velocity": 0.59843,
+      "length": 2.0,
+      "noteDetails": [
+        {
+          "note": 48,
+          "velocity": 0.59843,
+          "length": 2.0
+        }
+      ]
+    }
+  ],
+  "sourceUrl": "https://www.rppmf.com/radiohead/2000-kid_a/01-radiohead_2000-everything_in_its_right_place.mid",
+  "sequenceStatus": "community-transcription-excerpt"
+}

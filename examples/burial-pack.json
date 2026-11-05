@@ -1,0 +1,740 @@
+{
+  "description": "Five original synthesis and sequence studies inspired by Burial; arrangements are original, not song transcriptions.",
+  "presets": [
+    {
+      "name": "Burial Archangel - Ghost Choir",
+      "bpm": 132,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            42,
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 3.2
+        },
+        {
+          "index": 7,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 10,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 14,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 16,
+          "notes": [
+            38,
+            57,
+            61,
+            66
+          ],
+          "velocity": 0.72,
+          "length": 3.2
+        },
+        {
+          "index": 23,
+          "notes": [
+            57,
+            61,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 26,
+          "notes": [
+            57,
+            61,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 30,
+          "notes": [
+            57,
+            61,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 32,
+          "notes": [
+            45,
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 3.2
+        },
+        {
+          "index": 39,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 42,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 46,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 48,
+          "notes": [
+            40,
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 3.2
+        },
+        {
+          "index": 55,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 58,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        },
+        {
+          "index": 62,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 3.2
+        }
+      ]
+    },
+    {
+      "name": "Burial Near Dark - Shadow Keys",
+      "bpm": 135,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            36,
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.72,
+          "length": 3.8
+        },
+        {
+          "index": 6,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 11,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.72,
+          "length": 3.8
+        },
+        {
+          "index": 22,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 27,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.72,
+          "length": 3.8
+        },
+        {
+          "index": 38,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 43,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.72,
+          "length": 3.8
+        },
+        {
+          "index": 54,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        },
+        {
+          "index": 59,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 3.8
+        }
+      ]
+    },
+    {
+      "name": "Burial Raver - Night Organ",
+      "bpm": 135,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            41,
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.72,
+          "length": 1.8
+        },
+        {
+          "index": 3,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 7,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 10,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 14,
+          "notes": [
+            56,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 16,
+          "notes": [
+            44,
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.72,
+          "length": 1.8
+        },
+        {
+          "index": 19,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 23,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 26,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 30,
+          "notes": [
+            55,
+            60,
+            63
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 32,
+          "notes": [
+            39,
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.72,
+          "length": 1.8
+        },
+        {
+          "index": 35,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 39,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 42,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 46,
+          "notes": [
+            55,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 48,
+          "notes": [
+            46,
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.72,
+          "length": 1.8
+        },
+        {
+          "index": 51,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 55,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 58,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        },
+        {
+          "index": 62,
+          "notes": [
+            53,
+            58,
+            62
+          ],
+          "velocity": 0.56,
+          "length": 1.8
+        }
+      ]
+    },
+    {
+      "name": "Burial Kindred - Broken Chord",
+      "bpm": 134,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            37,
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 2.6
+        },
+        {
+          "index": 5,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 11,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 15,
+          "notes": [
+            56,
+            59,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 2.6
+        },
+        {
+          "index": 21,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 27,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 31,
+          "notes": [
+            57,
+            61,
+            64
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 32,
+          "notes": [
+            40,
+            56,
+            59,
+            66
+          ],
+          "velocity": 0.72,
+          "length": 2.6
+        },
+        {
+          "index": 37,
+          "notes": [
+            56,
+            59,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 43,
+          "notes": [
+            56,
+            59,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 47,
+          "notes": [
+            56,
+            59,
+            66
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 48,
+          "notes": [
+            35,
+            54,
+            57,
+            61
+          ],
+          "velocity": 0.72,
+          "length": 2.6
+        },
+        {
+          "index": 53,
+          "notes": [
+            54,
+            57,
+            61
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 59,
+          "notes": [
+            54,
+            57,
+            61
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        },
+        {
+          "index": 63,
+          "notes": [
+            54,
+            57,
+            61
+          ],
+          "velocity": 0.56,
+          "length": 2.6
+        }
+      ]
+    },
+    {
+      "name": "Burial Come Down to Us - Warm Halo",
+      "bpm": 100,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 14.5
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.72,
+          "length": 14.5
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.72,
+          "length": 14.5
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.72,
+          "length": 14.5
+        }
+      ]
+    }
+  ]
+}

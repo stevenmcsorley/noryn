@@ -16,7 +16,7 @@ const instanceId = z
     "Optional instance ID from get_state; defaults to the latest running synth.",
   );
 function upstream(env: Env) {
-  const server = new McpServer({ name: "noryn", version: "0.4.0" });
+  const server = new McpServer({ name: "noryn", version: "0.5.0" });
   async function call(op: string, args: unknown, id?: string) {
     const response = await fetch(`${env.NORYN_BRIDGE_URL}/api`, {
       method: "POST",
@@ -38,7 +38,7 @@ function upstream(env: Env) {
     "get_state",
     {
       description:
-        "Inspect actual live NORYN parameters, ranges, preset, transport and all 64 steps. Read before changing a sound.",
+        "Inspect actual live NORYN parameters, ranges, preset, transport and all 256 steps. Read before changing a sound.",
       inputSchema: { instanceId },
     },
     async ({ instanceId }) => call("state", {}, instanceId),
@@ -93,15 +93,15 @@ function upstream(env: Env) {
       call("loadUserPreset", { name }, instanceId),
   );
   const step = z.object({
-    index: z.number().int().min(0).max(63),
+    index: z.number().int().min(0).max(255),
     notes: z.array(z.number().int().min(0).max(127)).max(16),
     noteDetails:z.array(z.object({note:z.number().int().min(0).max(127),
-      length:z.number().min(.05).max(64),velocity:z.number().min(.01).max(1)})).max(16).optional(),
+      length:z.number().min(.05).max(256),velocity:z.number().min(.01).max(1)})).max(16).optional(),
     velocity: z.number().min(0.01).max(1).optional(),
     length: z
       .number()
       .min(0.05)
-      .max(64)
+      .max(256)
       .optional()
       .describe(
         "Duration in sequencer steps, multiplied by global gate. Use 16 for a chord held over a bar of sixteenths.",
@@ -111,9 +111,9 @@ function upstream(env: Env) {
     "write_sequence",
     {
       description:
-        "Write any subset of a 64-step polyphonic sequence. For chord progressions put chord MIDI notes at chosen steps and set length. replace=false preserves other steps.",
+        "Write any subset of a 256-step polyphonic sequence. For chord progressions put chord MIDI notes at chosen steps and set length. replace=false preserves other steps.",
       inputSchema: {
-        steps: z.array(step).max(64),
+        steps: z.array(step).max(256),
         replace: z.boolean().default(false),
         instanceId,
       },
@@ -133,7 +133,7 @@ function upstream(env: Env) {
           .array(z.number().int().min(0).max(11))
           .length(7)
           .default([0, 2, 4, 5, 7, 9, 11]),
-        stepsPerChord: z.number().int().min(1).max(64).default(16),
+        stepsPerChord: z.number().int().min(1).max(256).default(16),
         seventh: z.boolean().default(false),
         velocity: z.number().min(0.01).max(1).default(0.8),
         replace: z.boolean().default(true),
@@ -150,8 +150,8 @@ function upstream(env: Env) {
       replace,
       instanceId,
     }) => {
-      if (degrees.length * stepsPerChord > 64)
-        throw new Error("Progression exceeds 64 steps.");
+      if (degrees.length * stepsPerChord > 256)
+        throw new Error("Progression exceeds 256 steps.");
       const notesFor = (degree: number) =>
         [0, 2, 4, ...(seventh ? [6] : [])].map((offset) => {
           const d = degree - 1 + offset;
@@ -181,6 +181,20 @@ function upstream(env: Env) {
       },
     },
     async ({ instanceId, ...args }) => call("transport", args, instanceId),
+  );
+  server.registerTool(
+    "midi_map",
+    {
+      description:
+        "Inspect or edit MIDI controller mappings. learn arms a parameter ID (or transport:play / transport:record) so the next incoming CC is assigned to it; clear removes a target's mapping; clearAll removes all. Returns the current mappings.",
+      inputSchema: {
+        learn: z.string().optional(),
+        clear: z.string().optional(),
+        clearAll: z.boolean().optional(),
+        instanceId,
+      },
+    },
+    async ({ instanceId, ...args }) => call("midiMap", args, instanceId),
   );
   server.registerTool(
     "set_scale",
@@ -233,7 +247,7 @@ export default {
     )
       return new Response("Unauthorized", { status: 401 });
     if (new URL(request.url).pathname === "/health")
-      return Response.json({ name: "noryn-codemode", version: "0.4.0" });
+      return Response.json({ name: "noryn-codemode", version: "0.5.0" });
     const server = await codeMcpServer({
       server: upstream(env),
       executor: new DynamicWorkerExecutor({ loader: env.LOADER }),

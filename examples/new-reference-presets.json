@@ -1,0 +1,190 @@
+{
+  "description": "New song-reference presets: each clones a related patch sound with overrides; sequences come from song-sequence-replacements.json.",
+  "presets": [
+    {
+      "name": "Radiohead No Surprises - Music Box Bells",
+      "template": "Depeche Mode Strangelove - Bright Bell",
+      "sound": {
+        "fmratio": 3.5,
+        "decay": 1.1,
+        "sustain": 0,
+        "release": 0.6,
+        "cutoff": 7200,
+        "chorus": 0.18,
+        "reverb": 0.48,
+        "delay": 0.14,
+        "attack": 0.001,
+        "analogdrift": 0.05
+      }
+    },
+    {
+      "name": "Radiohead Pyramid Song - Sunken Piano",
+      "template": "Father John Misty The Palace - Warm Piano",
+      "sound": {
+        "cutoff": 1700,
+        "reverb": 0.52,
+        "delay": 0.12,
+        "decay": 1.4,
+        "release": 0.7,
+        "analogdrift": 0.18,
+        "lfo2dest": 1,
+        "lfo2amount": 0.06,
+        "lfo2rate": 0.07
+      }
+    },
+    {
+      "name": "Radiohead Videotape - Tape Piano",
+      "template": "Radiohead Daydreaming - Distant Keys",
+      "sound": {
+        "cutoff": 2100,
+        "chorus": 0.32,
+        "reverb": 0.36,
+        "analogdrift": 0.3,
+        "lfo1dest": 15,
+        "lfo1amount": 0.04,
+        "rate": 0.35,
+        "release": 0.5
+      }
+    },
+    {
+      "name": "Radiohead Reckoner - Falling Strings",
+      "template": "Father John Misty Chloe - Velvet Strings",
+      "sound": {
+        "cutoff": 4200,
+        "attack": 0.18,
+        "release": 0.9,
+        "chorus": 0.35,
+        "reverb": 0.5,
+        "width": 1.6
+      }
+    },
+    {
+      "name": "Radiohead Nude - Round Bass",
+      "template": "Depeche Mode Policy of Truth - Muted Bass",
+      "sound": {
+        "cutoff": 520,
+        "resonance": 0.1,
+        "attack": 0.012,
+        "decay": 0.9,
+        "sustain": 0.7,
+        "release": 0.25,
+        "drive": 0.08,
+        "reverb": 0.12,
+        "chorus": 0.06
+      }
+    },
+    {
+      "name": "Radiohead Lotus Flower - Rubber Bass",
+      "template": "Depeche Mode Strangelove - Pulse Bass",
+      "sound": {
+        "cutoff": 760,
+        "resonance": 0.42,
+        "envamount": 0.45,
+        "decay": 0.35,
+        "sustain": 0.35,
+        "lfo2dest": 1,
+        "lfo2amount": 0.12,
+        "lfo2rate": 0.5,
+        "drive": 0.22
+      }
+    },
+    {
+      "name": "Thom Yorke The Eraser - Loop Piano",
+      "template": "Radiohead Everything - Pulsing Keys",
+      "sound": {
+        "cutoff": 2600,
+        "decay": 0.7,
+        "sustain": 0.3,
+        "release": 0.35,
+        "delay": 0.28,
+        "feedback": 0.38,
+        "reverb": 0.22,
+        "chorus": 0.1
+      }
+    },
+    {
+      "name": "Depeche Mode Master and Servant - Whip Riff",
+      "template": "Depeche Mode Everything Counts - Clockwork Pluck",
+      "sound": {
+        "cutoff": 3800,
+        "resonance": 0.35,
+        "drive": 0.4,
+        "decay": 0.28,
+        "sustain": 0.1,
+        "release": 0.12,
+        "reverb": 0.2,
+        "delay": 0.16,
+        "noise": 0.06
+      }
+    },
+    {
+      "name": "Depeche Mode Stripped - Analog Bass",
+      "template": "Depeche Mode Personal Jesus - Machine Bass",
+      "sound": {
+        "cutoff": 900,
+        "resonance": 0.28,
+        "envamount": 0.35,
+        "decay": 0.5,
+        "sustain": 0.55,
+        "release": 0.2,
+        "drive": 0.18,
+        "chorus": 0.12
+      }
+    },
+    {
+      "name": "Depeche Mode Halo - Choir Strings",
+      "template": "Depeche Mode Black Celebration - Shadow Choir",
+      "sound": {
+        "attack": 0.22,
+        "release": 1.1,
+        "cutoff": 3200,
+        "chorus": 0.3,
+        "reverb": 0.55,
+        "width": 1.5
+      }
+    },
+    {
+      "name": "Depeche Mode New Life - Synthpop Lead",
+      "template": "Depeche Mode Just Cant Get Enough - Bright Lead",
+      "sound": {
+        "cutoff": 4800,
+        "resonance": 0.2,
+        "pulsewidth": 0.4,
+        "pwmdepth": 0.5,
+        "attack": 0.004,
+        "decay": 0.3,
+        "sustain": 0.6,
+        "release": 0.15,
+        "chorus": 0.25,
+        "delay": 0.18
+      }
+    },
+    {
+      "name": "Depeche Mode Photographic - Early Sequence",
+      "template": "Depeche Mode Enjoy the Silence - Dark Bass",
+      "sound": {
+        "cutoff": 1500,
+        "resonance": 0.32,
+        "envamount": 0.5,
+        "decay": 0.22,
+        "sustain": 0.15,
+        "release": 0.1,
+        "drive": 0.15,
+        "delay": 0.12
+      }
+    },
+    {
+      "name": "Depeche Mode A Question of Time - Drive Bass",
+      "template": "Depeche Mode World in My Eyes - Resonant Bass",
+      "sound": {
+        "cutoff": 1100,
+        "resonance": 0.3,
+        "drive": 0.35,
+        "decay": 0.3,
+        "sustain": 0.4,
+        "release": 0.1,
+        "chorus": 0.05
+      }
+    }
+  ]
+}

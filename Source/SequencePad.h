@@ -87,4 +87,41 @@ struct SequencePad : juce::Button
         ignoreUnused(down);
     }
 };
+// Whole-pattern strip: shows every step, the loop length, the visible page and the playhead.
+struct StepOverview : juce::Component
+{
+    Sequencer &sequence;
+    std::function<int()> length, visiblePage;
+    std::function<void(int)> jump;
+    int pageSize = 64;
+    explicit StepOverview(Sequencer &s) : sequence(s) {}
+    void paint(juce::Graphics &g) override
+    {
+        using namespace juce;
+        const int loop = length(), page = visiblePage(), head = sequence.playhead.load();
+        const float cell = float(getWidth()) / maxSequenceSteps, h = float(getHeight());
+        g.setColour(Colour(0xff0b151e));
+        g.fillRoundedRectangle(getLocalBounds().toFloat(), 3);
+        g.setColour(Colour(0xff1d3340));
+        g.fillRect(page * pageSize * cell, 0.f, pageSize * cell, h);
+        for (int i = 0; i < maxSequenceSteps; ++i)
+        {
+            const bool inLoop = i < loop, filled = !sequence.steps[size_t(i)].empty();
+            if (i == head)
+                g.setColour(Colour(0xffffc47b));
+            else if (filled)
+                g.setColour(inLoop ? Colour(0xff66dce4) : Colour(0xff35505a));
+            else
+                g.setColour(inLoop ? Colour(0xff26394a) : Colour(0xff121e28));
+            g.fillRect(i * cell + 1, 2.f, jmax(1.f, cell - 2), h - 4);
+        }
+        g.setColour(Colour(0xff8ca5ae));
+        g.drawVerticalLine(int(pageSize * cell), 0, h);
+    }
+    void mouseDown(const juce::MouseEvent &e) override
+    {
+        const int index = juce::jlimit(0, maxSequenceSteps - 1, int(e.x * maxSequenceSteps / juce::jmax(1, getWidth())));
+        jump(index / pageSize);
+    }
+};
 } // namespace noryn

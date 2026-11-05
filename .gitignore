@@ -8,3 +8,4 @@ dist/
 WORKPLAN.md
 *.log
 .DS_Store
+__pycache__/

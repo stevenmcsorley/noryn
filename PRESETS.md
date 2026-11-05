@@ -1192,3 +1192,4 @@
 ### 290: Solitude / Reinterpretation Swell
 
 **Pads** — M83 - Solitude (Felsmann + Tiley): dark brass-swell study. Hold low, widely spaced chords for 3-4 seconds. Candidate for listening comparison; the full recording also contains other layers.
+

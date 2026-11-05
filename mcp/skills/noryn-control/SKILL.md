@@ -1,6 +1,6 @@
 ---
 name: noryn-control
-description: Control the running local NORYN synthesizer to design sounds, save presets, program its 64-step polyphonic sequencer, write chord progressions, select scales or assign four LFOs through Cloudflare Code Mode.
+description: Control the running local NORYN synthesizer to design sounds, save presets, program its 256-step polyphonic sequencer, write chord progressions, select scales or assign four LFOs through Cloudflare Code Mode.
 ---
 
 Use the NORYN `code` tool. It executes JavaScript in Cloudflare's isolated Dynamic Worker runtime, with typed `codemode` operations for the local synthesizer.

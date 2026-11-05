@@ -1,0 +1,56 @@
+{
+ "audited_presets": 45,
+ "distinct_pitch_contours": 33,
+ "repeated_pitch_contours": [
+  [
+   "Depeche Mode Enjoy the Silence - Cathedral Pad",
+   "Depeche Mode Never Let Me Down Again - Wide Strings"
+  ],
+  [
+   "Depeche Mode Personal Jesus - Machine Bass",
+   "Depeche Mode World in My Eyes - Resonant Bass"
+  ],
+  [
+   "Depeche Mode Strangelove - Bright Bell",
+   "Depeche Mode People Are People - Iron Bell"
+  ],
+  [
+   "Depeche Mode Everything Counts - Clockwork Pluck",
+   "Radiohead Weird Fishes - Interlocking Pluck"
+  ],
+  [
+   "Depeche Mode Black Celebration - Shadow Choir",
+   "Burial Night Bus - Empty Streets"
+  ],
+  [
+   "Father John Misty The Palace - Warm Piano",
+   "Father John Misty Gods Favorite Customer - Sunday Organ"
+  ],
+  [
+   "Father John Misty Chloe - Velvet Strings",
+   "Burial Come Down to Us - Warm Halo",
+   "Radiohead Motion Picture Soundtrack - Organ"
+  ],
+  [
+   "Father John Misty Mr Tillman - Soft Electric Keys",
+   "Radiohead Daydreaming - Distant Keys"
+  ],
+  [
+   "Burial Untrue - Hollow Choir",
+   "Burial Shell of Light - Amber Keys"
+  ],
+  [
+   "Burial Etched Headplate - Rain Bells",
+   "Burial Ashtray Wasp - Fractured Stab",
+   "Burial Rival Dealer - Signal Flare"
+  ]
+ ],
+ "notes": "Contour ignores tempo, velocity and gate. In v0.5.0 all 60 song patches have distinct contours, demos fill up to 256 steps, and every user preset is rendered by NorynSmoke --user-presets.",
+ "replaced_with_sourced_excerpts": 46,
+ "remaining_generic_demos": [],
+ "chord_studies": 14,
+ "max_steps": 256,
+ "repeated_pitch_contours_after_replacement": [],
+ "song_presets": 60,
+ "new_presets_v050": 13
+}

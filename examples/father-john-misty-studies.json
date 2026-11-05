@@ -1,0 +1,385 @@
+{
+  "description": "Original synthesis studies and arrangements inspired by named songs; not verified recreations or transcriptions.",
+  "presets": [
+    {
+      "name": "Father John Misty The Palace - Warm Piano",
+      "bpm": 72,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 7.4
+        },
+        {
+          "index": 8,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 7.4
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 7.4
+        },
+        {
+          "index": 24,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 7.4
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.68,
+          "length": 7.4
+        },
+        {
+          "index": 40,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.52,
+          "length": 7.4
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 7.4
+        },
+        {
+          "index": 56,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 7.4
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Chloe - Velvet Strings",
+      "bpm": 86,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 14.5
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 14.5
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.68,
+          "length": 14.5
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 14.5
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Gods Favorite Customer - Sunday Organ",
+      "bpm": 80,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 7.2
+        },
+        {
+          "index": 8,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 7.2
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 7.2
+        },
+        {
+          "index": 24,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 7.2
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.68,
+          "length": 7.2
+        },
+        {
+          "index": 40,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.52,
+          "length": 7.2
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 7.2
+        },
+        {
+          "index": 56,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 7.2
+        }
+      ]
+    },
+    {
+      "name": "Father John Misty Mr Tillman - Soft Electric Keys",
+      "bpm": 100,
+      "steps": 64,
+      "pattern": [
+        {
+          "index": 0,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 6,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 4.8
+        },
+        {
+          "index": 10,
+          "notes": [
+            48,
+            55,
+            59,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 16,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 22,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.52,
+          "length": 4.8
+        },
+        {
+          "index": 26,
+          "notes": [
+            45,
+            55,
+            60,
+            64
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 32,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 38,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.52,
+          "length": 4.8
+        },
+        {
+          "index": 42,
+          "notes": [
+            41,
+            53,
+            57,
+            60
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 48,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        },
+        {
+          "index": 54,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.52,
+          "length": 4.8
+        },
+        {
+          "index": 58,
+          "notes": [
+            43,
+            55,
+            59,
+            62
+          ],
+          "velocity": 0.68,
+          "length": 4.8
+        }
+      ]
+    }
+  ]
+}

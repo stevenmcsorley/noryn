@@ -1,6 +1,17 @@
-# NORYN 0.4 — Hybrid Synthesizer
+# NORYN 0.5 — Hybrid Synthesizer
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
+
+## v0.5.0 changes
+
+- **256-step sequencer.** Loops run up to 256 steps (16 bars of sixteenths). The grid pages through 64 steps at a time and **follows the playhead** during playback and step recording, so later steps can be watched, performed and overdubbed live. A 256-step overview strip shows the whole pattern and jumps between pages.
+- **MIDI.** The standalone app now enables every connected MIDI input automatically, including devices plugged in while it runs; the new **MIDI** button lists inputs (switch any off) and opens the full Audio/MIDI settings. **MIDI learn:** right-click any knob, PLAY or RECORD, choose *MIDI Learn* and move a controller. Mappings are listed and cleared in the MIDI panel, and saved globally so they survive preset changes. In a DAW, notes and controllers arrive through the host's MIDI routing.
+- **Audio stability.** Blocks larger than the size announced in `prepareToPlay` are now rendered in prepared-size pieces instead of overrunning the oversampler, chorus and metronome buffers (hosts may deliver these). A guard silences and resets voices and effect state if a non-finite sample ever appears, so one bad sample can no longer leave delay/reverb/chorus feeding constant noise. See *Known issue* below.
+- **Song demos rebuilt** for all 47 earlier artist patches and **13 new patches** (see *Song-reference demo sequences*). All 64 user presets are rendered in CI-style checks for finite, bounded audio, clean stops and balanced loudness.
+
+### Known issue: occasional white noise in the standalone app
+
+Reported in live use: audio sometimes turns to white noise until restart. It has **not been reproduced** in automated tests (full renders of every user preset; 570 rounds of randomized live use with preset/engine/parameter changes, notes, bend, sustain, mod wheel, sample-rate and block-size changes). The two fixes above remove the likely internal causes. The strongest remaining lead is CPU: rendering every demo with 256-sample blocks averages 8–38% of the real-time budget, but the busiest single blocks (dense chords plus releasing tails using all 16 voices) reach 0.85–1.3x the budget on the test machine. A block over budget makes the audio driver underrun, which can sound like the output dropping out or turning to noise. Until voice rendering is optimized, set the buffer to 512 or 1024 samples in the MIDI panel's *Audio / MIDI settings*. If it still happens, note the device, buffer size and the preset that was playing.
 
 ## v0.4.0 changes
 
@@ -12,7 +23,7 @@ The artist/song names indicate **original interpretations**, not extracted patch
 
 ## Screenshots
 
-| Synthesizer | 64-step sequencer |
+| Synthesizer | 256-step sequencer |
 | --- | --- |
 | ![Synthesizer](preview.png) | ![Sequencer](sequencer.png) |
 | **Four LFOs** | **Scale engine** |
@@ -27,7 +38,7 @@ Run `./run.sh`. Build outputs:
 - `build/Noryn_artefacts/Release/Standalone/NORYN`
 - `build/Noryn_artefacts/Release/VST3/NORYN.vst3` — copy the complete bundle into `~/.vst3/` and rescan your DAW.
 
-Choose audio and MIDI devices in the standalone Options menu. Play a MIDI controller, click the piano, or use A/W/S/E/D/F/T/G/Y/H/U/J. Space auditions the current patch; Page Up/Down browse. STOP clears notes, transport, recording and effect tails. Pitch bend spans two semitones; sustain and velocity work. CC1 opens the filter by up to three octaves; it does not create a hidden LFO route.
+MIDI inputs are enabled automatically in the standalone app; use the **MIDI** button to switch inputs off, open Audio/MIDI settings or map controllers. Play a MIDI controller, click the piano, or use A/W/S/E/D/F/T/G/Y/H/U/J. Space auditions the current patch; Page Up/Down browse. STOP clears notes, transport, recording and effect tails. Pitch bend spans two semitones; sustain and velocity work. CC1 opens the filter by up to three octaves; it does not create a hidden LFO route.
 
 ## Knobs and displays
 
@@ -81,12 +92,12 @@ There are **no legacy hidden sends** to the filter or oscillators. Off means no 
 
 LFOs are per-voice and restart with a note. Modulation indicators show the most recently played active voice's effective values. Shape displays do not move with LFO phase or incoming audio.
 
-## 64-step sequencer
+## 256-step sequencer
 
-Open **64 STEP SEQUENCER**:
+Open **256 STEP SEQUENCER**:
 
 - PLAY / STOP SEQ control transport. BPM spans 30–300.
-- Length spans 1–64 steps. Division is quarter, eighth, sixteenth or thirty-second notes. Note-on/off events use sample deadlines, without scanning every MIDI note on every audio sample.
+- Length spans 1–256 steps. The pad grid shows 64 steps at a time; the **1-64**, **65-128**, **129-192** and **193-256** buttons switch pages, and the footer shows the length and playing step. With **FOLLOW PLAYHEAD** on (the default), the grid turns to the page being played, or to the step-record cursor, so you can watch and overdub live on any page. Choosing a page during playback switches follow off so you can edit another page; tick it again to resume. The strip under the footer shows all 256 steps (filled steps, loop length, visible page, playhead); click it to jump to a page. Division is quarter, eighth, sixteenth or thirty-second notes. Note-on/off events use sample deadlines, without scanning every MIDI note on every audio sample.
 - Click a pad to toggle the entry note. Right-click a pad to inspect its note/velocity. Shift-click clears it. Pads can hold chords; MIDI recording and MCP can enter several notes in a step.
 - Entry velocity, note length in steps, and global gate control articulation. Each recorded chord note retains its own velocity and duration. Pads show length; hover to inspect every note. Right-click also recalls its entry length.
 - **Release limit** defaults to 80 ms for sequencer voices, so a short gate does not inherit a pad's multi-second tail. Enable **PATCH RELEASE** for the preset's full tail. Live keyboard envelopes are independent.
@@ -111,13 +122,13 @@ Two saved user presets are bundled and installed by `run.sh` without overwriting
 - **M83 Solitude - Swell Chord Test:** the current swell study with an eight-bar chord test.
 - **M83 Solitude - Electric Piano Test:** a synthesized six-operator electric-piano alternative with the same pattern.
 
-Select either under User patches, open **64 STEP SEQUENCER**, and press **PLAY**. The arrangement uses 64 eighth-note steps at 61 BPM: Cm7, Bbadd9, F, Fm(add9), Ebmaj7, Abmaj7, Dm7b5/Ab, G7sus4 and G7. The final two chords share the last bar. Quantization is chromatic to retain the borrowed major/dominant notes. Each chord note has its own gate length and velocity. This is a piano-style harmonic test arrangement, not a complete transcription of the recorded performance.
+Select either under User patches, open **256 STEP SEQUENCER**, and press **PLAY**. The arrangement uses 64 eighth-note steps at 61 BPM: Cm7, Bbadd9, F, Fm(add9), Ebmaj7, Abmaj7, Dm7b5/Ab, G7sus4 and G7. The final two chords share the last bar. Quantization is chromatic to retain the borrowed major/dominant notes. Each chord note has its own gate length and velocity. This is a piano-style harmonic test arrangement, not a complete transcription of the recorded performance.
 
 The [JSON pattern](examples/solitude-chords.json) and [MIDI file](<examples/Solitude Chord Study.mid>) can be reused in a DAW. The pattern was created and recalled through the real Cloudflare Code Mode MCP tool. `mcp/server/solitude-test.mjs` can create new uniquely named test copies in a running instance; it replaces that instance's current pattern and leaves transport stopped.
 
 ## Stolen Dog keys test
 
-**Burial Stolen Dog - Hazy Keys** is a saved user preset with a four-bar, 64-step pattern at 115.5 BPM. Select it under User patches, open **64 STEP SEQUENCER**, and press **PLAY**. Six-operator keys, a softened ladder filter, subtle pitch movement, ensemble and tempo echo create the hazy texture. Bass notes have longer gates than the chopped upper chords; sequence release is limited to 100 ms.
+**Burial Stolen Dog - Hazy Keys** is a saved user preset with a four-bar, 64-step pattern at 115.5 BPM. Select it under User patches, open **256 STEP SEQUENCER**, and press **PLAY**. Six-operator keys, a softened ladder filter, subtle pitch movement, ensemble and tempo echo create the hazy texture. Bass notes have longer gates than the chopped upper chords; sequence release is limited to 100 ms.
 
 The study uses C#m7, Eadd9, F#m9 and Dmaj9 with chromatic quantization. It is an original synthesized interpretation informed by [Burial’s recording](https://burial.bandcamp.com/track/stolen-dog), not a sampled recreation or complete transcription. The [JSON pattern](examples/stolen-dog-study.json), [MIDI file](<examples/Stolen Dog Hazy Keys Study.mid>) and native preset are bundled. [Listen to the synthesized study](stolen-dog-study.wav). No reference audio is distributed. `mcp/server/stolen-dog-test.mjs` creates and verifies a uniquely named copy through Cloudflare Code Mode; it replaces the running instance’s current pattern and leaves playback stopped.
 
@@ -141,10 +152,66 @@ cmake --build build --target Noryn_All NorynSmoke -j2
 NORYN_NO_MCP=1 xvfb-run -a build/NorynSmoke_artefacts/Release/NorynSmoke .
 ```
 
-The checks cover 68 sound controls with rendered audio comparisons; every UI parameter binding and minimum; disabled wraparound/accidental reset; all 290 presets and five engines; signature parameter bounds, unique states, output levels and artist/song search; full parameter/pattern recall; 64-step timing at 120/240 BPM; live and chord step recording; exhaustive scale/root/direction/MIDI-note bounds; collision-safe note-offs; matching scope/audio samples; static setting graphs; OSC-display independence; LFO rate/depth graph response; moving modulation indicators with fixed base values; destination isolation and no audio modulation with routes Off; and finite output at 44.1/48/96 kHz with 16/64/127/512-sample blocks.
+The checks cover 68 sound controls with rendered audio comparisons; every UI parameter binding and minimum; disabled wraparound/accidental reset; all 290 presets and five engines; signature parameter bounds, unique states, output levels and artist/song search; full parameter/pattern recall; 64-step timing at 120/240 BPM, 256-step recall, loop wrap and playhead follow; MIDI learn for parameters and transport; oversized host blocks; live and chord step recording; exhaustive scale/root/direction/MIDI-note bounds; collision-safe note-offs; matching scope/audio samples; static setting graphs; OSC-display independence; LFO rate/depth graph response; moving modulation indicators with fixed base values; destination isolation and no audio modulation with routes Off; and finite output at 44.1/48/96 kHz with 16/64/127/512-sample blocks.
 
 The ADSR integration now preserves the release rate established at note-off. Previously, reapplying unchanged parameters each block could stretch a low-sustain patch into an extremely long tail. Regression checks cover sustain values near zero, edits during release, exact per-note gates, Stop/Clear, five-minute loop accounting and bounded short-gate audio. Physical-string excitation is initialized only for the physical-string engine.
 
 Reports: `validation.json`, `control-sensitivity.csv`, `native-knob-verification.json`. Screenshots: `preview.png`, `sequencer.png`, `lfos.png`, `scales.png`, `preview-small.png`. `demo.wav` samples the eight original preset categories. `signature-demo.wav` is a 48-second tour of the 16 new signature families, using original notes/chords rather than song melodies. `preset-levels.csv` reports RMS and peak for every tested patch. Native mouse testing also verifies that dragging 70% below the minimum stays at zero after release/double-click. Offline verification does not replace listening or validation across DAWs.
 
 NORYN is released under [AGPL-3.0](LICENSE). JUCE uses its AGPLv3 open-source option in this build; dependency notices are in [THIRD_PARTY.md](THIRD_PARTY.md). Binary releases include the license and a matching source archive with JUCE 8.0.6. Windows/macOS binaries require builds on those platforms. User wavetable import, a multi-slot arbitrary modulation matrix and host tempo sync remain future work.
+
+## Radiohead — Everything in Its Right Place studies
+
+Two saved User patches are included: **Radiohead Everything - Pulsing Keys** and **Radiohead Everything - Vocal Texture**. Each recalls a 64-step chord study at 136 BPM. Select a patch, open the sequencer and press PLAY. The keys use rounded analog tones; the vocal texture uses the formant wavetable with slow position/filter modulation. These are original synthesized studies; the vocal patch approximates the processed-vocal character with synthesis. Pattern JSON files are in `examples/radiohead-keys.json` and `examples/radiohead-vocal.json`.
+
+## Additional Burial studies
+
+Five saved User patches add original sounds and 64-step arrangements: **Archangel - Ghost Choir** (132 BPM), **Near Dark - Shadow Keys** (135), **Raver - Night Organ** (135), **Kindred - Broken Chord** (134), and **Come Down to Us - Warm Halo** (100). Names begin with `Burial` in the browser. Select one, open the sequencer and press PLAY. The pack spans formant choir, FM keys, organ, dark analog stabs and a slow pad. These are musical inspirations with original chord arrangements, rather than transcriptions or verified reconstructions. Pattern data is in `examples/burial-pack.json`.
+
+## Radiohead and Burial expansion
+
+Twelve further User patches each recall a 64-step original arrangement. Radiohead studies: **Idioteque - Frozen Chords**, **Kid A - Glass Music Box**, **All I Need - Low Gravity**, **Motion Picture Soundtrack - Organ**, **Weird Fishes - Interlocking Pluck**, and **Daydreaming - Distant Keys**. Burial studies: **Untrue - Hollow Choir**, **Shell of Light - Amber Keys**, **Etched Headplate - Rain Bells**, **Ashtray Wasp - Fractured Stab**, **Rival Dealer - Signal Flare**, and **Night Bus - Empty Streets**. Browser names include the artist prefix. Open the sequencer and press PLAY after selecting a patch. These are original synthesized interpretations with original arrangements, not verified song recreations. Pattern data is in `examples/radiohead-burial-expansion.json`.
+
+## Father John Misty studies
+
+Four User patches include original 64-step arrangements: **The Palace - Warm Piano** (72 BPM), **Chloe - Velvet Strings** (86), **Gods Favorite Customer - Sunday Organ** (80), and **Mr Tillman - Soft Electric Keys** (100). Names begin with `Father John Misty`. Select a patch, open the sequencer and press PLAY. Piano and strings are synthesized approximations; these are palette studies with original chords, not transcriptions or verified recreations. Their tempos are arrangement choices. JSON patterns are in `examples/father-john-misty-studies.json`. Album references: [God’s Favorite Customer](https://www.subpop.com/releases/father_john_misty/gods_favorite_customer) and [Chloë and the Next 20th Century](https://fatherjohnmisty.bandcamp.com/album/chlo-and-the-next-20th-century).
+
+## Depeche Mode studies
+
+24 saved User patches span bass, bells, metallic strikes, choir, strings, organ, plucks and leads. Each has an original 64-step arrangement and its own tempo. Select a patch beginning with `Depeche Mode`, open the sequencer and press PLAY. These are synthesized musical inspirations with original arrangements, not verified song reconstructions. Tempos are arrangement choices. Pattern data: `examples/depeche-mode-studies.json`.
+
+- **Enjoy the Silence - Dark Bass** — 113 BPM
+- **Enjoy the Silence - Cathedral Pad** — 113 BPM
+- **Personal Jesus - Machine Bass** — 130 BPM
+- **Personal Jesus - Metallic Strike** — 130 BPM
+- **Never Let Me Down Again - Driving Bass** — 106 BPM
+- **Never Let Me Down Again - Wide Strings** — 106 BPM
+- **Strangelove - Bright Bell** — 118 BPM
+- **Strangelove - Pulse Bass** — 118 BPM
+- **Policy of Truth - Muted Bass** — 114 BPM
+- **Policy of Truth - Glass Hook** — 114 BPM
+- **World in My Eyes - Resonant Bass** — 122 BPM
+- **World in My Eyes - Digital Air** — 122 BPM
+- **Everything Counts - Clockwork Pluck** — 116 BPM
+- **Everything Counts - Reed Organ** — 116 BPM
+- **People Are People - Iron Bell** — 120 BPM
+- **People Are People - Punch Bass** — 120 BPM
+- **Black Celebration - Shadow Choir** — 108 BPM
+- **Black Celebration - Low Pulse Bass** — 108 BPM
+- **Waiting for the Night - Quiet Arp** — 94 BPM
+- **Clean - Sub Bass** — 100 BPM
+- **Walking in My Shoes - Haunted Pad** — 94 BPM
+- **Precious - Silver Keys** — 110 BPM
+- **Just Cant Get Enough - Bright Lead** — 128 BPM
+- **Shake the Disease - Cold Pluck** — 108 BPM
+
+## Song-reference demo sequences
+
+60 Depeche Mode, Radiohead, Thom Yorke, Father John Misty and Burial user patches recall song-specific demos of up to 256 steps (16 bars of sixteenths or 32 bars of eighths; *Everything in Its Right Place* uses six 10/4 bars, *Policy of Truth - Glass Hook* eight bars because the hook is not continuous in its source). They replace the earlier generic arrangements described above, and no two share a pitch pattern. Select one under User patches, open **256 STEP SEQUENCER** and press **PLAY**.
+
+- **46 note-level excerpts** (all Depeche Mode, Radiohead and Thom Yorke patches, plus Burial *Archangel*): quantized excerpts of community MIDI or Online Sequencer transcriptions, matched to the patch role (bass part for bass patches, hook, piano or pad part for others). Each window is the 16-bar span with continuous playing and the most distinct bars, so most demos move through the song's progression rather than repeating one bar. Sources, tracks, windows and file hashes: `examples/song-sequence-replacements.json`; rebuild with `scripts/replace_song_sequences.py`.
+- **14 chord studies**: the four Father John Misty patches use 32-bar intro/verse/chorus progressions from cited chord charts. The other ten Burial patches use progressions estimated from the official preview audio and are low confidence; their second eight bars vary the rhythm. Data: `examples/chord-study-sequences.json`; rebuild with `scripts/write_chord_studies.py`.
+- **13 new patches**: Radiohead *No Surprises - Music Box Bells*, *Pyramid Song - Sunken Piano*, *Videotape - Tape Piano*, *Reckoner - Falling Strings*, *Nude - Round Bass*, *Lotus Flower - Rubber Bass*; Thom Yorke *The Eraser - Loop Piano*; Depeche Mode *Master and Servant - Whip Riff*, *Stripped - Analog Bass*, *Halo - Choir Strings*, *New Life - Synthpop Lead*, *Photographic - Early Sequence*, *A Question of Time - Drive Bass*. Each starts from a related patch's sound with its own changes (`examples/new-reference-presets.json`, `scripts/add_reference_presets.py`).
+- Loudness is balanced from rendered measurements (`scripts/balance_levels.py`); run `NorynSmoke <dir> --user-presets` to re-render every demo and write `user-preset-levels.csv`.
+
+None have been listening-verified against the recordings. The excerpts reproduce melodies and bass lines from the named songs; they are included as playing demos of the sounds.
