@@ -46,11 +46,12 @@
   ]
  ],
  "notes": "Contour ignores tempo, velocity and gate. In v0.5.0 all 60 song patches have distinct contours, demos fill up to 256 steps, and every user preset is rendered by NorynSmoke --user-presets.",
- "replaced_with_sourced_excerpts": 46,
+ "replaced_with_sourced_excerpts": 65,
  "remaining_generic_demos": [],
- "chord_studies": 14,
+ "chord_studies": 16,
  "max_steps": 256,
  "repeated_pitch_contours_after_replacement": [],
- "song_presets": 60,
- "new_presets_v050": 13
+ "song_presets": 81,
+ "new_presets_v050": 13,
+ "nine_inch_nails_presets": 8
 }

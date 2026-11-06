@@ -72,6 +72,8 @@ def plan(path, tracks, channels, beats_per_bar, bars_per_slice, slices_wanted):
         block['label'] = best
     need = max(1, max(b['coverage'] for b in blocks) * .75)
     eligible = [b for b in blocks if b['coverage'] >= need]
+    if len(eligible) < slices_wanted:  # sparse parts (fills, bells): accept any phrase where they play
+        eligible = [b for b in blocks if b['coverage'] >= 1]
     count = collections.Counter(b['label'] for b in eligible)
     # Split the span where the part plays into equal regions, so the medley runs from the start of
     # the song to its end. Each region gives its most common section, preferring one not yet used.

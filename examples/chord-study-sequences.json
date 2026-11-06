@@ -1197,6 +1197,435 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Burial Stolen Dog - Hazy Keys",
+      "bpm": 115.5,
+      "division": 16,
+      "low": 55,
+      "sections": [
+        {
+          "style": "hazy",
+          "progression": [
+            [
+              "F#m9",
+              1
+            ],
+            [
+              "Dadd9",
+              1
+            ],
+            [
+              "C#m7",
+              1
+            ],
+            [
+              "C#m/E",
+              1
+            ],
+            [
+              "F#m9",
+              1
+            ],
+            [
+              "Dadd9",
+              1
+            ],
+            [
+              "C#m7",
+              1
+            ],
+            [
+              "A/E",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "hazy_lift",
+          "progression": [
+            [
+              "F#m9/A",
+              1
+            ],
+            [
+              "Dadd9",
+              1
+            ],
+            [
+              "C#m7",
+              1
+            ],
+            [
+              "C#m/E",
+              1
+            ],
+            [
+              "F#m9/A",
+              1
+            ],
+            [
+              "Dadd9",
+              1
+            ],
+            [
+              "C#m7",
+              1
+            ],
+            [
+              "A/E",
+              1
+            ]
+          ]
+        }
+      ],
+      "source": "Official 30 s iTunes preview, bar-synchronous chroma/NNLS analysis at 115.5 BPM: a stable four-bar F#m9 - Dadd9 - C#m - C#m/E (A/E) cycle",
+      "reference": "Burial - Stolen Dog (official recording)",
+      "status": "audio-analysis-chord-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 72
+    },
+    {
+      "name": "Richard Ashcroft A Song for the Lovers - Warm Strings",
+      "bpm": 77,
+      "division": 8,
+      "low": 55,
+      "sections": [
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "E",
+              1
+            ],
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "F",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "E",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad",
+          "progression": [
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "E",
+              1
+            ],
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "pad_swell",
+          "progression": [
+            [
+              "F",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "E",
+              1
+            ],
+            [
+              "F",
+              1
+            ],
+            [
+              "Em",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "E",
+              1
+            ]
+          ]
+        }
+      ],
+      "source": "https://tabs.ultimate-guitar.com/tab/richard-ashcroft/a-song-for-the-lovers-chords-18979 (verse Am-G-F-E, chorus F-Em-Dm-E); tempo measured from the official preview",
+      "reference": "Verse, chorus, verse, chorus (32 bars)",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 48
+    },
+    {
+      "name": "Richard Ashcroft Break the Night with Colour - Piano",
+      "bpm": 80,
+      "division": 8,
+      "low": 55,
+      "sections": [
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "Dm",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              1
+            ],
+            [
+              "Gsus4",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "Dm",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              1
+            ],
+            [
+              "Gsus4",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              1
+            ],
+            [
+              "Gsus4",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano_flow",
+          "progression": [
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              0.5
+            ],
+            [
+              "C/B",
+              0.5
+            ],
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              0.5
+            ],
+            [
+              "C/B",
+              0.5
+            ]
+          ]
+        },
+        {
+          "style": "piano",
+          "progression": [
+            [
+              "Dm",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              1
+            ],
+            [
+              "Gsus4",
+              1
+            ],
+            [
+              "Dm",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              1
+            ],
+            [
+              "Gsus4",
+              1
+            ]
+          ]
+        },
+        {
+          "style": "piano_flow",
+          "progression": [
+            [
+              "Am",
+              1
+            ],
+            [
+              "G",
+              1
+            ],
+            [
+              "Fadd9",
+              1
+            ],
+            [
+              "C",
+              0.5
+            ],
+            [
+              "C/B",
+              0.5
+            ]
+          ]
+        }
+      ],
+      "source": "https://www.guitartabs.cc/tabs/r/richard_ashcroft/break_the_night_with_colour_acoustic_crd.html (verse Dm-Fadd9-C-Gsus4, chorus Am-G-Fadd9-C-C/B); 80 BPM measured from the official preview",
+      "reference": "Intro, verse, chorus, verse, chorus (32 bars)",
+      "status": "chord-chart-study",
+      "listeningVerified": false,
+      "steps": 256,
+      "populatedSteps": 108
     }
   ]
 }

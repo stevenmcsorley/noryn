@@ -11,7 +11,7 @@ from replace_song_sequences import update
 PITCH = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
 QUALITY = {'': (0, 4, 7), 'm': (0, 3, 7), '7': (0, 4, 7, 10), 'm7': (0, 3, 7, 10), 'maj7': (0, 4, 7, 11),
            '6': (0, 4, 7, 9), 'sus4': (0, 5, 7), 'dim7': (0, 3, 6, 9), 'm7b5': (0, 3, 6, 10),
-           '13': (0, 4, 10, 14, 21)}
+           '13': (0, 4, 10, 14, 21), 'm9': (0, 3, 7, 10, 14), 'maj9': (0, 4, 7, 11, 14), 'add9': (0, 2, 4, 7)}
 
 def pitch_class(name):
     return (PITCH[name[0]] + name[1:].count('#') - name[1:].count('b')) % 12
@@ -44,6 +44,11 @@ STYLES = {
              (.625, .375, .66, 'bass')],
     'bells': [(i / 8, .25, .62 - (i % 2) * .1, 'arp') for i in range(8)],
     'flare': [(0, 1, .6, 'bass'), (0, .875, .66, 'chord'), (.5, .5, .58, 'top')],
+    # Stolen Dog study: bass held 15 steps, a held chord, two off-beat chops and the top note at the bar end.
+    'hazy': [(0, 15.1 / 16, .66, 'bass'), (0, 5.2 / 16, .62, 'chord'), (7 / 16, 2.7 / 16, .5, 'chord'),
+             (11 / 16, 2.9 / 16, .54, 'chord'), (15 / 16, .7 / 16, .46, 'peak')],
+    'hazy_lift': [(0, 15.1 / 16, .66, 'bass'), (0, 5.2 / 16, .62, 'chord'), (7 / 16, 2.7 / 16, .5, 'chord'),
+                  (.5, 4 / 16, .4, 'top'), (11 / 16, 2.9 / 16, .54, 'chord'), (15 / 16, .7 / 16, .46, 'peak')],
     # Second-half variations so 16-bar loops develop instead of repeating.
     'chops_lift': [(0, .375, .74, 'bass'), (0, .125, .7, 'chord'), (.1875, .125, .55, 'chord'),
                    (.4375, .125, .62, 'chord'), (.5, .25, .5, 'top'), (.6875, .1875, .58, 'chord'),
@@ -82,12 +87,14 @@ def build(spec):
                     notes = upper
                 elif part == 'top':
                     notes = [upper[-1] + 12]
+                elif part == 'peak':
+                    notes = [upper[-1]]
                 else:
                     run = upper + [n + 12 for n in upper]
                     if part == 'arp_down':
                         run = run[::-1]
                     notes = [run[int(round(offset * 8)) % len(run)]]
-                held = max(.25, min(at + length, span_end) - at) * steps_per_bar - .1
+                held = max(.25, (min(at + length, span_end) - at) * steps_per_bar - .1)  # floor in steps
                 cell = cells.setdefault(int(round(at * steps_per_bar)), {})
                 for note in notes:
                     if 0 <= note < 128:

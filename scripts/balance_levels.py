@@ -7,7 +7,7 @@ import csv, struct, sys
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-SKIP = ('M83', 'Code Mode', 'Burial Stolen Dog')
+SKIP = ('M83', 'Code Mode')
 
 def main(levels_csv):
     repo = Path(__file__).resolve().parents[1]

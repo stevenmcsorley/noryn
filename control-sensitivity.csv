@@ -1,5 +1,5 @@
 parameter,normalized_low,normalized_high,relative_audio_difference
-analogdrift,0.2,0.8,0.366566
+analogdrift,0.2,0.8,0.320783
 attack,0.2,0.8,0.640517
 balance,0.2,0.8,0.771975
 chorus,0.2,0.8,0.538561
@@ -49,7 +49,7 @@ octaveb,0.2,0.8,0.910609
 oscbsemi,0.2,0.8,0.850107
 osclink,0.2,0.8,0.921995
 pan,0.2,0.8,0.519910
-phasefree,0.2,0.8,0.510234
+phasefree,0.2,0.8,0.712769
 pitchfine,0.2,0.8,1.002455
 position,0.2,0.8,0.306049
 pulsewidth,0.2,0.8,0.868827
