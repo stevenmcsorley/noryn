@@ -7,7 +7,7 @@ namespace noryn
 {
 // Synthesized drum machine: 16 pads, each an analog-style model built from oscillators and noise,
 // or a loaded one-shot sample. A 16-lane step pattern runs on the shared transport.
-constexpr int drumPads = 16, maxDrumSteps = 64;
+constexpr int drumPads = 16, maxDrumSteps = 256; // as long as the 256-step sequencer
 enum class DrumType
 {
     Kick,
@@ -772,6 +772,11 @@ struct DrumMachine
         }
         if (!running)
             playhead.store(-1);
+        // Stopping the transport stops the drums: ringing cymbals and toms fade out in ~20 ms.
+        if (!running && wasRunning)
+            for (auto &voice : voices)
+                if (voice.active)
+                    voice.choking = juce::jmin(voice.choking, .999f);
         auto event = hits.cbegin();
         for (int i = 0; i < count; ++i)
         {

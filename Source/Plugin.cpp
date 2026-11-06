@@ -881,7 +881,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         if (incidents.pending.load() == IncidentRecorder::none)
             return false;
         String summary;
-        summary << "Version 1.0.0\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
+        summary << "Version 1.0.1\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
                 << ", block " << preparedBlock << "\nSequencer playing " << int(sequencer.playing.load())
                 << ", recording " << int(sequencer.recording.load()) << ", playhead "
                 << sequencer.playhead.load() << "\nActive voices " << visual.voices.load()
@@ -1056,7 +1056,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "1.0.0");
+        result->setProperty("version", "1.0.1");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
@@ -1395,8 +1395,10 @@ class NorynProcessor : public AudioProcessor, private Timer
         if (old.isValid())
             tree.removeChild(old, nullptr);
         tree.addChild(sequencer.save(), -1, nullptr);
-        if (!drums.pattern.empty())
-            tree.addChild(drums.save(), -1, nullptr);
+        // A loaded patch's own Drums block lives on in the parameter tree; replace it, never duplicate it.
+        for (auto stale = tree.getChildWithName("Drums"); stale.isValid(); stale = tree.getChildWithName("Drums"))
+            tree.removeChild(stale, nullptr);
+        tree.addChild(drums.save(), -1, nullptr); // empty too, so drumless patches silence the drums
         auto xml = tree.createXml();
         copyXmlToBinary(*xml, b);
     }

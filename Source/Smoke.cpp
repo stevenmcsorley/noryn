@@ -743,6 +743,95 @@ int main(int argc, char **argv)
             require(nonFinite == 0 && stuck == 0, "Fuzzed live use produced invalid or stuck audio");
             return 0;
         }
+        if (argc > 3 && String(argv[2]) == "--apply-song-drums")
+        {
+            // --apply-song-drums plan.json: writes each song preset's drum part (kit + steps, or a
+            // pattern preset, or none) and balances drums against the synth part.
+            auto plan = JSON::parse(File(argv[3]));
+            auto render = [&](double seconds)
+            {
+                h.prepare(48000, 512);
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+                AudioBuffer<float> block(2, 512);
+                MidiBuffer none;
+                double energy = 0;
+                const int blocks = int(seconds * 48000 / 512);
+                for (int b = 0; b < blocks; ++b)
+                {
+                    block.clear();
+                    h.p->processBlock(block, none);
+                    for (int c = 0; c < 2; ++c)
+                        for (int i = 0; i < 512; ++i)
+                            energy += block.getSample(c, i) * block.getSample(c, i);
+                }
+                norynControl(h.p.get(), JSON::parse(R"({"op":"panic"})"));
+                AudioBuffer<float> flush(2, 512);
+                MidiBuffer none2;
+                h.p->processBlock(flush, none2);
+                return std::sqrt(energy / (2.0 * blocks * 512));
+            };
+            for (int item = 0; item < plan.size(); ++item)
+            {
+                const auto entry = plan[item];
+                const auto file = exampleRoot.getChildFile("presets/" + entry["preset"].toString() + ".noryn");
+                MemoryBlock patch;
+                require(file.loadFileAsData(patch), "missing preset " + entry["preset"].toString().toStdString());
+                auto load = [&] { h.p->setStateInformation(patch.getData(), int(patch.getSize())); };
+                load();
+                const float master = h.parameters.at("master")->convertFrom0to1(h.parameters.at("master")->getValue());
+                auto applyDrums = [&]
+                {
+                    norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"clear":true}})"));
+                    if (bool(entry["none"]))
+                        return;
+                    auto *args = new DynamicObject();
+                    args->setProperty("kit", entry["kit"]);
+                    if (entry.hasProperty("pattern"))
+                        args->setProperty("pattern", entry["pattern"]);
+                    auto *request = new DynamicObject();
+                    request->setProperty("op", "drums");
+                    request->setProperty("args", var(args));
+                    norynControl(h.p.get(), var(request));
+                    if (entry.hasProperty("hits"))
+                    {
+                        norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"clear":true}})"));
+                        norynControl(h.p.get(), JSON::parse("{\"op\":\"drums\",\"args\":{\"length\":" + entry["length"].toString() + "}}"));
+                        auto *p = dynamic_cast<AudioProcessor *>(h.p.get());
+                        for (const auto &hit : *entry["hits"].getArray())
+                            norynControl(p, JSON::parse("{\"op\":\"drums\",\"args\":{\"step\":{\"pad\":" + hit[0].toString() +
+                                                        ",\"step\":" + hit[1].toString() + ",\"velocity\":" + hit[2].toString() + "}}}"));
+                    }
+                };
+                applyDrums();
+                const double bpm = h.parameters.at("bpm")->convertFrom0to1(h.parameters.at("bpm")->getValue());
+                const int division = int(h.parameters.at("seqdivision")->convertFrom0to1(h.parameters.at("seqdivision")->getValue()));
+                const int length = int(h.parameters.at("seqlength")->convertFrom0to1(h.parameters.at("seqlength")->getValue()));
+                const double loop = jmin(40.0, length * 60.0 / (bpm * (1 << division)));
+                double synthRms = 0, drumRms = 0;
+                float drumLevel = 0;
+                if (!bool(entry["none"]))
+                {
+                    h.value("drumlevel", 0);
+                    synthRms = render(loop);
+                    h.value("drumlevel", 1);
+                    h.value("master", 0);
+                    drumRms = render(loop);
+                    // Drums sit just under the synth part; the synth gives up a little so the total stays put.
+                    drumLevel = drumRms > 1.e-5 ? float(jlimit(.08, 1.5, synthRms * .8 / drumRms)) : 0.f;
+                    h.value("master", jmax(0.f, master * .85f));
+                    h.value("drumlevel", drumLevel);
+                }
+                else
+                    h.value("drumlevel", .9f);
+                MemoryBlock saved;
+                h.p->getStateInformation(saved);
+                require(file.replaceWithData(saved.getData(), saved.getSize()), "could not write preset");
+                const double total = render(loop);
+                std::cout << entry["preset"].toString() << ": " << (bool(entry["none"]) ? String("no drums") : entry["kit"].toString())
+                          << " synth " << synthRms << " drums@1 " << drumRms << " level " << drumLevel << " total " << total << "\n";
+            }
+            return 0;
+        }
         if (argc > 3 && String(argv[2]) == "--hunter")
         {
             // --hunter <dir>: builds the Hunter multitrack demo session headlessly and checks it.
@@ -1795,7 +1884,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"1.0.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"1.0.1\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +

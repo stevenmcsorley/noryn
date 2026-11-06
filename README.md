@@ -2,6 +2,16 @@
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
 
+## v1.0.1: drums for every song demo
+
+- **Every song demo has its drums.** 55 transcribed demos carry the drum part from the same community MIDI file and the same four song sections as their synth part (channel 10, quantized to 1/16, General MIDI notes mapped to the pad roles). They span up to 256 steps, so the drums follow the medley section by section. 22 demos without drum MIDI, mostly the chord studies, get a pattern chosen for the song: two-step garage for Burial, trip-hop for Portishead, synth-pop drive for Depeche Mode and so on. Five songs that have no drums on record (Motion Picture Soundtrack, Daydreaming, A Warm Place, Night Bus, The Palace) stay drumless, as do the M83 and Code Mode studies.
+- Kits follow the artist: Linn Electro for Depeche Mode and The Cure, Industrial for Nine Inch Nails, Trip-Hop for Portishead, UNKLE and Burial, and Breakbeat Dusty or Minimal Clicks for Radiohead. Drum level was set per preset by rendering the synth and drums separately, so the drums sit just under the synth part.
+- Drum patterns now run to 256 steps (16 bars), with bar pages that follow the playhead.
+- Patches now always save their drums, an empty pattern included, so loading a drumless song silences the previous one's drums. Older patches still leave the drums alone.
+- Fixed: re-saving a loaded patch could keep its old drum pattern instead of the current one.
+- Drums now fade out within about 20 ms when the transport stops.
+- `scripts/plan_song_drums.py` and `NorynSmoke . --apply-song-drums plan.json` rebuild and balance the song drums.
+
 ## v1.0.0: drums, a multitrack studio and a vocal chain
 
 NORYN is now a small studio. The standalone app records, mixes and bounces; inside a DAW, NORYN stays an instrument and gains the drum machine (the DAW already has tracks).

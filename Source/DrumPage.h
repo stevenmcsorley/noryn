@@ -37,10 +37,13 @@ class DrumPage : public juce::Component, private juce::Timer
             syncLength();
             repaint();
         };
-        lengths.addItemList({"16 steps", "32 steps", "48 steps", "64 steps"}, 1);
+        for (int bars = 1; bars <= 16; bars *= 2)
+            lengths.addItem(juce::String(bars) + (bars == 1 ? " bar" : " bars") + " (" + juce::String(bars * 16) + ")", bars * 16);
+        lengths.addItem("3 bars (48)", 48);
+        lengths.addItem("12 bars (192)", 192);
         lengths.onChange = [this]
         {
-            drums.pattern.length.store(lengths.getSelectedId() * 16);
+            drums.pattern.length.store(lengths.getSelectedId());
             if (view * 16 >= drums.pattern.length.load())
                 showView(0);
             repaint();
@@ -62,13 +65,15 @@ class DrumPage : public juce::Component, private juce::Timer
             drums.pattern.clear();
             repaint();
         };
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < maxDrumSteps / 16; ++i)
         {
             auto &b = viewButtons[size_t(i)];
-            b.setButtonText(juce::String(i * 16 + 1) + "-" + juce::String(i * 16 + 16));
+            b.setButtonText(juce::String(i + 1));
+            b.setTooltip("Bar " + juce::String(i + 1) + " (steps " + juce::String(i * 16 + 1) + "-" + juce::String(i * 16 + 16) + ")");
             b.setRadioGroupId(4471);
             b.setClickingTogglesState(true);
             b.onClick = [this, i] { showView(i); };
+            b.setWantsKeyboardFocus(false);
             addAndMakeVisible(b);
         }
         for (auto *c : std::initializer_list<juce::Component *>{&kits, &patterns, &lengths, &play, &record, &keys, &clear,
@@ -129,8 +134,8 @@ class DrumPage : public juce::Component, private juce::Timer
         record.setBounds(662, 8, 100, 30);
         keys.setBounds(768, 8, 130, 30);
         clear.setBounds(904, 8, 60, 30);
-        for (int i = 0; i < 4; ++i)
-            viewButtons[size_t(i)].setBounds(gridX + i * 102, 46, 96, 22);
+        for (int i = 0; i < maxDrumSteps / 16; ++i)
+            viewButtons[size_t(i)].setBounds(gridX + i * 50, 46, 46, 22);
         const int px = 1000;
         padType.setBounds(px + 12, 132, 180, 24);
         padChoke.setBounds(px + 200, 132, 190, 24);
@@ -255,7 +260,7 @@ class DrumPage : public juce::Component, private juce::Timer
     juce::ComboBox kits, patterns, lengths, padType, padChoke;
     juce::TextButton play{"PLAY"}, record{"REC DRUMS"}, keys{"KEYS PLAY DRUMS"}, clear{"CLEAR"},
         loadSample{"LOAD SAMPLE..."};
-    std::array<juce::TextButton, 4> viewButtons;
+    std::array<juce::TextButton, maxDrumSteps / 16> viewButtons;
     std::unique_ptr<ui::Knob> tune, decay, tone, snap, level, pan, busDrive, busComp, room;
     std::unique_ptr<juce::FileChooser> chooser;
     int selected = 0, view = 0;
@@ -275,13 +280,20 @@ class DrumPage : public juce::Component, private juce::Timer
     void showView(int index)
     {
         view = index;
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < maxDrumSteps / 16; ++i)
+        {
             viewButtons[size_t(i)].setToggleState(i == index, juce::dontSendNotification);
+            viewButtons[size_t(i)].setEnabled(i * 16 < drums.pattern.length.load());
+        }
         repaint();
     }
     void syncLength()
     {
-        lengths.setSelectedId(juce::jlimit(1, 4, (drums.pattern.length.load() + 15) / 16), juce::dontSendNotification);
+        const int length = drums.pattern.length.load();
+        if (lengths.indexOfItemId(length) < 0)
+            lengths.addItem(juce::String(length) + " steps", length);
+        lengths.setSelectedId(length, juce::dontSendNotification);
+        showView(view);
     }
     void selectPad(int p)
     {
@@ -316,6 +328,9 @@ class DrumPage : public juce::Component, private juce::Timer
         const bool running = isPlaying && isPlaying();
         if (play.getToggleState() != running)
             play.setToggleState(running, juce::dontSendNotification);
+        // Long patterns: the grid follows the bar that is playing.
+        if (running && !painting && drums.playhead.load() >= 0 && drums.playhead.load() / 16 != view)
+            showView(drums.playhead.load() / 16);
         if (isVisible())
             repaint(0, 74, getWidth(), getHeight() - 74);
     }
