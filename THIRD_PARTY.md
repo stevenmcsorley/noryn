@@ -18,7 +18,7 @@ The factory parameter bank and native UI drawing code were created for this proj
 
 ## Corresponding source
 
-The main release provides `NORYN-0.7.0-source.tar.gz`, containing this project's sources and the JUCE 8.0.6 source tree needed for the native build. Build it without fetching JUCE:
+The main release provides `NORYN-0.7.1-source.tar.gz`, containing this project's sources and the JUCE 8.0.6 source tree needed for the native build. Build it without fetching JUCE:
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_JUCE="$PWD/vendor/JUCE"

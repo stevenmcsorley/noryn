@@ -1,5 +1,6 @@
 #include "ControlBridge.h"
 #include "Engine.h"
+#include "Incidents.h"
 #include "MidiMap.h"
 #if JucePlugin_Build_Standalone
 #include <juce_audio_plugin_client/Standalone/juce_StandaloneFilterWindow.h>
@@ -17,7 +18,7 @@ namespace
 const Colour cyan(0xff5de7ed), amber(0xffffb569), ink(0xff090e12), text(0xffe3edf0), muted(0xff8ca5ae);
 }
 class NorynEditor;
-class NorynProcessor : public AudioProcessor
+class NorynProcessor : public AudioProcessor, private Timer
 {
   public:
     AudioProcessorValueTreeState state;
@@ -34,6 +35,7 @@ class NorynProcessor : public AudioProcessor
     MidiBuffer scaledMidi, sequenceMidi, quantizedMidi, splitMidi;
     int preparedBlock = 0;
     std::atomic<int> audioRecoveries{0}, voiceFaults{0};
+    IncidentRecorder incidents;
     MidiMap midiMap;
     std::vector<RangedAudioParameter *> mappable;
     StringArray mappableIds;
@@ -71,9 +73,12 @@ class NorynProcessor : public AudioProcessor
         if (SystemStats::getEnvironmentVariable("NORYN_NO_MCP", {}) != "1")
             bridge = std::make_unique<ControlBridge>([this](const var &request)
                                                      { return handleControl(request); });
+        startTimer(500);
     }
     ~NorynProcessor() override
     {
+        stopTimer();
+        flushIncident();
         if (midiMap.dirty.load())
             saveMidiMap();
         bridge.reset();
@@ -306,6 +311,7 @@ class NorynProcessor : public AudioProcessor
     void prepareToPlay(double sr, int block) override
     {
         preparedBlock = jmax(1, block);
+        incidents.prepare(sr);
         synth.allNotesOff(0, false);
         sequencer.reset();
         scaleEngine.reset();
@@ -397,6 +403,7 @@ class NorynProcessor : public AudioProcessor
         reverb.reset();
         delay.clear();
         audioRecoveries.fetch_add(1);
+        incidents.trigger(IncidentRecorder::effectRecovery);
     }
     void renderBlock(AudioBuffer<float> &buffer, MidiBuffer &midi)
     {
@@ -451,6 +458,7 @@ class NorynProcessor : public AudioProcessor
             high.clear();
             synth.allNotesOff(0, false);
             voiceFaults.fetch_add(1);
+            incidents.trigger(IncidentRecorder::voiceFault);
         }
         oversampling.processSamplesDown(base);
         chorus.setRate(v("chorusrate"));
@@ -506,6 +514,7 @@ class NorynProcessor : public AudioProcessor
             buffer.setSample(1, i, r);
             visual.left.push(l);
             visual.right.push(r);
+            incidents.push(l, r);
             peakL = jmax(peakL, std::abs(l));
             peakR = jmax(peakR, std::abs(r));
         }
@@ -526,6 +535,41 @@ class NorynProcessor : public AudioProcessor
                     break;
                 }
         visual.voices.store(voices);
+    }
+    void timerCallback() override
+    {
+        flushIncident();
+    }
+    // Saves a pending incident from the black-box recorder, with everything needed to reproduce it.
+    bool flushIncident()
+    {
+        if (incidents.pending.load() == IncidentRecorder::none)
+            return false;
+        String summary;
+        summary << "Version 0.7.1\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
+                << ", block " << preparedBlock << "\nSequencer playing " << int(sequencer.playing.load())
+                << ", recording " << int(sequencer.recording.load()) << ", playhead "
+                << sequencer.playhead.load() << "\nActive voices " << visual.voices.load()
+                << "\nEffect recoveries " << audioRecoveries.load() << ", voice faults " << voiceFaults.load()
+                << "\n" << deviceReport() << "Parameters:\n";
+        for (auto *parameter : mappable)
+            summary << "  " << parameter->paramID << " = " << parameter->convertFrom0to1(parameter->getValue())
+                    << "\n";
+        MemoryBlock stateData;
+        getStateInformation(stateData);
+        return incidents.flush(summary, stateData);
+    }
+    static String deviceReport()
+    {
+#if JucePlugin_Build_Standalone
+        if (auto *holder = StandalonePluginHolder::getInstance())
+            if (auto *device = holder->deviceManager.getCurrentAudioDevice())
+                return "Audio device: " + device->getTypeName() + " / " + device->getName() + ", buffer " +
+                       String(device->getCurrentBufferSizeSamples()) + ", xruns " +
+                       String(device->getXRunCount()) + ", CPU " +
+                       String(holder->deviceManager.getCpuUsage() * 100, 1) + "%\n";
+#endif
+        return "Audio device: host\n";
     }
     // The controller map belongs to the player's setup, not to a sound, so it is stored outside presets.
     static File midiMapFile()
@@ -641,12 +685,15 @@ class NorynProcessor : public AudioProcessor
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "0.7.0");
+        result->setProperty("version", "0.7.1");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
         result->setProperty("audioRecoveries", audioRecoveries.load());
         result->setProperty("voiceFaults", voiceFaults.load());
+        result->setProperty("incidentsSaved", incidents.saved.load());
+        result->setProperty("outputRms", incidents.lastRms);
+        result->setProperty("outputZeroCrossingRate", incidents.lastZeroCrossingRate);
         result->setProperty("recording", sequencer.recording.load());
         result->setProperty("playhead", sequencer.playhead.load());
         auto *params = new DynamicObject();
@@ -894,6 +941,12 @@ class NorynProcessor : public AudioProcessor
             if (args.hasProperty("amount"))
                 setValue((prefix + "amount").toRawUTF8(), jlimit(-1.f, 1.f, float(args["amount"])), true);
             return result();
+        }
+        if (op == "flushIncident")
+        {
+            auto *result = new DynamicObject();
+            result->setProperty("saved", flushIncident());
+            return var(result);
         }
         if (op == "panic")
         {

@@ -2,6 +2,11 @@
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
 
+## v0.7.1 changes
+
+- **Black-box recorder for the white-noise report.** NORYN now watches its own output. If it turns into loud broadband noise for half a second, or a safety guard has to reset non-finite audio, it saves three files to `~/.config/NORYN/incidents/`: a WAV of the last 4 seconds, a `.noryn` file of the exact state (sound, sequence, scale; load it like a user preset) and a `.txt` summary (preset, sequencer state, voices, every parameter, and in the standalone app the audio device, buffer size, xrun count and CPU load). It only records; it never mutes, so deliberately noisy sounds are unaffected. At most one report per 30 seconds is kept, and only the newest 20.
+- **Noise investigation.** New test modes: `NorynSmoke . --noise-hunt N seed` plays user presets at 44.1 kHz / 512 with the sequencer running and changes presets, sequencer settings, engine, record/play state, keyboard notes and knobs mid-play; `NorynSmoke . --probe "<preset>" out.wav <note> id=value...` renders one held note. Every user preset render now also fails if the recorder reports it as noise.
+
 ## v0.7.0 changes
 
 - **26 new song presets.** Nine Inch Nails (8 from 7 songs), The Cure (5), Portishead (2), UNKLE (1), The Verve (3) and Richard Ashcroft (2), each with a whole-song demo; see *Song-reference demo sequences*.
@@ -25,7 +30,13 @@ Native Linux VST3 instrument and standalone synthesizer. The interface takes cue
 
 ### Known issue: occasional white noise in the standalone app
 
-Reported in live use: audio sometimes turns to white noise until restart. It has **not been reproduced** in automated tests (full renders of every user preset; 570 rounds of randomized live use with preset/engine/parameter changes, notes, bend, sustain, mod wheel, sample-rate and block-size changes). The two fixes above remove the likely internal causes. The strongest remaining lead is CPU: rendering every demo with 256-sample blocks averages 8–38% of the real-time budget, but the busiest single blocks (dense chords plus releasing tails using all 16 voices) reach 0.85–1.3x the budget on the test machine. A block over budget makes the audio driver underrun, which can sound like the output dropping out or turning to noise. Until voice rendering is optimized, set the buffer to 512 or 1024 samples in the MIDI panel's *Audio / MIDI settings*. If it still happens, note the device, buffer size and the preset that was playing.
+Reported in live use, mostly with the step sequencer running: audio sometimes turns to loud white noise. It has **not been reproduced** offline. What has been ruled out:
+
+- **Synth or effects running away.** The filters, chorus, delay and reverb are stable or tanh-limited, and non-finite audio is caught and reset (since 0.6.0). 600 randomized sequencer sessions (presets, sequencer length/rate/gate, engine, record/play, notes and knobs changed mid-play) produced no noise. The few loud, bright windows found were tonal sound with the filter opened, not noise.
+- **The noise oscillator.** Even at full level through an open filter on an eight-note chord it reaches about RMS 0.11, so a louder wall of noise is not a sound NORYN makes on purpose.
+- **Audio-driver underruns staying stuck.** NORYN's standalone ALSA output was reproduced with the same settings into PipeWire. A 250 ms stall and two seconds at 115% CPU both produced dropouts and crackle, and the output recovered cleanly as soon as processing caught up.
+
+Remaining suspects are outside the synth's sound path: the audio device or driver, or controller data. One example would be a USB hub dropping out and sending a burst of MIDI that moves learned controls. If it happens, the black-box recorder (0.7.1) saves what NORYN was outputting and its full state to `~/.config/NORYN/incidents/`. If those files show clean audio while you heard noise, the fault is after NORYN. A 512 or 1024 sample buffer is still recommended.
 
 ## v0.4.0 changes
 

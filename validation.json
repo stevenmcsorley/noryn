@@ -1,5 +1,5 @@
 {
-  "version": "0.7.0",
+  "version": "0.7.1",
   "factory_presets": 290,
   "signature_presets": 192,
   "reference_studies": 2,
@@ -8,7 +8,7 @@
   "tested_controls": 68,
   "weakest_control": "depth",
   "minimum_relative_audio_difference": 0.048012,
-  "quietest_preset_rms": 0.004573,
+  "quietest_preset_rms": 0.004443,
   "loudest_preset_rms": 0.122377,
   "state_recall": true,
   "gui_bindings": true,
@@ -18,6 +18,6 @@
   "five_minute_note_balance": true,
   "stress_sample_rates": [44100, 48000, 96000],
   "stress_block_sizes": [16, 64, 127, 512],
-  "elapsed_seconds": 69.78,
-  "dense_16_voice_realtime_ratio": 0.5555
+  "elapsed_seconds": 73.12,
+  "dense_16_voice_realtime_ratio": 0.6228
 }

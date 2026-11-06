@@ -65,7 +65,7 @@ class ControlBridge : private juce::Timer
         object->setProperty("id", id);
         object->setProperty("inbox", inbox.getFullPathName());
         object->setProperty("outbox", outbox.getFullPathName());
-        object->setProperty("version", "0.7.0");
+        object->setProperty("version", "0.7.1");
 #if JUCE_LINUX || JUCE_MAC
         object->setProperty("pid", int(getpid()));
 #endif

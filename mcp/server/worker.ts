@@ -16,7 +16,7 @@ const instanceId = z
     "Optional instance ID from get_state; defaults to the latest running synth.",
   );
 function upstream(env: Env) {
-  const server = new McpServer({ name: "noryn", version: "0.7.0" });
+  const server = new McpServer({ name: "noryn", version: "0.7.1" });
   async function call(op: string, args: unknown, id?: string) {
     const response = await fetch(`${env.NORYN_BRIDGE_URL}/api`, {
       method: "POST",
@@ -247,7 +247,7 @@ export default {
     )
       return new Response("Unauthorized", { status: 401 });
     if (new URL(request.url).pathname === "/health")
-      return Response.json({ name: "noryn-codemode", version: "0.7.0" });
+      return Response.json({ name: "noryn-codemode", version: "0.7.1" });
     const server = await codeMcpServer({
       server: upstream(env),
       executor: new DynamicWorkerExecutor({ loader: env.LOADER }),

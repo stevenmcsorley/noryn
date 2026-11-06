@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "0.7.0"
+VERSION = "0.7.1"
 DIST.mkdir(exist_ok=True)
 
 

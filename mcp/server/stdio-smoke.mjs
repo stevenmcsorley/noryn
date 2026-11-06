@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const client = new Client({
   name: "noryn-stdio-verification",
-  version: "0.7.0",
+  version: "0.7.1",
 });
 await client.connect(
   new StdioClientTransport({

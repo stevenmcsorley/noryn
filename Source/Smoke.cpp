@@ -205,6 +205,10 @@ int main(int argc, char **argv)
     const auto testMap = File::getSpecialLocation(File::tempDirectory).getChildFile("noryn-test-midi-map.xml");
     testMap.deleteFile();
     setenv("NORYN_MIDI_MAP_FILE", testMap.getFullPathName().toRawUTF8(), 1);
+    // Nor write incident reports into the player's folder.
+    const auto testIncidents = File::getSpecialLocation(File::tempDirectory).getChildFile("noryn-test-incidents");
+    testIncidents.deleteRecursively();
+    setenv("NORYN_INCIDENT_DIR", testIncidents.getFullPathName().toRawUTF8(), 1);
     ScopedJuceInitialiser_GUI initialise;
     try
     {
@@ -351,6 +355,59 @@ int main(int argc, char **argv)
             h.value("cutoff", 1200);
             std::cout << "PASS: MIDI learn maps controllers to parameters and transport, and saves the map.\n";
         }
+        {
+            // Black-box recorder: broadband noise at full level is reported with audio and state;
+            // a normal loud chord is not.
+            auto *processor = h.p.get();
+            auto saved = [&] { return int(norynControl(processor, JSON::parse(R"({"op":"state"})"))["incidentsSaved"]); };
+            auto play = [&](double seconds, bool stop = true)
+            {
+                h.prepare(44100, 512);
+                AudioBuffer<float> block(2, 512);
+                MidiBuffer midi;
+                for (int note : {48, 52, 55, 59, 62, 64, 67, 71})
+                    midi.addEvent(MidiMessage::noteOn(1, note, 1.f), 0);
+                for (int at = 0; at < int(44100 * seconds); at += 512)
+                {
+                    h.p->processBlock(block, midi);
+                    midi.clear();
+                }
+                if (stop)
+                {
+                    norynControl(processor, JSON::parse(R"({"op":"panic"})"));
+                    block.clear();
+                    h.p->processBlock(block, midi);
+                }
+            };
+            h.p->setCurrentProgram(1);
+            h.value("master", 1);
+            h.value("sustain", 1);
+            play(2);
+            const int before = saved();
+            for (auto [id, value] : std::vector<std::pair<String, float>>{
+                     {"noise", 1}, {"filtercharacter", 0}, {"filtermode", 2}, {"cutoff", 2000}, {"drive", 1}, {"reverb", 0},
+                     {"delay", 0}, {"chorus", 0}, {"balance", 0}, {"sub", 0}})
+                h.value(id, value);
+            play(2, false);
+            norynControl(processor, JSON::parse(R"({"op":"flushIncident"})"));
+            norynControl(processor, JSON::parse(R"({"op":"panic"})"));
+            {
+                // Consume the panic here so it cannot stop the next test's sequencer.
+                AudioBuffer<float> block(2, 512);
+                MidiBuffer none;
+                h.p->processBlock(block, none);
+            }
+            require(saved() == before + 1, "Loud broadband noise was not reported");
+            auto texts = testIncidents.findChildFiles(File::findFiles, false, "*.txt");
+            require(texts.size() == 1 && texts[0].withFileExtension(".wav").getSize() > 44100 * 6 &&
+                        texts[0].withFileExtension(".noryn").getSize() > 1000 &&
+                        texts[0].loadFileAsString().contains("noise-like"),
+                    "Incident files were not written");
+            std::cout << "PASS: black-box recorder saves audio and state for noise, not for a loud chord ("
+                      << before << " false reports).\n";
+            require(before == 0, "A normal chord was reported as noise");
+            h.p->setCurrentProgram(1);
+        }
         if (argc > 2 && String(argv[2]) == "--fuzz")
         {
             // Simulated heavy live use. Every recovery would previously have been a stuck-noise event.
@@ -447,6 +504,159 @@ int main(int argc, char **argv)
             require(nonFinite == 0 && stuck == 0, "Fuzzed live use produced invalid or stuck audio");
             return 0;
         }
+        if (argc > 3 && String(argv[2]) == "--probe")
+        {
+            // --probe "<preset>" out.wav note id=value ...: holds one note for 1.5 s with the sequencer stopped.
+            MemoryBlock patch;
+            exampleRoot.getChildFile("presets/" + String(argv[3]) + ".noryn").loadFileAsData(patch);
+            h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+            for (int a = 6; a < argc; ++a)
+                h.value(String(argv[a]).upToFirstOccurrenceOf("=", false, false),
+                        String(argv[a]).fromFirstOccurrenceOf("=", false, false).getFloatValue());
+            h.p->releaseResources();
+            h.p->setPlayConfigDetails(0, 2, 44100, 512);
+            h.p->prepareToPlay(44100, 512);
+            const int total = int(44100 * 1.5);
+            AudioBuffer<float> all(1, total), block(2, 512);
+            MidiBuffer midi;
+            for (int at = 0; at < total; at += 512)
+            {
+                midi.clear();
+                if (at == 0)
+                    midi.addEvent(MidiMessage::noteOn(1, String(argv[5]).getIntValue(), uint8(100)), 0);
+                h.p->processBlock(block, midi);
+                all.copyFrom(0, at, block, 0, 0, jmin(512, total - at));
+            }
+            auto st = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+            std::cout << "PROBE voices " << st["voices"].toString() << " playing " << st["playing"].toString()
+                      << " recording " << st["recording"].toString() << " recoveries "
+                      << st["audioRecoveries"].toString() << "\n";
+            for (auto *param : h.p->getParameters())
+                if (auto *ranged = dynamic_cast<RangedAudioParameter *>(param))
+                    std::cout << ranged->paramID << "=" << ranged->convertFrom0to1(ranged->getValue()) << " ";
+            std::cout << "\n";
+            File(argv[4]).deleteFile();
+            WavAudioFormat wav;
+            std::unique_ptr<AudioFormatWriter> writer(
+                wav.createWriterFor(new FileOutputStream(File(argv[4])), 44100, 1, 32, {}, 0));
+            writer->writeFromAudioSampleBuffer(all, 0, total);
+            return 0;
+        }
+        if (argc > 2 && String(argv[2]) == "--noise-hunt")
+        {
+            // Realistic sessions at 44.1 kHz / 512: user presets switched mid-play with the sequencer
+            // running, keyboard notes and knob moves. Flags loud windows whose zero-crossing rate is
+            // white-noise-like, which the finite/peak checks above cannot see.
+            const int rounds = argc > 3 ? String(argv[3]).getIntValue() : 100;
+            Random rng(argc > 4 ? String(argv[4]).getLargeIntValue() : 99);
+            auto users = exampleRoot.getChildFile("presets").findChildFiles(File::findFiles, false, "*.noryn");
+            users.sort();
+            std::vector<RangedAudioParameter *> knobs;
+            for (auto &entry : h.parameters)
+                if (entry.first != "master" && entry.first != "noise")
+                    knobs.push_back(entry.second);
+            const double sr = 44100;
+            const int size = 512, window = 4096;
+            h.p->releaseResources();
+            h.p->setPlayConfigDetails(0, 2, sr, size);
+            h.p->prepareToPlay(sr, size);
+            AudioBuffer<float> block(2, size);
+            MidiBuffer midi;
+            std::vector<float> history;
+            int events = 0;
+            double maxRms = 0, maxZcrLoud = 0;
+            String lastTweak;
+            for (int round = 0; round < rounds; ++round)
+            {
+                const auto file = users[rng.nextInt(users.size())];
+                MemoryBlock patch;
+                file.loadFileAsData(patch);
+                h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+                if (SystemStats::getEnvironmentVariable("NORYN_HUNT_SELFTEST", {}).isNotEmpty())
+                    h.value("noise", 1);
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+                history.clear();
+                String roundLog;
+                bool reported = false;
+                const int blocks = int(sr * 4 / size);
+                for (int b = 0; b < blocks; ++b)
+                {
+                    midi.clear();
+                    if (rng.nextInt(20) == 0)
+                    {
+                        auto *param = knobs[size_t(rng.nextInt(int(knobs.size())))];
+                        const float value = jlimit(0.f, 1.f, param->getValue() + (rng.nextFloat() - .5f) * .3f);
+                        param->setValueNotifyingHost(value);
+                        lastTweak = param->paramID + "=" + String(param->convertFrom0to1(value));
+                        roundLog += " " + lastTweak;
+                    }
+                    if (rng.nextInt(60) == 0)
+                        norynControl(h.p.get(), JSON::parse(rng.nextBool()
+                                                                ? R"({"op":"transport","args":{"recording":true}})"
+                                                                : R"({"op":"transport","args":{"recording":false}})"));
+                    if (rng.nextInt(90) == 0)
+                        norynControl(h.p.get(), JSON::parse(rng.nextBool()
+                                                                ? R"({"op":"transport","args":{"playing":false}})"
+                                                                : R"({"op":"transport","args":{"playing":true}})"));
+                    if (rng.nextInt(8) == 0)
+                        midi.addEvent(MidiMessage::noteOn(1, 36 + rng.nextInt(48), uint8(40 + rng.nextInt(87))),
+                                      rng.nextInt(size));
+                    if (rng.nextInt(8) == 0)
+                        for (int n = 36; n < 84; ++n)
+                            if (rng.nextInt(6) == 0)
+                                midi.addEvent(MidiMessage::noteOff(1, n), rng.nextInt(size));
+                    h.p->processBlock(block, midi);
+                    for (int i = 0; i < size; ++i)
+                        history.push_back(block.getSample(0, i));
+                    while (int(history.size()) >= window)
+                    {
+                        double energy = 0;
+                        int crossings = 0;
+                        for (int i = 0; i < window; ++i)
+                        {
+                            energy += history[size_t(i)] * history[size_t(i)];
+                            if (i > 0 && (history[size_t(i)] >= 0) != (history[size_t(i - 1)] >= 0))
+                                ++crossings;
+                        }
+                        const double rms = std::sqrt(energy / window), zcr = double(crossings) / window;
+                        maxRms = jmax(maxRms, rms);
+                        if (rms > .05)
+                            maxZcrLoud = jmax(maxZcrLoud, zcr);
+                        if ((rms > .35 || (rms > .08 && zcr > .28)) && !reported)
+                        {
+                            reported = true;
+                            ++events;
+                            const auto dumpDir = SystemStats::getEnvironmentVariable("NORYN_HUNT_DUMP", {});
+                            if (dumpDir.isNotEmpty())
+                            {
+                                AudioBuffer<float> clip(1, window);
+                                for (int i = 0; i < window; ++i)
+                                    clip.setSample(0, i, history[size_t(i)]);
+                                auto out = File(dumpDir).getChildFile("event-" + String(round) + ".wav");
+                                out.deleteFile();
+                                WavAudioFormat wav;
+                                std::unique_ptr<AudioFormatWriter> writer(wav.createWriterFor(
+                                    new FileOutputStream(out), sr, 1, 32, {}, 0));
+                                if (writer)
+                                    writer->writeFromAudioSampleBuffer(clip, 0, window);
+                            }
+                            const auto st = norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"));
+                            std::cout << "NOISE round " << round << " t=" << b * size / sr << "s rms " << rms
+                                      << " zcr " << zcr << " preset \"" << file.getFileNameWithoutExtension()
+                                      << "\" engine " << h.p->getParameters()[0]->getName(20) << " last tweak "
+                                      << lastTweak << " voiceFaults " << int(st["voiceFaults"]) << "\n  changes:" << roundLog << "\n";
+                        }
+                        history.erase(history.begin(), history.begin() + window / 2);
+                    }
+                }
+            }
+            norynControl(h.p.get(), JSON::parse(R"({"op":"flushIncident"})"));
+            const int reports = int(norynControl(h.p.get(), JSON::parse(R"({"op":"state"})"))["incidentsSaved"]);
+            std::cout << "noise hunt rounds " << rounds << " noise events " << events << " max rms " << maxRms
+                      << " max zero-crossing rate when audible " << maxZcrLoud << " recorder reports " << reports
+                      << "\n";
+            return 0;
+        }
         if (argc > 2 && String(argv[2]) == "--user-presets")
         {
             // Play every shipped user preset's whole demo loop, then Stop: audio must stay finite and
@@ -505,12 +715,14 @@ int main(int argc, char **argv)
                 const double loopRms = std::sqrt(loopEnergy / (2.0 * loopSamples)),
                              tailRms = std::sqrt(tailEnergy / (2.0 * 24000));
                 const bool held = norynPerformanceTelemetry(h.p.get()).size() != 0;
+                const bool flagged = bool(norynControl(h.p.get(), JSON::parse(R"({"op":"flushIncident"})"))["saved"]);
                 levels << '"' << file.getFileNameWithoutExtension() << "\"," << steps << ',' << loopSeconds << ','
                        << loopRms << ',' << peak << ',' << tailRms << ',' << busy / total << ',' << worst << ',' << worstAt << '\n';
                 String problem = !finite ? "non-finite or unbounded audio"
                                  : loopRms < .003 ? "silent demo"
                                  : tailRms > .003 ? "sound continued after Stop"
                                  : held ? "voices held after Stop"
+                                 : flagged ? "reported as noise by the black-box recorder"
                                         : "";
                 std::cout << (problem.isEmpty() ? "ok   " : "FAIL ") << file.getFileNameWithoutExtension() << " rms "
                           << loopRms << " peak " << peak << " tail " << tailRms << " cpu " << busy / total << " worst "
@@ -1297,7 +1509,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.7.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"0.7.1\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +

@@ -96,114 +96,114 @@ index,name,category,rms,peak
 94,"Royal Fanfare","Brass & Strings",0.037379,0.186912
 95,"Muted Copper","Brass & Strings",0.057766,0.192009
 96,"Orchestral Dream","Brass & Strings",0.029132,0.111862
-97,"Wonder Rubber","Basses",0.008013,0.090660
-98,"Herbie Chameleon","Basses",0.014453,0.112471
-99,"Thriller Night Bass","Basses",0.017718,0.136599
-100,"Billie Pocket","Basses",0.012229,0.106451
-101,"Flashlight Bounce","Basses",0.018445,0.119989
-102,"Giorgio Midnight","Basses",0.007611,0.127767
-103,"Good Times Circuit","Basses",0.010476,0.120213
-104,"Da Funk Squelch","Basses",0.015506,0.162503
-105,"Around the Groove","Basses",0.009682,0.107591
-106,"Voyager Satin","Basses",0.017976,0.125875
-107,"Chromeo Night Drive","Basses",0.012571,0.108691
-108,"Dua Disco Pulse","Basses",0.010199,0.095095
-109,"Sweet Voltage","Basses",0.011167,0.098918
-110,"Blue Monday Floor","Basses",0.011998,0.115636
-111,"West End Underpass","Basses",0.010454,0.087166
-112,"Enjoy the Basement","Basses",0.010944,0.105682
-113,"Just Enough Bass","Basses",0.006364,0.105182
-114,"Fade to Grey Pulse","Basses",0.013395,0.107450
-115,"Cars in Motion","Basses",0.013232,0.117485
-116,"Tainted Circuit","Basses",0.008014,0.122558
-117,"Don't You Want Bass","Basses",0.008781,0.087156
-118,"Rio Lowline","Basses",0.008623,0.086325
-119,"Blinding Midnight","Basses",0.012760,0.116522
-120,"Midnight City Low","Basses",0.007869,0.081192
-121,"Phuture Warehouse","Basses",0.007940,0.199543
-122,"Hardfloor Spiral","Basses",0.008550,0.191267
-123,"Josh Wink Rise","Basses",0.007058,0.186817
-124,"Richie Minimal","Basses",0.007059,0.143651
-125,"Bam Bam Acid","Basses",0.005465,0.118088
-126,"A Guy Called Squelch","Basses",0.005926,0.114706
-127,"Chemical Resonator","Basses",0.008850,0.178598
-128,"Fatboy Filter Funk","Basses",0.004877,0.088707
-129,"Orbital Acid Orbit","Basses",0.012456,0.181411
-130,"Underworld Basement","Basses",0.008203,0.187498
-131,"Charlotte Dark Pulse","Basses",0.004864,0.106416
-132,"Beyer Warehouse Bite","Basses",0.005705,0.133114
-133,"Reese Origin","Basses",0.056782,0.133363
-134,"Inner City Low","Basses",0.051187,0.130847
-135,"Pendulum Turbine","Basses",0.043396,0.101240
-136,"Noisia Alloy","Basses",0.049932,0.131758
-137,"Chase Heavyweight","Basses",0.041114,0.125086
-138,"Skrillex Vowel","Basses",0.046881,0.133794
+97,"Wonder Rubber","Basses",0.013522,0.094098
+98,"Herbie Chameleon","Basses",0.011339,0.116763
+99,"Thriller Night Bass","Basses",0.016600,0.126862
+100,"Billie Pocket","Basses",0.012229,0.093583
+101,"Flashlight Bounce","Basses",0.015859,0.150227
+102,"Giorgio Midnight","Basses",0.007966,0.116790
+103,"Good Times Circuit","Basses",0.007600,0.083582
+104,"Da Funk Squelch","Basses",0.013703,0.155733
+105,"Around the Groove","Basses",0.014497,0.108200
+106,"Voyager Satin","Basses",0.015812,0.146709
+107,"Chromeo Night Drive","Basses",0.012502,0.108059
+108,"Dua Disco Pulse","Basses",0.008208,0.088556
+109,"Sweet Voltage","Basses",0.011515,0.099097
+110,"Blue Monday Floor","Basses",0.011694,0.107464
+111,"West End Underpass","Basses",0.011319,0.089095
+112,"Enjoy the Basement","Basses",0.011315,0.112591
+113,"Just Enough Bass","Basses",0.006027,0.094583
+114,"Fade to Grey Pulse","Basses",0.013633,0.111962
+115,"Cars in Motion","Basses",0.013329,0.123705
+116,"Tainted Circuit","Basses",0.008779,0.127874
+117,"Don't You Want Bass","Basses",0.009279,0.089290
+118,"Rio Lowline","Basses",0.007515,0.082771
+119,"Blinding Midnight","Basses",0.012799,0.115733
+120,"Midnight City Low","Basses",0.008284,0.083735
+121,"Phuture Warehouse","Basses",0.007856,0.201169
+122,"Hardfloor Spiral","Basses",0.008562,0.190476
+123,"Josh Wink Rise","Basses",0.007077,0.185805
+124,"Richie Minimal","Basses",0.007195,0.156062
+125,"Bam Bam Acid","Basses",0.005473,0.114114
+126,"A Guy Called Squelch","Basses",0.005672,0.104273
+127,"Chemical Resonator","Basses",0.008843,0.177919
+128,"Fatboy Filter Funk","Basses",0.004889,0.087066
+129,"Orbital Acid Orbit","Basses",0.012475,0.179973
+130,"Underworld Basement","Basses",0.008252,0.190218
+131,"Charlotte Dark Pulse","Basses",0.004443,0.079206
+132,"Beyer Warehouse Bite","Basses",0.005708,0.132011
+133,"Reese Origin","Basses",0.048617,0.126790
+134,"Inner City Low","Basses",0.056362,0.132229
+135,"Pendulum Turbine","Basses",0.039669,0.104058
+136,"Noisia Alloy","Basses",0.051610,0.131673
+137,"Chase Heavyweight","Basses",0.049236,0.137621
+138,"Skrillex Vowel","Basses",0.048311,0.135177
 139,"Skream Sub Room","Basses",0.062957,0.167055
-140,"Benga Wobble","Basses",0.039376,0.126648
-141,"Burial Shadow","Basses",0.047650,0.110619
-142,"Flume Elastic","Basses",0.040603,0.117596
-143,"Justice Grind","Basses",0.037484,0.083803
-144,"Gesaffelstein Iron","Basses",0.051766,0.133600
-145,"Lucky Solo","Leads",0.023435,0.101331
-146,"Shine Diamond","Leads",0.027444,0.123140
-147,"Wakeman Gold","Leads",0.024841,0.168254
-148,"Jan Hammer Chase","Leads",0.025034,0.160424
-149,"Duke Solo","Leads",0.022004,0.119049
-150,"Chick Galactic","Leads",0.022583,0.136861
-151,"Zawinul Bird","Leads",0.025626,0.128366
-152,"Popcorn Kernel","Leads",0.006442,0.119017
-153,"Funk Worm","Leads",0.026490,0.124793
-154,"Portishead Whistle","Leads",0.043189,0.134728
-155,"Boards Worn Lead","Leads",0.023450,0.099773
-156,"Air Moon Solo","Leads",0.024640,0.118941
-157,"Jump Arena Brass","Brass & Strings",0.039989,0.202914
-158,"Final Countdown Horn","Brass & Strings",0.038074,0.181535
-159,"Africa Copper","Brass & Strings",0.032143,0.186129
-160,"Prince Royal Stab","Brass & Strings",0.013122,0.149941
-161,"Kiss Minimal Stab","Brass & Strings",0.010052,0.148561
-162,"Sledgehammer Horn","Brass & Strings",0.029843,0.179938
-163,"Axel Street Brass","Brass & Strings",0.029798,0.157828
-164,"Take On Bright","Brass & Strings",0.010368,0.163807
-165,"Europe Carrie Glow","Brass & Strings",0.024637,0.151630
-166,"Howard New Song","Brass & Strings",0.034818,0.200773
-167,"Roxy Avalon Brass","Brass & Strings",0.047123,0.205279
-168,"Killers Human Poly","Brass & Strings",0.031391,0.174105
-169,"Adagio Skyline","Leads",0.051986,0.236135
-170,"Armin Blue Horizon","Leads",0.044123,0.200871
-171,"Ferry Out of Blue","Leads",0.056819,0.242898
-172,"Sash Encore Lead","Leads",0.038245,0.165214
-173,"Darude Sandstorm Edge","Leads",0.031629,0.135052
-174,"Faithless Insomnia Stab","Leads",0.008542,0.110995
-175,"Avicii Levels Lift","Leads",0.051449,0.194215
-176,"Swedish House Skyline","Leads",0.046973,0.212670
-177,"Garrix Big Room","Leads",0.017544,0.196175
-178,"Deadmau5 Strobe Lead","Leads",0.045830,0.196418
-179,"Above Beyond Air","Leads",0.037804,0.182931
-180,"Eric Prydz Opus Glow","Leads",0.055554,0.223210
-181,"Children Dream Pluck","Plucks",0.008036,0.110174
-182,"Better Off Droplet","Plucks",0.006741,0.121857
-183,"9PM Glass Wire","Plucks",0.006403,0.087492
-184,"Animals Wooden Drop","Plucks",0.007412,0.149909
-185,"Strobe Dawn Pluck","Plucks",0.008683,0.115173
-186,"I Remember Ember","Plucks",0.007811,0.107032
-187,"Lane Eight River","Plucks",0.006621,0.098794
-188,"Ben Bohmer Bloom","Plucks",0.010541,0.111892
-189,"Yotto North Star","Plucks",0.005619,0.098507
-190,"Tinlicker Copper Rain","Plucks",0.010640,0.119688
-191,"Bicep Apricot","Plucks",0.013573,0.108036
-192,"Jon Hopkins Open Eye","Plucks",0.007771,0.154187
-193,"Mr Fingers Deep","Keys",0.013803,0.146000
-194,"Inner City Good Life","Keys",0.010759,0.169192
-195,"MK Garage Stab","Keys",0.011798,0.196960
-196,"Kerri Chandler Velvet","Keys",0.014271,0.149164
-197,"Disclosure Latch Keys","Keys",0.010501,0.154196
-198,"Duke Dumont Ocean","Keys",0.016358,0.177963
-199,"Robin S Organ House","Keys",0.021571,0.205808
-200,"Crystal Waters Stab","Keys",0.012169,0.177961
-201,"Stardust Filter Chord","Keys",0.016634,0.216045
-202,"Modjo Lady Glow","Keys",0.015897,0.189069
-203,"Fred Again Soft Key","Keys",0.018671,0.161218
-204,"Peggy Gou Neon Key","Keys",0.015150,0.167287
+140,"Benga Wobble","Basses",0.042200,0.126571
+141,"Burial Shadow","Basses",0.049638,0.118681
+142,"Flume Elastic","Basses",0.046982,0.127694
+143,"Justice Grind","Basses",0.035607,0.085674
+144,"Gesaffelstein Iron","Basses",0.053840,0.130823
+145,"Lucky Solo","Leads",0.022725,0.092097
+146,"Shine Diamond","Leads",0.026497,0.119320
+147,"Wakeman Gold","Leads",0.025047,0.157508
+148,"Jan Hammer Chase","Leads",0.025328,0.161671
+149,"Duke Solo","Leads",0.021862,0.108808
+150,"Chick Galactic","Leads",0.022685,0.132400
+151,"Zawinul Bird","Leads",0.025477,0.125635
+152,"Popcorn Kernel","Leads",0.006883,0.119241
+153,"Funk Worm","Leads",0.026806,0.124014
+154,"Portishead Whistle","Leads",0.043272,0.133296
+155,"Boards Worn Lead","Leads",0.023349,0.109657
+156,"Air Moon Solo","Leads",0.022504,0.115635
+157,"Jump Arena Brass","Brass & Strings",0.042645,0.206778
+158,"Final Countdown Horn","Brass & Strings",0.031766,0.184420
+159,"Africa Copper","Brass & Strings",0.029316,0.156911
+160,"Prince Royal Stab","Brass & Strings",0.018496,0.178880
+161,"Kiss Minimal Stab","Brass & Strings",0.012539,0.184923
+162,"Sledgehammer Horn","Brass & Strings",0.030500,0.173538
+163,"Axel Street Brass","Brass & Strings",0.028138,0.152859
+164,"Take On Bright","Brass & Strings",0.009006,0.135593
+165,"Europe Carrie Glow","Brass & Strings",0.034604,0.153286
+166,"Howard New Song","Brass & Strings",0.035658,0.247309
+167,"Roxy Avalon Brass","Brass & Strings",0.047228,0.200694
+168,"Killers Human Poly","Brass & Strings",0.033005,0.186989
+169,"Adagio Skyline","Leads",0.052359,0.220362
+170,"Armin Blue Horizon","Leads",0.043959,0.191108
+171,"Ferry Out of Blue","Leads",0.061426,0.274421
+172,"Sash Encore Lead","Leads",0.036493,0.174801
+173,"Darude Sandstorm Edge","Leads",0.031600,0.139876
+174,"Faithless Insomnia Stab","Leads",0.009254,0.131456
+175,"Avicii Levels Lift","Leads",0.048272,0.200195
+176,"Swedish House Skyline","Leads",0.054196,0.263817
+177,"Garrix Big Room","Leads",0.014971,0.153604
+178,"Deadmau5 Strobe Lead","Leads",0.044058,0.192666
+179,"Above Beyond Air","Leads",0.038500,0.179748
+180,"Eric Prydz Opus Glow","Leads",0.053446,0.240509
+181,"Children Dream Pluck","Plucks",0.007179,0.081352
+182,"Better Off Droplet","Plucks",0.006562,0.118430
+183,"9PM Glass Wire","Plucks",0.007447,0.107263
+184,"Animals Wooden Drop","Plucks",0.008405,0.162332
+185,"Strobe Dawn Pluck","Plucks",0.009908,0.136604
+186,"I Remember Ember","Plucks",0.007030,0.083787
+187,"Lane Eight River","Plucks",0.006364,0.083566
+188,"Ben Bohmer Bloom","Plucks",0.009758,0.123408
+189,"Yotto North Star","Plucks",0.005182,0.096503
+190,"Tinlicker Copper Rain","Plucks",0.009096,0.127136
+191,"Bicep Apricot","Plucks",0.014901,0.131865
+192,"Jon Hopkins Open Eye","Plucks",0.007733,0.151923
+193,"Mr Fingers Deep","Keys",0.015886,0.177960
+194,"Inner City Good Life","Keys",0.011691,0.205846
+195,"MK Garage Stab","Keys",0.012376,0.195727
+196,"Kerri Chandler Velvet","Keys",0.016390,0.151465
+197,"Disclosure Latch Keys","Keys",0.010120,0.157192
+198,"Duke Dumont Ocean","Keys",0.016904,0.177121
+199,"Robin S Organ House","Keys",0.013864,0.174434
+200,"Crystal Waters Stab","Keys",0.012436,0.188077
+201,"Stardust Filter Chord","Keys",0.016021,0.213851
+202,"Modjo Lady Glow","Keys",0.015197,0.146171
+203,"Fred Again Soft Key","Keys",0.019145,0.151550
+204,"Peggy Gou Neon Key","Keys",0.015102,0.185149
 205,"Whitney Saving Tines","Keys",0.057970,0.259288
 206,"A-ha FM Crystal","Keys",0.041932,0.234815
 207,"Enya Orinoco Bell","Keys",0.047652,0.278343
@@ -228,54 +228,54 @@ index,name,category,rms,peak
 226,"Stereolab Motor Organ","Keys",0.064219,0.252929
 227,"Metronomy Riviera","Keys",0.069433,0.248801
 228,"Tame Psychedelic Organ","Keys",0.062590,0.227557
-229,"Juno Midnight Silk","Pads",0.054883,0.209961
-230,"Jupiter Wide Horizon","Pads",0.055194,0.300960
-231,"Prophet Polaroid","Pads",0.041310,0.183902
-232,"OB Dream Theater","Pads",0.043534,0.245829
-233,"Cure Disintegration","Pads",0.047539,0.229842
-234,"Talk Talk Soft Light","Pads",0.034950,0.139703
-235,"Tears Head Over Pad","Pads",0.035612,0.179618
-236,"Tangerine Amber Pad","Pads",0.044522,0.196547
-237,"OMD Souvenir Clouds","Pads",0.035225,0.141800
-238,"New Order Elegia","Pads",0.039612,0.178528
-239,"Pet Shop Dreaming","Pads",0.043183,0.213600
-240,"Weeknd Afterglow","Pads",0.046619,0.208604
-241,"Blade Neon Rain","Pads",0.049920,0.291826
-242,"Chariots Warm Light","Pads",0.071052,0.311256
-243,"Zimmer Distant Sand","Pads",0.076903,0.418422
-244,"Eno Airport Haze","Pads",0.037797,0.248093
-245,"Jarre Equinoxe Sky","Pads",0.048585,0.274978
-246,"Klaus Schulze Horizon","Pads",0.064273,0.334852
-247,"Aphex Stone Cloud","Pads",0.055759,0.316472
-248,"BoC Turquoise Fog","Pads",0.049122,0.273659
-249,"Nils Frahm Felt Air","Pads",0.081886,0.352543
-250,"Hammock Endless Blue","Pads",0.064735,0.372450
-251,"Carbon Based Orbit","Pads",0.067553,0.343411
-252,"Trent Reznor Ash","Pads",0.047279,0.224094
-253,"Kraftwerk Formant","Textures",0.055386,0.262420
-254,"Daft Human Vowel","Textures",0.054544,0.267779
-255,"Laurie O Superman Air","Textures",0.050858,0.237079
-256,"Bjork Digital Bloom","Textures",0.059532,0.314310
-257,"Imogen Harmonic Halo","Textures",0.055663,0.270226
-258,"Grimes Crystal Voice","Textures",0.059946,0.256752
-259,"Oneohtrix Prism","Textures",0.051625,0.249065
-260,"Arca Liquid Metal","Textures",0.042461,0.204120
-261,"Sophie Glass Polymer","Textures",0.015064,0.171338
-262,"FKA Twigs Breath","Textures",0.056717,0.270685
-263,"M83 Midnight Choir","Textures",0.053095,0.283246
-264,"Radiohead Everything","Textures",0.067446,0.227741
-265,"Baba Pulse Field","Motion",0.033905,0.191098
-266,"Won't Get Fooled Gate","Motion",0.031529,0.186885
-267,"Kraftwerk Autobahn","Motion",0.032944,0.151275
-268,"Jarre Oxygene Pulse","Motion",0.026450,0.171346
-269,"Tangerine Ruby Steps","Motion",0.031744,0.196856
-270,"Giorgio Chase Motor","Motion",0.028341,0.153178
-271,"Orbital Halcyon Pulse","Motion",0.023633,0.130741
-272,"Underworld Born Pulse","Motion",0.032705,0.238138
-273,"Chemical Star Guitar","Motion",0.023571,0.108188
-274,"Daft Aerodynamic Rotor","Motion",0.037112,0.301303
-275,"Jon Hopkins Emerald","Motion",0.022786,0.118535
-276,"Floating Points Orbit","Motion",0.024660,0.137362
+229,"Juno Midnight Silk","Pads",0.055121,0.201317
+230,"Jupiter Wide Horizon","Pads",0.054083,0.333259
+231,"Prophet Polaroid","Pads",0.040248,0.214951
+232,"OB Dream Theater","Pads",0.037997,0.227102
+233,"Cure Disintegration","Pads",0.048379,0.221721
+234,"Talk Talk Soft Light","Pads",0.035136,0.181908
+235,"Tears Head Over Pad","Pads",0.034313,0.167156
+236,"Tangerine Amber Pad","Pads",0.044432,0.200233
+237,"OMD Souvenir Clouds","Pads",0.036595,0.145704
+238,"New Order Elegia","Pads",0.040423,0.201256
+239,"Pet Shop Dreaming","Pads",0.044083,0.202073
+240,"Weeknd Afterglow","Pads",0.049358,0.197418
+241,"Blade Neon Rain","Pads",0.060163,0.275647
+242,"Chariots Warm Light","Pads",0.071974,0.289398
+243,"Zimmer Distant Sand","Pads",0.077070,0.346332
+244,"Eno Airport Haze","Pads",0.034765,0.194993
+245,"Jarre Equinoxe Sky","Pads",0.054614,0.312315
+246,"Klaus Schulze Horizon","Pads",0.062199,0.350989
+247,"Aphex Stone Cloud","Pads",0.058250,0.281098
+248,"BoC Turquoise Fog","Pads",0.054683,0.311100
+249,"Nils Frahm Felt Air","Pads",0.077081,0.329002
+250,"Hammock Endless Blue","Pads",0.068315,0.322685
+251,"Carbon Based Orbit","Pads",0.068397,0.324280
+252,"Trent Reznor Ash","Pads",0.055772,0.281220
+253,"Kraftwerk Formant","Textures",0.056161,0.285623
+254,"Daft Human Vowel","Textures",0.052792,0.261896
+255,"Laurie O Superman Air","Textures",0.052558,0.260372
+256,"Bjork Digital Bloom","Textures",0.058427,0.274565
+257,"Imogen Harmonic Halo","Textures",0.054831,0.277014
+258,"Grimes Crystal Voice","Textures",0.056633,0.251660
+259,"Oneohtrix Prism","Textures",0.051222,0.269597
+260,"Arca Liquid Metal","Textures",0.042283,0.194940
+261,"Sophie Glass Polymer","Textures",0.015658,0.152131
+262,"FKA Twigs Breath","Textures",0.057020,0.295171
+263,"M83 Midnight Choir","Textures",0.053836,0.280214
+264,"Radiohead Everything","Textures",0.066590,0.246795
+265,"Baba Pulse Field","Motion",0.038746,0.224038
+266,"Won't Get Fooled Gate","Motion",0.026811,0.206523
+267,"Kraftwerk Autobahn","Motion",0.033703,0.161248
+268,"Jarre Oxygene Pulse","Motion",0.026196,0.136027
+269,"Tangerine Ruby Steps","Motion",0.030805,0.159090
+270,"Giorgio Chase Motor","Motion",0.030240,0.179289
+271,"Orbital Halcyon Pulse","Motion",0.025103,0.141265
+272,"Underworld Born Pulse","Motion",0.032215,0.207540
+273,"Chemical Star Guitar","Motion",0.023830,0.111577
+274,"Daft Aerodynamic Rotor","Motion",0.035448,0.256123
+275,"Jon Hopkins Emerald","Motion",0.020252,0.113380
+276,"Floating Points Orbit","Motion",0.025317,0.135557
 277,"Oxygene Glass Harp","Plucks",0.008185,0.125457
 278,"Vangelis Bamboo","Plucks",0.005960,0.114130
 279,"Sakamoto Rain Wire","Plucks",0.007950,0.122053
@@ -288,5 +288,5 @@ index,name,category,rms,peak
 286,"Apparat Fractured Nylon","Plucks",0.013669,0.114877
 287,"Nujabes Gentle Wire","Plucks",0.006679,0.109734
 288,"ODESZA Sunlit Pluck","Plucks",0.005010,0.102992
-289,"Solitude / Original Lead","Leads",0.028756,0.137566
-290,"Solitude / Reinterpretation Swell","Pads",0.053485,0.235091
+289,"Solitude / Original Lead","Leads",0.029327,0.142661
+290,"Solitude / Reinterpretation Swell","Pads",0.054654,0.251607
