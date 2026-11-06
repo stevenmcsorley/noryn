@@ -46,3 +46,13 @@ The sequencer now records per-note chord durations/velocities, schedules absolut
 ## Burial — Stolen Dog study
 
 `Burial Stolen Dog - Hazy Keys` is a saved six-operator keys interpretation with a 256-step, 16-bar chord pattern at 115.5 BPM. A bar-synchronous chroma analysis of the official preview confirms the tempo and a stable F#m9–Dadd9–C#m7–C#m/E cycle (A/E in alternate passes). The earlier four-bar study used the same cycle rotated to start on C#m7; it now starts on F#m9 and runs 16 bars. Subtle pitch/filter LFOs, ensemble, echo and reverb supply movement; longer bass gates sit beneath shorter upper-chord chops. This is a representative harmonic/rhythmic study, not a complete transcription or a reconstruction of Burial's sample processing. The [official recording](https://burial.bandcamp.com/track/stolen-dog) is the reference; reference audio is not bundled.
+
+## Björk — Hunter multitrack demo
+
+The STUDIO page's **LOAD HUNTER DEMO** builds an instrumental arrangement *inspired by* "Hunter" (Homogenic, 1997). No MIDI transcription of the song could be found, so the arrangement was written for NORYN from published harmonic analyses and an analysis of the official preview:
+
+- [Hooktheory](https://www.hooktheory.com/theorytab/view/bjork/hunter) gives a main section in G Phrygian dominant alternating I–II (G and A♭) at 160/80 BPM, and an E♭ major bridge (IV9 – Isus2 – vi – I – vi7).
+- A 1997 [Oberlin Review](https://www2.oberlin.edu/stupub/ocreview/archives/1997.10.03/arts/home.html) piece describes the song as alternating between heavy G and A♭ bass chords, with a short progression in the middle.
+- A high-resolution analysis of the official preview confirms 80 BPM, a bass moving G – A♭ – B♭ (the recording sits about 20 cents sharp), and G major, E♭/B♭ and A♭ colours above it.
+
+From these, the riff is G | G/A♭ | E♭/B♭ | A♭/G in half bars, and the bridge is A♭9 – E♭sus2 – Cm7/G – E♭/B♭ – Cm7. The form (intro, riff, verse, bridge, second verse, bridge, climax, outro; 84 bars, about 4:16) follows the record's length and dynamic arc. The bolero-style snare, bass rhythm, string figure, stabs and glass line are original parts in that spirit, not transcriptions, and there is no vocal melody. No audio from the record is bundled or used.

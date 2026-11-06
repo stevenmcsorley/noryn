@@ -1,6 +1,12 @@
 #include "ControlBridge.h"
 #include "Engine.h"
 #include "Incidents.h"
+#include "Drums.h"
+#include "Studio.h"
+#include "DrumPage.h"
+#include "StudioPage.h"
+#include "VocalPage.h"
+#include "HunterDemo.h"
 #include "MidiMap.h"
 #if JucePlugin_Build_Standalone
 #include <juce_audio_plugin_client/Standalone/juce_StandaloneFilterWindow.h>
@@ -36,6 +42,24 @@ class NorynProcessor : public AudioProcessor, private Timer
     int preparedBlock = 0;
     std::atomic<int> audioRecoveries{0}, voiceFaults{0};
     IncidentRecorder incidents;
+    DrumMachine drums;
+    Studio studio;
+    AudioBuffer<float> inputAudio, drumAudio, studioMix;
+    MidiBuffer drumHits, playedMidi;
+    std::array<std::atomic<float>, drumPads> uiDrumHits{};
+    bool lastStudioRun = false;
+    // The multitrack studio and audio input exist in the standalone app; a DAW already has tracks.
+    static bool studioAvailable()
+    {
+        return PluginHostType::getPluginLoadedAs() != AudioProcessor::wrapperType_VST3;
+    }
+    static BusesProperties buses()
+    {
+        auto layout = BusesProperties().withOutput("Output", AudioChannelSet::stereo(), true);
+        if (studioAvailable())
+            layout = layout.withInput("Input", AudioChannelSet::stereo(), true);
+        return layout;
+    }
     MidiMap midiMap;
     std::vector<RangedAudioParameter *> mappable;
     StringArray mappableIds;
@@ -50,7 +74,7 @@ class NorynProcessor : public AudioProcessor, private Timer
     std::unique_ptr<ControlBridge> bridge;
     std::atomic<int> userLoaded{-1};
     NorynProcessor()
-        : AudioProcessor(BusesProperties().withOutput("Output", AudioChannelSet::stereo(), true)),
+        : AudioProcessor(buses()),
           state(*this, nullptr, "NORYN", layout()), synth(state)
     {
         for (int i = 0; i < 16; ++i)
@@ -70,14 +94,16 @@ class NorynProcessor : public AudioProcessor, private Timer
             }
         loadMidiMap();
         setCurrentProgram(1);
-        if (SystemStats::getEnvironmentVariable("NORYN_NO_MCP", {}) != "1")
+        if (SystemStats::getEnvironmentVariable("NORYN_NO_MCP", {}) != "1" && !offlineInstance())
             bridge = std::make_unique<ControlBridge>([this](const var &request)
                                                      { return handleControl(request); });
-        startTimer(500);
+        startTimer(100);
     }
     ~NorynProcessor() override
     {
         stopTimer();
+        if (demoBuilder)
+            demoBuilder->stopThread(10000);
         flushIncident();
         if (midiMap.dirty.load())
             saveMidiMap();
@@ -247,6 +273,9 @@ class NorynProcessor : public AudioProcessor, private Timer
             add((prefix + "amount").toRawUTF8(), ("LFO " + String(n) + " Amount").toRawUTF8(), -1, 1, .5f);
         }
         add("bpm", "Sequencer BPM", 30, 300, 120);
+        add("drumlevel", "Drum Level", 0, 1.5f, .9f);
+        add("drumswing", "Drum Swing", 0, 1, 0);
+        add("studiolevel", "Studio Tracks Level", 0, 1.5f, 1);
         add("seqgate", "Step Gate", .05f, 1.f, .7f);
         add("seqrelease", "Sequence Release Limit", .005f, 2, .08f);
         p.add(std::make_unique<AudioParameterBool>(ParameterID("seqfollowrelease", 1),
@@ -312,6 +341,14 @@ class NorynProcessor : public AudioProcessor, private Timer
     {
         preparedBlock = jmax(1, block);
         incidents.prepare(sr);
+        drums.prepare(sr);
+        studio.prepare(sr, preparedBlock);
+        inputAudio.setSize(2, preparedBlock);
+        drumAudio.setSize(2, preparedBlock);
+        studioMix.setSize(2, preparedBlock);
+        drumHits.ensureSize(2048);
+        playedMidi.ensureSize(8192);
+        lastStudioRun = false;
         synth.allNotesOff(0, false);
         sequencer.reset();
         scaleEngine.reset();
@@ -359,7 +396,9 @@ class NorynProcessor : public AudioProcessor, private Timer
     }
     bool isBusesLayoutSupported(const BusesLayout &b) const override
     {
-        return b.getMainOutputChannelSet() == AudioChannelSet::stereo();
+        const auto in = b.getMainInputChannelSet();
+        return b.getMainOutputChannelSet() == AudioChannelSet::stereo() &&
+               (in.isDisabled() || in == AudioChannelSet::mono() || in == AudioChannelSet::stereo());
     }
     void processBlock(AudioBuffer<float> &buffer, MidiBuffer &midi) override
     {
@@ -407,9 +446,36 @@ class NorynProcessor : public AudioProcessor, private Timer
     }
     void renderBlock(AudioBuffer<float> &buffer, MidiBuffer &midi)
     {
+        const int count = buffer.getNumSamples();
+        const int inputs = jmin(getTotalNumInputChannels(), buffer.getNumChannels(), 2);
+        for (int c = 0; c < 2; ++c)
+            if (c < inputs && count <= inputAudio.getNumSamples())
+                inputAudio.copyFrom(c, 0, buffer, c, 0, count);
+            else if (count <= inputAudio.getNumSamples())
+                inputAudio.clear(c, 0, count);
         buffer.clear();
-        if (buffer.getNumSamples() == 0)
+        if (count == 0)
             return;
+        // The studio transport drives the sequencer and drums, starting them where the timeline is.
+        const bool studioRun = studio.playing.load();
+        if (studioRun != lastStudioRun)
+        {
+            lastStudioRun = studioRun;
+            if (studio.runSequencer.load())
+            {
+                if (studioRun)
+                {
+                    const double sr = getSampleRate(), bpm = jlimit(30.f, 300.f, v("bpm"));
+                    const double at = double(studio.position.load());
+                    const double seqStep = sr * 60 / (bpm * (1 << jlimit(0, 3, int(v("seqdivision")))));
+                    sequencer.startStep.store(int(std::llround(at / seqStep) % jmax(1, int(v("seqlength")))));
+                    drums.startStep.store(int(std::llround(at / (sr * 15 / bpm)) % jmax(1, drums.pattern.length.load())));
+                    sequencer.playing.store(true);
+                }
+                else
+                    sequencer.stop();
+            }
+        }
         if (lastVoiceMode != int(v("voicemode")))
         {
             synth.allNotesOff(0, false);
@@ -417,6 +483,31 @@ class NorynProcessor : public AudioProcessor, private Timer
         }
         applyMidiMap(midi);
         keyboard.processNextMidiBuffer(midi, 0, buffer.getNumSamples(), true);
+        // Channel 10 always plays drums (General MIDI map); with "keys play drums" every key does,
+        // C3 upward playing pads 1-16. Those notes are taken out of what reaches the synth.
+        drumHits.clear();
+        playedMidi.clear();
+        const bool keysToDrums = drums.keysPlayDrums.load();
+        for (const auto metadata : midi)
+        {
+            const auto msg = metadata.getMessage();
+            const bool drumNote = msg.isNoteOnOrOff() && msg.getChannel() != 16 &&
+                                  (msg.getChannel() == 10 || keysToDrums);
+            if (!drumNote)
+            {
+                playedMidi.addEvent(msg, metadata.samplePosition);
+                continue;
+            }
+            const int pad = msg.getChannel() == 10 ? DrumMachine::padForNote(msg.getNoteNumber())
+                                                   : ((msg.getNoteNumber() - 48) % drumPads + drumPads) % drumPads;
+            if (pad >= 0 && msg.isNoteOn())
+                drumHits.addEvent(MidiMessage::noteOn(1, pad, msg.getVelocity()), metadata.samplePosition);
+        }
+        for (int pad = 0; pad < drumPads; ++pad)
+            if (const float velocity = uiDrumHits[size_t(pad)].exchange(0); velocity > 0)
+                drumHits.addEvent(MidiMessage::noteOn(1, pad, velocity), 0);
+        midi.clear();
+        midi.addEvents(playedMidi, 0, -1, 0);
         if (panicRequested.exchange(false))
         {
             synth.allNotesOff(0, false);
@@ -503,13 +594,52 @@ class NorynProcessor : public AudioProcessor, private Timer
         reverb.processStereo(buffer.getWritePointer(0), buffer.getWritePointer(1), buffer.getNumSamples());
         if (!finite(buffer) || !finite(clickAudio))
             recoverAudio(buffer);
-        float peakL = 0, peakR = 0;
-        for (int i = 0; i < buffer.getNumSamples(); ++i)
+        // Synth at its master level (what a "synth" track records); the click stays out of recordings.
+        for (int i = 0; i < count; ++i)
         {
-            float l = buffer.getSample(0, i), r = buffer.getSample(1, i), mid = (l + r) * .5f,
-                  side = (l - r) * .5f * width.getNextValue(), gain = master.getNextValue();
-            l = .98f * std::tanh(((mid + side + clickAudio.getSample(0, i)) * gain) / .98f);
-            r = .98f * std::tanh(((mid - side + clickAudio.getSample(0, i)) * gain) / .98f);
+            const float l = buffer.getSample(0, i), r = buffer.getSample(1, i), mid = (l + r) * .5f,
+                        side = (l - r) * .5f * width.getNextValue(), gain = master.getNextValue();
+            buffer.setSample(0, i, (mid + side) * gain);
+            buffer.setSample(1, i, (mid - side) * gain);
+            clickAudio.setSample(0, i, clickAudio.getSample(0, i) * gain);
+        }
+        const float bpm = v("bpm");
+        drums.process(drumAudio, count, drumHits, bpm, sequencer.playing.load(), v("drumswing") * .5f,
+                      v("drumlevel"));
+        if (!finite(drumAudio))
+        {
+            drumAudio.clear();
+            drums.prepare(getSampleRate());
+            voiceFaults.fetch_add(1);
+        }
+        studioMix.clear(0, count);
+        {
+            Studio::Context context;
+            context.inputLeft = inputs > 0 ? inputAudio.getReadPointer(0) : nullptr;
+            context.inputRight = inputs > 1 ? inputAudio.getReadPointer(1) : nullptr;
+            context.synth = &buffer;
+            context.drums = &drumAudio;
+            context.output = &studioMix;
+            context.count = count;
+            context.bpm = bpm;
+            const int scale = int(v("scale"));
+            const auto &scales = ScaleEngine::scales();
+            context.scaleMask = scale >= int(scales.size()) - 1 ? uint16_t(int(v("customscale")))
+                                                               : scales[size_t(jlimit(0, int(scales.size()) - 1, scale))].mask;
+            context.root = int(v("root"));
+            studio.process(context);
+        }
+        if (!finite(studioMix))
+            studioMix.clear();
+        const float studioLevel = v("studiolevel");
+        float peakL = 0, peakR = 0;
+        for (int i = 0; i < count; ++i)
+        {
+            const float click = clickAudio.getSample(0, i);
+            float l = .98f * std::tanh((buffer.getSample(0, i) + drumAudio.getSample(0, i) +
+                                        studioMix.getSample(0, i) * studioLevel + click) / .98f);
+            float r = .98f * std::tanh((buffer.getSample(1, i) + drumAudio.getSample(1, i) +
+                                        studioMix.getSample(1, i) * studioLevel + click) / .98f);
             buffer.setSample(0, i, l);
             buffer.setSample(1, i, r);
             visual.left.push(l);
@@ -518,6 +648,7 @@ class NorynProcessor : public AudioProcessor, private Timer
             peakL = jmax(peakL, std::abs(l));
             peakR = jmax(peakR, std::abs(r));
         }
+        studio.captureMaster(buffer, count);
         visual.left.publish();
         visual.right.publish();
         visual.peakL.store(peakL);
@@ -536,9 +667,213 @@ class NorynProcessor : public AudioProcessor, private Timer
                 }
         visual.voices.store(voices);
     }
+    static int indexByName(const var &value, const StringArray &names)
+    {
+        if (value.isString())
+        {
+            for (int i = 0; i < names.size(); ++i)
+                if (names[i].equalsIgnoreCase(value.toString()))
+                    return i;
+            for (int i = 0; i < names.size(); ++i)
+                if (names[i].containsIgnoreCase(value.toString()))
+                    return i;
+            throw std::runtime_error("unknown name: " + value.toString().toStdString());
+        }
+        return int(value);
+    }
+    static StringArray kitNames()
+    {
+        StringArray names;
+        for (const auto &kit : drumKits())
+            names.add(kit.name);
+        return names;
+    }
+    static StringArray patternNames()
+    {
+        StringArray names;
+        for (const auto &pattern : drumPatterns())
+            names.add(pattern.name);
+        return names;
+    }
+    void applyDrumPattern(int index)
+    {
+        drums.applyPattern(index);
+        const auto &spec = drumPatterns()[size_t(jlimit(0, int(drumPatterns().size()) - 1, index))];
+        setValue("drumswing", jlimit(0.f, 1.f, spec.swing * 2), true);
+    }
+    // {"kit", "pattern", "length", "keysPlayDrums", "recording", "pad": {index, type, tune, decay, tone, snap,
+    //  level, pan, choke}, "step": {pad, step, velocity}, "hit": {pad, velocity}}
+    var drumControl(const var &args)
+    {
+        if (args.hasProperty("kit"))
+            drums.applyKit(indexByName(args["kit"], kitNames()));
+        if (args.hasProperty("pattern"))
+            applyDrumPattern(indexByName(args["pattern"], patternNames()));
+        if (args.hasProperty("clear") && bool(args["clear"]))
+            drums.pattern.clear();
+        if (args.hasProperty("length"))
+            drums.pattern.length.store(jlimit(1, maxDrumSteps, int(args["length"])));
+        if (args.hasProperty("keysPlayDrums"))
+            drums.keysPlayDrums.store(bool(args["keysPlayDrums"]));
+        if (args.hasProperty("recording"))
+            drums.recording.store(bool(args["recording"]));
+        if (auto *pad = args["pad"].getDynamicObject())
+        {
+            auto &target = drums.pads[size_t(jlimit(0, drumPads - 1, int(pad->getProperty("index"))))];
+            if (pad->hasProperty("type"))
+                target.type.store(indexByName(pad->getProperty("type"), drumTypeNames()));
+            for (auto [id, field] : std::vector<std::pair<const char *, std::atomic<float> *>>{
+                     {"tune", &target.tune}, {"decay", &target.decay}, {"tone", &target.tone},
+                     {"snap", &target.snap}, {"level", &target.level}, {"pan", &target.pan}})
+                if (pad->hasProperty(id))
+                    field->store(float(pad->getProperty(id)));
+            if (pad->hasProperty("choke"))
+                target.choke.store(int(pad->getProperty("choke")));
+            if (pad->hasProperty("sample"))
+                drums.loadSample(int(pad->getProperty("index")), File(pad->getProperty("sample").toString()));
+        }
+        if (auto *step = args["step"].getDynamicObject())
+            drums.pattern.velocity[size_t(jlimit(0, drumPads - 1, int(step->getProperty("pad"))))]
+                                  [size_t(jlimit(0, maxDrumSteps - 1, int(step->getProperty("step"))))]
+                                      .store(uint8_t(jlimit(0, 127, int(step->getProperty("velocity")))));
+        if (auto *hit = args["hit"].getDynamicObject())
+            uiDrumHits[size_t(jlimit(0, drumPads - 1, int(hit->getProperty("pad"))))].store(
+                jlimit(.01f, 1.f, float(hit->getProperty("velocity"))));
+        auto *result = new DynamicObject();
+        result->setProperty("kit", drums.kitName);
+        result->setProperty("length", drums.pattern.length.load());
+        result->setProperty("playhead", drums.playhead.load());
+        Array<var> pads;
+        for (int p = 0; p < drumPads; ++p)
+        {
+            auto *pad = new DynamicObject();
+            const auto &source = drums.pads[size_t(p)];
+            pad->setProperty("name", source.name);
+            pad->setProperty("type", drumTypeNames()[source.type.load()]);
+            String steps;
+            for (int st = 0; st < drums.pattern.length.load(); ++st)
+            {
+                const int v = drums.pattern.velocity[size_t(p)][size_t(st)].load();
+                steps << (v == 0 ? "." : v >= 112 ? "X" : v >= 72 ? "x" : "o");
+            }
+            pad->setProperty("steps", steps);
+            pads.add(var(pad));
+        }
+        result->setProperty("pads", pads);
+        result->setProperty("kits", kitNames());
+        result->setProperty("patterns", patternNames());
+        return var(result);
+    }
+    // {"action": play|stop|record|locate|new|open|bounce|undo|clear, "position", "path",
+    //  "runSequencer", "track": {index, name, source, armed, monitor, mute, solo, fx, gain, pan,
+    //  "vocalPreset", "vocal": {id: value}}}
+    var studioControl(const var &args)
+    {
+        if (!studioAvailable())
+            throw std::runtime_error("The multitrack studio is available in the standalone app.");
+        if (args.hasProperty("runSequencer"))
+            studio.runSequencer.store(bool(args["runSequencer"]));
+        if (auto *track = args["track"].getDynamicObject())
+        {
+            const int index = jlimit(0, studioTracks - 1, int(track->getProperty("index")));
+            auto &t = studio.tracks[size_t(index)];
+            if (track->hasProperty("name"))
+                t.name = track->getProperty("name").toString();
+            if (track->hasProperty("source"))
+                t.source.store(jlimit(0, 5, indexByName(track->getProperty("source"), trackSourceNames())));
+            for (auto [id, flag] : std::vector<std::pair<const char *, std::atomic<bool> *>>{
+                     {"armed", &t.armed}, {"monitor", &t.monitor}, {"mute", &t.mute}, {"solo", &t.solo}, {"fx", &t.fx}})
+                if (track->hasProperty(id))
+                    flag->store(bool(track->getProperty(id)));
+            if (track->hasProperty("gain"))
+                t.gain.store(jlimit(0.f, 1.5f, float(track->getProperty("gain"))));
+            if (track->hasProperty("pan"))
+                t.pan.store(jlimit(-1.f, 1.f, float(track->getProperty("pan"))));
+            if (track->hasProperty("vocalPreset"))
+            {
+                StringArray names;
+                for (const auto &preset : VocalSettings::presets())
+                    names.add(preset.name);
+                t.chain.settings.applyPreset(indexByName(track->getProperty("vocalPreset"), names));
+            }
+            if (auto *vocal = track->getProperty("vocal").getDynamicObject())
+                for (const auto &entry : vocal->getProperties())
+                    t.chain.settings.set(entry.name.toString(), float(entry.value));
+        }
+        pollDemo();
+        const String action = args["action"].toString();
+        if (action == "hunterDemo")
+            buildHunterDemo();
+        if (action == "new")
+            studio.newSession(args.hasProperty("path") ? File(args["path"].toString())
+                                                       : Studio::defaultRoot().getChildFile("Session " + Time::getCurrentTime().formatted("%Y-%m-%d %H-%M-%S")));
+        else if (action == "open" && !studio.openSession(File(args["path"].toString())))
+            throw std::runtime_error("Not a NORYN session folder");
+        else if (action == "play")
+            studio.play();
+        else if (action == "record")
+            studio.record();
+        else if (action == "stop")
+            studio.stop();
+        else if (action == "locate")
+            studio.locate(int64(double(args["position"]) * getSampleRate()));
+        else if (action == "bounce")
+            studio.bounce(args.hasProperty("path") ? File(args["path"].toString())
+                                                   : studio.ensureSession().getChildFile("Mixdown.wav"));
+        else if (action == "undo")
+            studio.undoTake(jlimit(0, studioTracks - 1, int(args["index"])));
+        else if (action == "clear")
+            studio.clearTrack(jlimit(0, studioTracks - 1, int(args["index"])));
+        auto *result = new DynamicObject();
+        result->setProperty("session", studio.sessionDirectory.getFullPathName());
+        result->setProperty("playing", studio.playing.load());
+        result->setProperty("recording", studio.recording.load());
+        result->setProperty("bouncing", studio.bouncing.load());
+        result->setProperty("position", double(studio.position.load()) / jmax(1.0, getSampleRate()));
+        result->setProperty("length", double(studio.sessionLength()) / jmax(1.0, getSampleRate()));
+        result->setProperty("message", studio.lastMessage);
+        result->setProperty("demoProgress", demoProgress.load());
+        Array<var> tracks;
+        for (const auto &t : studio.tracks)
+        {
+            auto *row = new DynamicObject();
+            row->setProperty("name", t.name);
+            row->setProperty("source", trackSourceNames()[t.source.load()]);
+            row->setProperty("armed", t.armed.load());
+            row->setProperty("fx", t.fx.load());
+            row->setProperty("take", t.take.getFileName());
+            row->setProperty("start", double(t.takeStart) / jmax(1.0, getSampleRate()));
+            row->setProperty("seconds", double(t.takeLength) / jmax(1.0, getSampleRate()));
+            tracks.add(var(row));
+        }
+        result->setProperty("tracks", tracks);
+        return var(result);
+    }
+    void pollDemo()
+    {
+        if (const float progress = demoProgress.load(); progress >= 0 && !demoReady.load())
+            studio.lastMessage = "Building the Hunter demo... " + String(int(progress * 100)) + "%";
+        if (demoReady.exchange(false))
+        {
+            demoProgress.store(-1);
+            if (demoBuilder)
+                demoBuilder->stopThread(2000);
+            demoBuilder.reset();
+            setValue("bpm", HunterDemo::bpm, true);
+            studio.runSequencer.store(false);
+            sequencer.stop();
+            if (studio.openSession(demoDirectory))
+                studio.lastMessage = "Hunter demo ready: 7 parts plus an empty vocal track. Press PLAY.";
+            else
+                studio.lastMessage = "The Hunter demo could not be built.";
+        }
+    }
     void timerCallback() override
     {
         flushIncident();
+        if (studio.stopRequested.exchange(false))
+            studio.stop();
+        pollDemo();
     }
     // Saves a pending incident from the black-box recorder, with everything needed to reproduce it.
     bool flushIncident()
@@ -546,7 +881,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         if (incidents.pending.load() == IncidentRecorder::none)
             return false;
         String summary;
-        summary << "Version 0.7.1\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
+        summary << "Version 1.0.0\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
                 << ", block " << preparedBlock << "\nSequencer playing " << int(sequencer.playing.load())
                 << ", recording " << int(sequencer.recording.load()) << ", playhead "
                 << sequencer.playhead.load() << "\nActive voices " << visual.voices.load()
@@ -559,6 +894,42 @@ class NorynProcessor : public AudioProcessor, private Timer
         getStateInformation(stateData);
         return incidents.flush(summary, stateData);
     }
+    // Standalone: open an input device and unmute it, so mic tracks hear something. Also measures the
+    // device round trip so recorded input lines up with what was playing.
+    void enableAudioInput()
+    {
+#if JucePlugin_Build_Standalone
+        if (auto *holder = StandalonePluginHolder::getInstance())
+        {
+            holder->getMuteInputValue().setValue(false);
+            auto setup = holder->deviceManager.getAudioDeviceSetup();
+            if (setup.inputDeviceName.isEmpty() || setup.inputChannels.isZero())
+            {
+                if (setup.inputDeviceName.isEmpty())
+                    setup.inputDeviceName = setup.outputDeviceName;
+                setup.useDefaultInputChannels = false;
+                setup.inputChannels.clear();
+                setup.inputChannels.setRange(0, 2, true);
+                const auto error = holder->deviceManager.setAudioDeviceSetup(setup, true);
+                studio.lastMessage = error.isEmpty() ? "Audio input on: " + setup.inputDeviceName
+                                                     : "Could not open audio input: " + error;
+            }
+            if (auto *device = holder->deviceManager.getCurrentAudioDevice())
+                studio.roundTripLatency.store(device->getInputLatencyInSamples() + device->getOutputLatencyInSamples());
+        }
+#endif
+    }
+    void buildHunterDemo();
+    // Offline instances render demo stems; they never open the control bridge.
+    static bool &offlineInstance()
+    {
+        thread_local bool offline = false;
+        return offline;
+    }
+    std::unique_ptr<Thread> demoBuilder;
+    std::atomic<float> demoProgress{-1};
+    std::atomic<bool> demoReady{false};
+    File demoDirectory;
     static String deviceReport()
     {
 #if JucePlugin_Build_Standalone
@@ -685,7 +1056,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "0.7.1");
+        result->setProperty("version", "1.0.0");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());
@@ -942,6 +1313,10 @@ class NorynProcessor : public AudioProcessor, private Timer
                 setValue((prefix + "amount").toRawUTF8(), jlimit(-1.f, 1.f, float(args["amount"])), true);
             return result();
         }
+        if (op == "drums")
+            return drumControl(args);
+        if (op == "studio")
+            return studioControl(args);
         if (op == "flushIncident")
         {
             auto *result = new DynamicObject();
@@ -1020,6 +1395,8 @@ class NorynProcessor : public AudioProcessor, private Timer
         if (old.isValid())
             tree.removeChild(old, nullptr);
         tree.addChild(sequencer.save(), -1, nullptr);
+        if (!drums.pattern.empty())
+            tree.addChild(drums.save(), -1, nullptr);
         auto xml = tree.createXml();
         copyXmlToBinary(*xml, b);
     }
@@ -1032,6 +1409,9 @@ class NorynProcessor : public AudioProcessor, private Timer
             currentPreset.store(jlimit(0, getNumPrograms() - 1, int(tree.getProperty("factoryPreset", 0))));
             userLoaded.store(int(tree.getProperty("userPresetIndex", -1)));
             sequencer.restore(tree.getChildWithName("Sequence64"));
+            // Patches without drums leave the current kit and pattern playing.
+            if (const auto drumTree = tree.getChildWithName("Drums"); drumTree.isValid())
+                drums.restore(drumTree);
             // APVTS otherwise retains current values for missing children. Older patches
             // must receive legacy defaults, not inherit the most recently auditioned model.
             for (auto *item : getParameters())
@@ -1415,7 +1795,10 @@ class NorynEditor : public AudioProcessorEditor, private Timer
     TextButton routeShortcut{"ROUTE LFO"};
     TextButton characterTab{"VOICE DESIGN"};
     TextButton synthTab{"SYNTH"}, sequenceTab{"256 STEP SEQUENCER"}, modTab{"4 LFO ROUTING"},
-        scaleTab{"SCALE ENGINE"};
+        scaleTab{"SCALE ENGINE"}, drumTab{"DRUMS"}, studioTab{"STUDIO"}, vocalTab{"VOCAL"};
+    std::unique_ptr<DrumPage> drumPage;
+    std::unique_ptr<StudioPage> studioPage;
+    std::unique_ptr<VocalPage> vocalPage;
     LearnableButton seqPlay{"PLAY"}, seqRecord{"RECORD"};
     TextButton seqStop{"STOP SEQ"}, seqClear{"CLEAR"};
     TextButton midiButton{"MIDI"};
@@ -1999,6 +2382,48 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         }
     }
 
+    void buildStudioPages()
+    {
+        buildingPage = 5;
+        drumPage = std::make_unique<DrumPage>(p.drums);
+        drumPage->setBounds(16, 110, 1408, 712);
+        drumPage->onPattern = [this](int index) { p.applyDrumPattern(index); };
+        drumPage->onHit = [this](int pad, float velocity) { p.uiDrumHits[size_t(pad)].store(velocity); };
+        drumPage->onTransport = [this](bool run)
+        {
+            if (run)
+                p.sequencer.playing.store(true);
+            else
+                p.sequencer.stop();
+        };
+        drumPage->isPlaying = [this] { return p.sequencer.playing.load(); };
+        pageWidget(*drumPage, 5);
+        knob("drumlevel", "Drum Level", 1030, 110, amber, 84);
+        knob("drumswing", "Swing", 1124, 110, cyan, 84);
+        buildingPage = 6;
+        studioPage = std::make_unique<StudioPage>(p.studio);
+        studioPage->setBounds(16, 110, 1408, 712);
+        studioPage->bpm = [this] { return p.v("bpm"); };
+        studioPage->onNeedInput = [this] { p.enableAudioInput(); };
+        studioPage->onEditTrack = [this](int track)
+        {
+            vocalPage->selectTrack(track);
+            showPage(7);
+        };
+        studioPage->onLoadDemo = [this] { p.buildHunterDemo(); };
+        pageWidget(*studioPage, 6);
+        knob("studiolevel", "Tracks", 1326, 112, cyan, 74);
+        buildingPage = 7;
+        vocalPage = std::make_unique<VocalPage>(p.studio);
+        vocalPage->setBounds(16, 110, 1408, 712);
+        vocalPage->onNeedInput = [this] { p.enableAudioInput(); };
+        vocalPage->scaleDescription = [this]
+        {
+            return "KEY: " + MidiMessage::getMidiNoteName(int(p.v("root")), true, false, 3) + " " +
+                   ScaleEngine::names()[int(p.v("scale"))] + " (SCALE ENGINE)";
+        };
+        pageWidget(*vocalPage, 7);
+    }
     void showPage(int page)
     {
         activePage = page;
@@ -2009,6 +2434,13 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         modTab.setToggleState(page == 2, dontSendNotification);
         scaleTab.setToggleState(page == 3, dontSendNotification);
         characterTab.setToggleState(page == 4, dontSendNotification);
+        drumTab.setToggleState(page == 5, dontSendNotification);
+        studioTab.setToggleState(page == 6, dontSendNotification);
+        vocalTab.setToggleState(page == 7, dontSendNotification);
+        if (page == 5 && drumPage)
+            drumPage->refresh();
+        if (page == 6 && studioPage)
+            studioPage->refresh();
         repaint();
     }
     void pageWidget(Component &c, int page)
@@ -2458,7 +2890,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         status.setBounds(265, 903, 1010, 22);
         addAndMakeVisible(status);
         presetSearch.setName("presetSearch");
-        presetSearch.setBounds(1090, 83, 250, 22);
+        presetSearch.setBounds(1112, 83, 228, 22);
         midiButton.setBounds(1346, 83, 78, 22);
         midiButton.setWantsKeyboardFocus(false);
         midiButton.setTooltip("MIDI inputs and controller mappings");
@@ -2489,15 +2921,20 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             grabKeyboardFocus();
         };
         addAndMakeVisible(presetSearch);
-        synthTab.setBounds(322, 83, 100, 22);
-        sequenceTab.setBounds(430, 83, 180, 22);
-        modTab.setBounds(618, 83, 160, 22);
-        scaleTab.setBounds(786, 83, 150, 22);
-        characterTab.setBounds(944, 83, 138, 22);
-        TextButton *tabs[] = {&synthTab, &sequenceTab, &modTab, &scaleTab, &characterTab};
-        for (int page = 0; page < 5; ++page)
+        synthTab.setBounds(322, 83, 64, 22);
+        sequenceTab.setBounds(392, 83, 150, 22);
+        modTab.setBounds(548, 83, 116, 22);
+        scaleTab.setBounds(670, 83, 108, 22);
+        characterTab.setBounds(784, 83, 108, 22);
+        drumTab.setBounds(898, 83, 64, 22);
+        studioTab.setBounds(968, 83, 68, 22);
+        vocalTab.setBounds(1042, 83, 64, 22);
+        TextButton *tabs[] = {&synthTab, &sequenceTab, &modTab, &scaleTab, &characterTab, &drumTab, &studioTab, &vocalTab};
+        for (int page = 0; page < 8; ++page)
         {
             auto *tab = tabs[page];
+            if (page >= 6 && !NorynProcessor::studioAvailable())
+                continue; // inside a DAW the host does multitrack recording
             tab->setClickingTogglesState(false);
             tab->setWantsKeyboardFocus(false);
             tab->onClick = [this, page] { showPage(page); };
@@ -2510,6 +2947,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         buildModulationPage();
         buildScalePage();
         buildCharacterPage();
+        buildStudioPages();
         buildingPage = 0;
         showPage(0);
         fillPresets();
@@ -2619,7 +3057,7 @@ class NorynEditor : public AudioProcessorEditor, private Timer
             paintModulation(g);
         else if (activePage == 3)
             paintScale(g);
-        else
+        else if (activePage == 4)
             paintCharacter(g);
         g.setColour(Colour(0xff080f16));
         g.fillRoundedRectangle(16, 831, 232, 68, 5);
@@ -2631,13 +3069,172 @@ class NorynEditor : public AudioProcessorEditor, private Timer
         g.drawText("MIDI / sustain / mod wheel / bend", 28, 879, 210, 16, Justification::centredLeft);
         g.setColour(amber);
         g.setFont(FontOptions(10.f));
-        g.drawText("NORYN 0.7 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
+        g.drawText("NORYN 1.0 / " + String(p.visual.voices.load()) + " OF 16 VOICES", 24, 903, 232, 22,
                    Justification::centredLeft);
         g.setColour(muted);
         g.drawText(String(p.visual.sampleRate.load() / 1000, 1) + " kHz", 1310, 903, 108, 22,
                    Justification::centredRight);
     }
 };
+// Renders each part of the Hunter arrangement through its own offline NORYN instance into a session.
+class HunterBuilder : public Thread
+{
+  public:
+    HunterBuilder(NorynProcessor &processor, File directory, double rate)
+        : Thread("NORYN Hunter demo"), owner(processor), dir(std::move(directory)), sampleRate(rate)
+    {
+    }
+    void run() override
+    {
+        const auto parts = HunterDemo::parts();
+        dir.getChildFile("Audio").createDirectory();
+        ValueTree session("NorynSession");
+        session.setProperty("version", "1.0", nullptr);
+        session.setProperty("sampleRate", sampleRate, nullptr);
+        session.setProperty("bpm", HunterDemo::bpm, nullptr);
+        for (int index = 0; index < int(parts.size()) && !threadShouldExit(); ++index)
+        {
+            const auto &part = parts[size_t(index)];
+            ValueTree track("Track");
+            track.setProperty("index", index, nullptr);
+            track.setProperty("name", part.name, nullptr);
+            track.setProperty("source", part.notes.empty() ? int(TrackSource::InputLeft)
+                                        : part.drums       ? int(TrackSource::Drums)
+                                                           : int(TrackSource::Synth),
+                              nullptr);
+            track.setProperty("gain", part.gain, nullptr);
+            track.setProperty("pan", part.pan, nullptr);
+            track.setProperty("fx", part.notes.empty(), nullptr);
+            if (!part.notes.empty())
+            {
+                const auto file = dir.getChildFile("Audio").getChildFile(File::createLegalFileName(part.name) + ".wav");
+                if (render(part, file, index, int(parts.size())))
+                {
+                    track.setProperty("take", file.getRelativePathFrom(dir), nullptr);
+                    track.setProperty("takeStart", 0, nullptr);
+                }
+            }
+            else
+            {
+                VocalSettings vocal;
+                vocal.applyPreset(1);
+                track.addChild(vocal.save(), -1, nullptr);
+            }
+            session.addChild(track, -1, nullptr);
+        }
+        if (threadShouldExit())
+            return;
+        if (auto xml = session.createXml())
+            xml->writeTo(dir.getChildFile("session.xml"));
+        owner.demoReady.store(true);
+    }
+
+  private:
+    NorynProcessor &owner;
+    File dir;
+    double sampleRate;
+    bool render(const DemoPart &part, const File &file, int index, int count)
+    {
+        NorynProcessor::offlineInstance() = true;
+        auto instance = std::make_unique<NorynProcessor>();
+        NorynProcessor::offlineInstance() = false;
+        auto &p = *instance;
+        constexpr int block = 512;
+        p.setPlayConfigDetails(0, 2, sampleRate, block);
+        p.prepareToPlay(sampleRate, block);
+        if (part.drums)
+            p.drums.applyKit(NorynProcessor::kitNames().indexOf(part.sound));
+        else
+            for (int program = 0; program < p.getNumPrograms(); ++program)
+                if (p.getProgramName(program) == part.sound)
+                {
+                    p.setCurrentProgram(program);
+                    break;
+                }
+        p.setValue("bpm", HunterDemo::bpm);
+        // Events in samples: note-offs sort before note-ons at the same time.
+        const double samplesPerBeat = sampleRate * 60 / HunterDemo::bpm;
+        std::vector<std::pair<int64, MidiMessage>> events;
+        const int channel = part.drums ? 10 : 1;
+        for (const auto &n : part.notes)
+        {
+            const auto on = int64(n.beat * samplesPerBeat), off = int64((n.beat + n.length) * samplesPerBeat);
+            events.push_back({off, MidiMessage::noteOff(channel, n.note)});
+            events.push_back({on, MidiMessage::noteOn(channel, n.note, uint8(jlimit(1, 127, n.velocity)))});
+        }
+        std::stable_sort(events.begin(), events.end(), [](const auto &a, const auto &b)
+                         { return a.first < b.first || (a.first == b.first && a.second.isNoteOff() && b.second.isNoteOn()); });
+        const auto total = int64((HunterDemo::bars * 4 + 6) * samplesPerBeat);
+        AudioBuffer<float> audio(2, int(total)), chunk(2, block);
+        MidiBuffer midi;
+        size_t next = 0;
+        for (int64 at = 0; at < total; at += block)
+        {
+            if (threadShouldExit())
+                return false;
+            const int n = int(std::min<int64>(block, total - at));
+            midi.clear();
+            while (next < events.size() && events[next].first < at + n)
+            {
+                midi.addEvent(events[next].second, int(std::max<int64>(0, events[next].first - at)));
+                ++next;
+            }
+            chunk.setSize(2, n, false, false, true);
+            chunk.clear();
+            p.processBlock(chunk, midi);
+            for (int c = 0; c < 2; ++c)
+                audio.copyFrom(c, int(at), chunk, c, 0, n);
+            owner.demoProgress.store((float(index) + float(at) / float(total)) / float(count));
+        }
+        // Stems are matched for loudness where they play (RMS 0.12, peaks kept under -1 dBFS); the
+        // session's faders then set the mix.
+        double energy = 0;
+        int64 active = 0;
+        for (int64 at = 0; at + 4096 <= total; at += 4096)
+        {
+            double e = 0;
+            for (int c = 0; c < 2; ++c)
+            {
+                const float *d = audio.getReadPointer(c, int(at));
+                for (int i = 0; i < 4096; ++i)
+                    e += d[i] * d[i];
+            }
+            if (e / 8192 > 1.e-6)
+            {
+                energy += e;
+                active += 8192;
+            }
+        }
+        const float peak = jmax(audio.getMagnitude(0, 0, int(total)), audio.getMagnitude(1, 0, int(total)));
+        if (active > 0 && peak > 1.e-5f)
+            audio.applyGain(jmin(.12f / float(std::sqrt(energy / double(active))), .89f / peak));
+        file.deleteFile();
+        WavAudioFormat wav;
+        auto stream = file.createOutputStream();
+        if (!stream)
+            return false;
+        std::unique_ptr<AudioFormatWriter> writer(wav.createWriterFor(stream.get(), sampleRate, 2, 24, {}, 0));
+        if (!writer)
+            return false;
+        stream.release();
+        return writer->writeFromAudioSampleBuffer(audio, 0, int(total));
+    }
+};
+void NorynProcessor::buildHunterDemo()
+{
+    if (demoBuilder && demoBuilder->isThreadRunning())
+        return;
+    studio.stop();
+    demoDirectory = Studio::defaultRoot().getChildFile("Bjork Hunter Demo");
+    if (demoDirectory.exists())
+        demoDirectory = demoDirectory.getNonexistentSibling(false);
+    demoDirectory.createDirectory();
+    demoProgress.store(0);
+    demoReady.store(false);
+    const double rate = getSampleRate() > 0 ? getSampleRate() : 44100;
+    demoBuilder = std::make_unique<HunterBuilder>(*this, demoDirectory, rate);
+    demoBuilder->startThread(Thread::Priority::low);
+}
 AudioProcessorEditor *NorynProcessor::createEditor()
 {
     return new NorynEditor(*this);

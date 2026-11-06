@@ -94,6 +94,8 @@ export const operations = new Set([
   "progression",
   "transport",
   "midiMap",
+  "drums",
+  "studio",
   "scale",
   "lfo",
   "panic",

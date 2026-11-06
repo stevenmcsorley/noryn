@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const token = (await fs.readFile(path.join(root, ".mcp-token"), "utf8")).trim();
-const client = new Client({ name: "noryn-integration", version: "0.7.1" });
+const client = new Client({ name: "noryn-integration", version: "1.0.0" });
 await client.connect(
   new StreamableHTTPClientTransport(new URL("http://127.0.0.1:8787/mcp"), {
     requestInit: { headers: { Authorization: `Bearer ${token}` } },

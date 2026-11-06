@@ -86,6 +86,7 @@ struct Sequencer
     std::array<int, 128> recordedStep{};
     std::array<int, 128> activeStep{};
     std::atomic<bool> flushRequested{true}, restartRequested{false};
+    std::atomic<int> startStep{0}; // where the next start begins (the studio timeline sets it)
     double sampleClock = 0, nextTick = 0, lastStepSamples = 0;
     bool wasPlaying = false, wasRecording = false;
     uint64_t ticks = 0;
@@ -194,7 +195,7 @@ struct Sequencer
         {
             nextTick = blockStart;
             ticks = 0;
-            next = current = 0;
+            next = current = jmax(0, startStep.exchange(0)) % length;
         }
         if (!run)
         {

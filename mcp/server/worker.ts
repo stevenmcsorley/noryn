@@ -16,7 +16,7 @@ const instanceId = z
     "Optional instance ID from get_state; defaults to the latest running synth.",
   );
 function upstream(env: Env) {
-  const server = new McpServer({ name: "noryn", version: "0.7.1" });
+  const server = new McpServer({ name: "noryn", version: "1.0.0" });
   async function call(op: string, args: unknown, id?: string) {
     const response = await fetch(`${env.NORYN_BRIDGE_URL}/api`, {
       method: "POST",
@@ -197,6 +197,73 @@ function upstream(env: Env) {
     async ({ instanceId, ...args }) => call("midiMap", args, instanceId),
   );
   server.registerTool(
+    "drums",
+    {
+      description:
+        "Drum machine: choose a kit and/or pattern (index or name, e.g. 'Industrial', 'Trip-hop slow'), set pattern length (1-64 sixteenths), let MIDI keys play pads, arm drum recording, edit one pad's sound (type, tune in semitones, decay/tone/snap 0-1, level 0-1.5, pan -1..1, choke group, sample path), set one step's velocity (0 clears), or audition a pad. Pads: 1 kick, 2 snare, 3 clap, 4 closed hat, 5 open hat, 6-8 toms, 9 rim, 10 cowbell, 11 cymbal, 12 shaker, 13 conga, 14 zap, 15 noise hit, 16 boom (0-based indices). Returns the kit, pads and the pattern as text (X accent, x hit, o ghost).",
+      inputSchema: {
+        kit: z.union([z.number().int(), z.string()]).optional(),
+        pattern: z.union([z.number().int(), z.string()]).optional(),
+        clear: z.boolean().optional(),
+        length: z.number().int().min(1).max(64).optional(),
+        keysPlayDrums: z.boolean().optional(),
+        recording: z.boolean().optional(),
+        pad: z
+          .object({
+            index: z.number().int().min(0).max(15),
+            type: z.union([z.number().int(), z.string()]).optional(),
+            tune: z.number().min(-24).max(24).optional(),
+            decay: z.number().min(0).max(1).optional(),
+            tone: z.number().min(0).max(1).optional(),
+            snap: z.number().min(0).max(1).optional(),
+            level: z.number().min(0).max(1.5).optional(),
+            pan: z.number().min(-1).max(1).optional(),
+            choke: z.number().int().min(0).max(2).optional(),
+            sample: z.string().optional(),
+          })
+          .optional(),
+        step: z
+          .object({ pad: z.number().int().min(0).max(15), step: z.number().int().min(0).max(63), velocity: z.number().int().min(0).max(127) })
+          .optional(),
+        hit: z.object({ pad: z.number().int().min(0).max(15), velocity: z.number().min(0).max(1) }).optional(),
+        instanceId,
+      },
+    },
+    async ({ instanceId, ...args }) => call("drums", args, instanceId),
+  );
+  server.registerTool(
+    "studio",
+    {
+      description:
+        "Multitrack studio (standalone app only). action: play, stop, record (records armed tracks), locate (position in seconds), new / open (path = session folder), bounce (path = WAV, real time), undo / clear (index = track), hunterDemo (builds the Bjork 'Hunter' multitrack demo session). track edits one of 8 tracks: name, source (0 input 1, 1 input 2, 2 inputs 1+2, 3 synth, 4 drums, 5 synth+drums), armed, monitor, mute, solo, fx (vocal chain), gain 0-1.5, pan -1..1, vocalPreset (name or index), vocal (chain settings by id, e.g. {tune:1, tunespeed:0}). runSequencer makes the step sequencer and drums follow the studio transport.",
+      inputSchema: {
+        action: z.enum(["play", "stop", "record", "locate", "new", "open", "bounce", "undo", "clear", "hunterDemo"]).optional(),
+        position: z.number().min(0).optional(),
+        path: z.string().optional(),
+        index: z.number().int().min(0).max(7).optional(),
+        runSequencer: z.boolean().optional(),
+        track: z
+          .object({
+            index: z.number().int().min(0).max(7),
+            name: z.string().optional(),
+            source: z.union([z.number().int().min(0).max(5), z.string()]).optional(),
+            armed: z.boolean().optional(),
+            monitor: z.boolean().optional(),
+            mute: z.boolean().optional(),
+            solo: z.boolean().optional(),
+            fx: z.boolean().optional(),
+            gain: z.number().min(0).max(1.5).optional(),
+            pan: z.number().min(-1).max(1).optional(),
+            vocalPreset: z.union([z.number().int(), z.string()]).optional(),
+            vocal: z.record(z.string(), z.number()).optional(),
+          })
+          .optional(),
+        instanceId,
+      },
+    },
+    async ({ instanceId, ...args }) => call("studio", args, instanceId),
+  );
+  server.registerTool(
     "set_scale",
     {
       description:
@@ -247,7 +314,7 @@ export default {
     )
       return new Response("Unauthorized", { status: 401 });
     if (new URL(request.url).pathname === "/health")
-      return Response.json({ name: "noryn-codemode", version: "0.7.1" });
+      return Response.json({ name: "noryn-codemode", version: "1.0.0" });
     const server = await codeMcpServer({
       server: upstream(env),
       executor: new DynamicWorkerExecutor({ loader: env.LOADER }),

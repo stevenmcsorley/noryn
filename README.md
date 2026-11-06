@@ -1,6 +1,49 @@
-# NORYN 0.7 — Hybrid Synthesizer
+# NORYN 1.0 — Hybrid Synthesizer, Drum Machine and Studio
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
+
+## v1.0.0: drums, a multitrack studio and a vocal chain
+
+NORYN is now a small studio. The standalone app records, mixes and bounces; inside a DAW, NORYN stays an instrument and gains the drum machine (the DAW already has tracks).
+
+![DRUMS page](drums.png)
+
+### DRUMS (standalone and VST3)
+- **16-pad synthesized drum machine.** Every sound is built from oscillators and noise, with no recorded samples: kick, snare, clap, closed/open hat (choke group), toms, rim, cowbell, cymbal, shaker, conga, zap and a crushed industrial noise hit. Each pad has tune, decay, tone, snap/drive, level, pan and choke.
+- **Load your own samples** onto any pad (WAV, AIFF, FLAC, OGG). The sample is remembered with the patch.
+- **12 kits:** 808 Classic, 909 House, CR-78 Vintage, Linn Electro (Depeche Mode), Industrial (Nine Inch Nails), Trip-Hop (Portishead), Boom Bap Lo-Fi, Techno Warehouse, Synthwave Gated, Minimal Clicks, Breakbeat Dusty, Ambient Soft. Each kit has bus drive, glue compression and room.
+- **16-lane step pattern** of up to 64 sixteenths, with accents and ghosts (click, Shift-click, Alt/right-click; drag to paint) and swing. There are 26 pattern presets, from four-on-the-floor to Industrial stomp (NIN), Trip-hop slow (Portishead), Synth-pop drive (Depeche Mode), Post-punk (The Cure), Two-step garage (Burial), Amen-style break, Trap and Bossa nova.
+- Drums run on the sequencer's transport and BPM. **MIDI channel 10** always plays the pads (General MIDI drum map). **KEYS PLAY DRUMS** turns any keyboard into pads (C3 = pad 1). **REC DRUMS** writes what you play into the pattern, quantized. Drum Level and Swing are host parameters and MIDI-learnable. Patches saved with a drum pattern recall the kit and pattern; older patches leave the drums alone.
+
+![STUDIO page](studio.png)
+
+### STUDIO (standalone)
+- **8 tracks.** Each records one source: mic/input 1, input 2, both inputs, the NORYN synth, the drums, or synth + drums. Takes stream to disk (24-bit WAV), so length is limited only by disk space.
+- **Per track:** arm (R), input monitor (MON), mute, solo, vocal chain (FX / EDIT), level and pan, waveform lane, undo last take and clear (right-click a lane). Click the ruler or a lane to locate (snaps to the beat).
+- **SEQ + DRUMS FOLLOW** starts the step sequencer and drums from the same bar as the timeline, so you can record the synth and drums onto tracks and overdub over them. Live input is placed earlier by the device's measured round trip, so overdubs line up.
+- **Sessions:** NEW SESSION, OPEN... and an automatic session folder in `~/Music/NORYN Sessions/` (session.xml plus Audio/). **BOUNCE...** records the master mix to WAV in real time, from the start to the end of the longest take.
+- Arming or monitoring an input track opens and unmutes the audio input. If no input device was chosen, the output device is used. Use headphones when monitoring a mic.
+- **LOAD HUNTER DEMO** builds a full-length instrumental arrangement inspired by Björk's "Hunter" (Homogenic, 1997) as a session you can mix and record over. It has 84 bars at 80 BPM with seven parts on their own tracks (bolero snare, beat, bass, strings ostinato, E♭ bridge chords, stabs, glass texture), plus an empty vocal track with the vocal chain ready. Everything is played by NORYN's own sounds from an arrangement written for this demo; no audio from the record is used. Building takes about two and a half minutes in the background.
+
+![VOCAL page](vocal.png)
+
+### VOCAL (standalone)
+The channel strip for any track runs on playback and live monitoring, and is non-destructive (takes are recorded raw):
+- **Gate.**
+- **EQ:** low cut, mud cut, presence, air.
+- **De-esser.**
+- **Compressor** with a gain-reduction meter.
+- **Pitch correction** locked to the SCALE ENGINE's key and scale, from subtle to hard tune. It shows the detected and corrected note.
+- **Tape saturation.**
+- **20-band vocoder.** The carrier is the NORYN synth, a robot buzz that follows your voice, or a root-and-fifth drone.
+- **Doubler and harmony voice** (±12 semitones, also tuned).
+- **Tempo-synced tape delay and plate reverb.**
+
+13 chain presets cover clean, radio pop, subtle and hard tune, three vocoders, double and air, a harmony third, lo-fi tape (Portishead), industrial distortion (NIN), ambient wash and spoken word.
+
+### Control and tests
+- The control API and MCP server gain `drums` and `studio` tools: kits, patterns, pads, steps, transport, tracks, chains and the Hunter demo.
+- New checks run every kit and pad, pattern timing, channel 10 and patch recall; pitch correction (a note 40 cents sharp lands within 1 Hz of A4), vocoder output and every chain preset; and a studio round trip (record synth and input, play back, reopen the session, bounce). `NorynSmoke . --hunter <dir>` builds the demo headlessly; `--screenshots <dir>` renders each page.
 
 ## v0.7.1 changes
 

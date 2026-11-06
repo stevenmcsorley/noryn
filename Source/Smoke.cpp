@@ -20,6 +20,8 @@ static void require(bool condition, const String &message)
         throw std::runtime_error(message.toStdString());
 }
 #include "FeatureTests.h"
+#include "Drums.h"
+#include "VocalChain.h"
 struct Harness
 {
     std::unique_ptr<AudioProcessor> p{createPluginFilter()};
@@ -408,6 +410,243 @@ int main(int argc, char **argv)
             require(before == 0, "A normal chord was reported as noise");
             h.p->setCurrentProgram(1);
         }
+        {
+            // Drums: every kit and pad sounds, bounded; patterns land on the grid; channel 10 plays pads.
+            noryn::DrumMachine machine;
+            machine.prepare(48000);
+            AudioBuffer<float> out(2, 512);
+            MidiBuffer none;
+            for (int kit = 0; kit < int(noryn::drumKits().size()); ++kit)
+            {
+                machine.applyKit(kit);
+                for (int pad = 0; pad < noryn::drumPads; ++pad)
+                {
+                    MidiBuffer hit;
+                    hit.addEvent(MidiMessage::noteOn(1, pad, uint8(110)), 0);
+                    double energy = 0;
+                    float peak = 0;
+                    for (int b = 0; b < 60; ++b)
+                    {
+                        machine.process(out, 512, b == 0 ? hit : none, 120, false, 0, 1);
+                        for (int c = 0; c < 2; ++c)
+                            for (int i = 0; i < 512; ++i)
+                            {
+                                const float x = out.getSample(c, i);
+                                require(std::isfinite(x), "Drum pad produced non-finite audio");
+                                energy += x * x;
+                                peak = jmax(peak, std::abs(x));
+                            }
+                    }
+                    if (std::sqrt(energy / (2 * 60 * 512)) < .002 || peak > 1.f)
+                        throw std::runtime_error(("Drum pad out of range: " + String(noryn::drumKits()[size_t(kit)].name) +
+                                                  " pad " + String(pad + 1) + " rms " + String(std::sqrt(energy / (2 * 60 * 512))) +
+                                                  " peak " + String(peak)).toStdString());
+                }
+            }
+            for (int pattern = 0; pattern < int(noryn::drumPatterns().size()); ++pattern)
+                machine.applyPattern(pattern);
+            // Four on the floor at 120 BPM: kicks every 24000 samples.
+            machine.applyKit(0);
+            machine.applyPattern(1);
+            for (int lane = 1; lane < noryn::drumPads; ++lane)
+                for (auto &step : machine.pattern.velocity[size_t(lane)])
+                    step.store(0);
+            machine.pads[0].type.store(int(noryn::DrumType::Rim)); // a sharp click times cleanly
+            machine.room.store(0);
+            machine.prepare(48000);
+            std::vector<int> onsets;
+            std::vector<float> rendered;
+            for (int b = 0; b < 200; ++b)
+            {
+                machine.process(out, 512, none, 120, true, 0, 1);
+                rendered.insert(rendered.end(), out.getReadPointer(0), out.getReadPointer(0) + 512);
+            }
+            double previousRms = 0;
+            for (size_t w = 0; w + 128 <= rendered.size(); w += 128)
+            {
+                double e = 0;
+                for (size_t i = w; i < w + 128; ++i)
+                    e += rendered[i] * rendered[i];
+                const double rms = std::sqrt(e / 128);
+                if (rms > .03 && rms > previousRms * 1.8 && (onsets.empty() || int(w) - onsets.back() > 3000))
+                    onsets.push_back(int(w));
+                previousRms = rms;
+            }
+            require(onsets.size() >= 4, "Pattern did not play its beats");
+            for (size_t i = 1; i < 4; ++i)
+                require(std::abs((onsets[i] - onsets[i - 1]) - 24000) < 200, "Drum steps are off the grid");
+            // Through the processor: channel 10 note 38 plays the snare; state carries the pattern.
+            h.prepare(48000, 512);
+            norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"kit":"909","pattern":"Boom bap"}})"));
+            AudioBuffer<float> block(2, 512);
+            MidiBuffer gm;
+            gm.addEvent(MidiMessage::noteOn(10, 38, uint8(120)), 0);
+            h.p->processBlock(block, gm);
+            require(block.getMagnitude(0, 0, 512) > .01f, "Channel 10 did not play the drums");
+            MemoryBlock saved;
+            h.p->getStateInformation(saved);
+            norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"clear":true,"kit":0}})"));
+            h.p->setStateInformation(saved.getData(), int(saved.getSize()));
+            auto drumState = norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{}})"));
+            require(drumState["kit"].toString().contains("909") && drumState["pads"][1]["steps"].toString().contains("X"),
+                    "Drum kit and pattern were not recalled from the patch");
+            norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"clear":true}})"));
+            std::cout << "PASS: " << noryn::drumKits().size() << " drum kits x 16 pads sound and stay bounded, "
+                      << noryn::drumPatterns().size() << " patterns, beats on the grid, channel 10, patch recall.\n";
+        }
+        {
+            // Vocal chain: hard tune pulls a sharp note to pitch; the vocoder speaks; every preset is finite.
+            const double sr = 48000;
+            auto measure = [&](const std::vector<float> &x, size_t from)
+            {
+                int crossings = 0;
+                for (size_t i = from + 1; i < x.size(); ++i)
+                    crossings += (x[i - 1] < 0) != (x[i] < 0);
+                return crossings / 2.0 / (double(x.size() - from) / sr);
+            };
+            noryn::VocalChain chain;
+            chain.prepare(sr, 512);
+            chain.settings.applyPreset(3); // hard tune
+            chain.settings.set("reverb", 0);
+            chain.settings.set("delay", 0);
+            chain.settings.set("doubler", 0);
+            std::vector<float> in(512), l(512), r(512), output;
+            const double hz = 440 * std::exp2(.4 / 12); // 40 cents sharp
+            for (int b = 0; b < 200; ++b)
+            {
+                for (int i = 0; i < 512; ++i)
+                    in[size_t(i)] = .3f * float(std::sin(2 * MathConstants<double>::pi * hz * (b * 512 + i) / sr));
+                chain.process(in.data(), nullptr, l.data(), r.data(), 512, 120, 4095, 0);
+                output.insert(output.end(), l.begin(), l.end());
+            }
+            const double corrected = measure(output, output.size() / 2);
+            require(std::abs(chain.detectedHz.load() - hz) < 3, "Pitch detector missed a steady tone");
+            require(std::abs(corrected - 440) < 3, ("Pitch correction did not reach A4: " + String(corrected)).toStdString());
+            // Vocoder with a saw carrier
+            chain.prepare(sr, 512);
+            chain.settings.applyPreset(4);
+            std::vector<float> carrier(512);
+            double energy = 0;
+            for (int b = 0; b < 100; ++b)
+            {
+                for (int i = 0; i < 512; ++i)
+                {
+                    const double t = (b * 512 + i) / sr;
+                    in[size_t(i)] = .3f * float(std::sin(2 * MathConstants<double>::pi * 220 * t) * (.5 + .5 * std::sin(6 * t)));
+                    carrier[size_t(i)] = float(2 * std::fmod(t * 110, 1.0) - 1) * .4f;
+                }
+                chain.process(in.data(), carrier.data(), l.data(), r.data(), 512, 120, 4095, 0);
+                if (b > 20)
+                    for (int i = 0; i < 512; ++i)
+                        energy += l[size_t(i)] * l[size_t(i)];
+            }
+            const double vocoderRms = std::sqrt(energy / (79 * 512));
+            require(vocoderRms > .03 && vocoderRms < .4, ("Vocoder output out of range: " + String(vocoderRms)).toStdString());
+            for (int preset = 0; preset < int(noryn::VocalSettings::presets().size()); ++preset)
+            {
+                chain.prepare(sr, 512);
+                chain.settings.applyPreset(preset);
+                Random noise(preset);
+                for (int b = 0; b < 40; ++b)
+                {
+                    for (int i = 0; i < 512; ++i)
+                        in[size_t(i)] = (noise.nextFloat() - .5f) * .5f + .3f * float(std::sin(i * .05));
+                    chain.process(in.data(), carrier.data(), l.data(), r.data(), 512, 120, 2741, 2);
+                    for (int i = 0; i < 512; ++i)
+                        require(std::isfinite(l[size_t(i)]) && std::abs(l[size_t(i)]) < 8, "Vocal preset unbounded");
+                }
+            }
+            std::cout << "PASS: vocal chain: pitch detected, 40 cents sharp corrected to " << String(corrected, 1)
+                      << " Hz, vocoder rms " << String(vocoderRms, 3) << ", " << noryn::VocalSettings::presets().size()
+                      << " presets bounded.\n";
+        }
+        {
+            // Studio: record the synth and a live input, play them back aligned, reopen, bounce.
+            const auto sessionDir = File::getSpecialLocation(File::tempDirectory).getChildFile("noryn-test-session-" + String(Time::getHighResolutionTicks()));
+            sessionDir.deleteRecursively();
+            auto *processor = h.p.get();
+            auto studio = [&](const String &json) { return norynControl(processor, JSON::parse(json)); };
+            h.p->setCurrentProgram(1);
+            // Two inputs, as the standalone app opens them (the harness default has none).
+            h.p->releaseResources();
+            h.p->setPlayConfigDetails(2, 2, 48000, 512);
+            h.p->prepareToPlay(48000, 512);
+            studio(R"({"op":"studio","args":{"action":"new","runSequencer":false,"path":")" +
+                   sessionDir.getFullPathName().replace("\\", "/") + R"("}})");
+            studio(R"({"op":"studio","args":{"track":{"index":1,"source":"NORYN synth","armed":true}}})");
+            studio(R"({"op":"studio","args":{"track":{"index":0,"source":0,"armed":true,"fx":false}}})");
+            studio(R"({"op":"studio","args":{"action":"record"}})");
+            AudioBuffer<float> block(2, 512);
+            MidiBuffer midi;
+            const double inputHz = 330;
+            for (int b = 0; b < 94; ++b) // ~1 s
+            {
+                midi.clear();
+                if (b == 0)
+                    midi.addEvent(MidiMessage::noteOn(1, 60, uint8(100)), 0);
+                if (b == 60)
+                    midi.addEvent(MidiMessage::noteOff(1, 60), 0);
+                for (int i = 0; i < 512; ++i)
+                {
+                    const float x = .25f * float(std::sin(2 * MathConstants<double>::pi * inputHz * (b * 512 + i) / 48000));
+                    block.setSample(0, i, x);
+                    block.setSample(1, i, x);
+                }
+                h.p->processBlock(block, midi);
+            }
+            studio(R"({"op":"studio","args":{"action":"stop"}})");
+            auto state = studio(R"({"op":"studio","args":{}})");
+            require(std::abs(double(state["tracks"][1]["seconds"]) - 94 * 512 / 48000.0) < .02 &&
+                        std::abs(double(state["tracks"][0]["seconds"]) - 94 * 512 / 48000.0) < .02,
+                    "Takes were not recorded at the right length");
+            // Playback with the synth silent: only the takes sound.
+            studio(R"({"op":"studio","args":{"track":{"index":0,"armed":false},"action":"locate","position":0}})");
+            studio(R"({"op":"studio","args":{"track":{"index":1,"armed":false,"mute":true}}})");
+            studio(R"({"op":"panic"})");
+            block.clear();
+            midi.clear();
+            h.p->processBlock(block, midi);
+            for (int b = 0; b < 400; ++b) // let the patch's release and reverb die away
+            {
+                block.clear();
+                h.p->processBlock(block, midi);
+            }
+            studio(R"({"op":"studio","args":{"action":"locate","position":0}})");
+            studio(R"({"op":"studio","args":{"action":"play"}})");
+            std::vector<float> played;
+            for (int b = 0; b < 60; ++b)
+            {
+                midi.clear();
+                block.clear();
+                h.p->processBlock(block, midi);
+                played.insert(played.end(), block.getReadPointer(0), block.getReadPointer(0) + 512);
+            }
+            int crossings = 0;
+            for (size_t i = 24001; i < played.size(); ++i)
+                crossings += (played[i - 1] < 0) != (played[i] < 0);
+            const double playedHz = crossings / 2.0 / ((played.size() - 24000) / 48000.0);
+            require(std::abs(playedHz - inputHz) < 4, ("Input take did not play back: " + String(playedHz)).toStdString());
+            studio(R"({"op":"studio","args":{"action":"stop"}})");
+            // Reopen the session from disk
+            studio(R"({"op":"studio","args":{"action":"open","path":")" + sessionDir.getFullPathName().replace("\\", "/") + R"("}})");
+            state = studio(R"({"op":"studio","args":{}})");
+            require(state["tracks"][0]["take"].toString().endsWith(".wav") && bool(state["tracks"][1]["take"].toString().isNotEmpty()),
+                    "Session did not reopen its takes");
+            // Bounce runs in real time from the start; drive it and finish it.
+            const auto mix = sessionDir.getChildFile("Mixdown.wav");
+            studio(R"({"op":"studio","args":{"action":"bounce","path":")" + mix.getFullPathName().replace("\\", "/") + R"("}})");
+            for (int b = 0; b < 300 && bool(studio(R"({"op":"studio","args":{}})")["bouncing"]); ++b)
+            {
+                block.clear();
+                midi.clear();
+                h.p->processBlock(block, midi);
+            }
+            studio(R"({"op":"studio","args":{"action":"stop"}})");
+            require(mix.getSize() > 48000 * 2 * 3, "Bounce file was not written");
+            studio(R"({"op":"studio","args":{"track":{"index":1,"mute":false},"runSequencer":true}})");
+            std::cout << "PASS: studio records synth and input takes, plays them back (" << String(playedHz, 1)
+                      << " Hz), reopens the session and bounces the mix.\n";
+        }
         if (argc > 2 && String(argv[2]) == "--fuzz")
         {
             // Simulated heavy live use. Every recovery would previously have been a stuck-noise event.
@@ -502,6 +741,52 @@ int main(int argc, char **argv)
                       << " effect recoveries " << int(finalState["audioRecoveries"]) << " voice faults "
                       << int(finalState["voiceFaults"]) << "\n";
             require(nonFinite == 0 && stuck == 0, "Fuzzed live use produced invalid or stuck audio");
+            return 0;
+        }
+        if (argc > 3 && String(argv[2]) == "--hunter")
+        {
+            // --hunter <dir>: builds the Hunter multitrack demo session headlessly and checks it.
+            setenv("NORYN_STUDIO_DIR", argv[3], 1);
+            h.p->releaseResources();
+            h.p->setPlayConfigDetails(2, 2, 44100, 512);
+            h.p->prepareToPlay(44100, 512);
+            const auto started = Time::getMillisecondCounterHiRes();
+            norynControl(h.p.get(), JSON::parse(R"({"op":"studio","args":{"action":"hunterDemo"}})"));
+            var state;
+            for (;;)
+            {
+                Thread::sleep(500);
+                state = norynControl(h.p.get(), JSON::parse(R"({"op":"studio","args":{}})"));
+                if (double(state["demoProgress"]) < 0)
+                    break;
+            }
+            std::cout << "built in " << (Time::getMillisecondCounterHiRes() - started) / 1000 << " s: "
+                      << state["message"].toString() << "\n" << JSON::toString(state["tracks"], true) << "\n";
+            require(state["session"].toString().contains("Hunter") && double(state["length"]) > 240,
+                    "Hunter demo session was not built");
+            return 0;
+        }
+        if (argc > 3 && String(argv[2]) == "--screenshots")
+        {
+            // --screenshots <dir>: renders each tab of the editor to PNG for visual review.
+            const File out(argv[3]);
+            out.createDirectory();
+            norynControl(h.p.get(), JSON::parse(R"({"op":"drums","args":{"kit":"Industrial","pattern":"Industrial stomp"}})"));
+            std::unique_ptr<AudioProcessorEditor> view(h.p->createEditor());
+            view->setSize(1440, 930);
+            for (auto *child : view->getChildren())
+                if (auto *tab = dynamic_cast<TextButton *>(child))
+                    for (auto name : {"SYNTH", "256 STEP SEQUENCER", "DRUMS", "STUDIO", "VOCAL"})
+                        if (tab->getButtonText() == name)
+                        {
+                            tab->onClick();
+                            auto image = view->createComponentSnapshot(view->getLocalBounds(), true, 1);
+                            FileOutputStream stream(out.getChildFile(String(name).replace(" ", "-") + ".png"));
+                            stream.setPosition(0);
+                            stream.truncate();
+                            PNGImageFormat().writeImageToStream(image, stream);
+                        }
+            view.reset();
             return 0;
         }
         if (argc > 3 && String(argv[2]) == "--probe")
@@ -947,7 +1232,8 @@ int main(int argc, char **argv)
             if (pair.first == "voicemode" || pair.first == "glidetime" || pair.first == "bendrange" ||
                 pair.first.startsWith("seq") || pair.first == "bpm" || pair.first == "clicklevel" ||
                 pair.first == "metronome" || pair.first == "scale" || pair.first == "root" ||
-                pair.first == "customscale" || pair.first.startsWith("quantize"))
+                pair.first == "customscale" || pair.first.startsWith("quantize") ||
+                pair.first.startsWith("drum") || pair.first == "studiolevel") // tested with drums / studio
                 continue;
             ++audibleControls;
             h.baseline(pair.first);
@@ -1509,7 +1795,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"0.7.1\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"1.0.0\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +
