@@ -4,7 +4,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { runtimeDir } from './runtime-paths.mjs';
 const token=(await fs.readFile(path.join(runtimeDir,'mcp-token'),'utf8')).trim();
-const client=new Client({name:'noryn-stolen-dog-study',version:'1.0.1'});
+const client=new Client({name:'noryn-stolen-dog-study',version:'1.0.2'});
 await client.connect(new StreamableHTTPClientTransport(new URL('http://127.0.0.1:8787/mcp'),{requestInit:{headers:{Authorization:`Bearer ${token}`}}}));
 try {
  const result=await client.callTool({name:'code',arguments:{code:`async()=>{

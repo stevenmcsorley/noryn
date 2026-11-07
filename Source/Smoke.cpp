@@ -801,6 +801,15 @@ int main(int argc, char **argv)
                             norynControl(p, JSON::parse("{\"op\":\"drums\",\"args\":{\"step\":{\"pad\":" + hit[0].toString() +
                                                         ",\"step\":" + hit[1].toString() + ",\"velocity\":" + hit[2].toString() + "}}}"));
                     }
+                    // The song's own sound: pad edits, bus and swing, applied over the kit.
+                    if (auto *tweaks = entry["tweaks"].getArray())
+                        for (const auto &args : *tweaks)
+                        {
+                            auto *request = new DynamicObject();
+                            request->setProperty("op", "drums");
+                            request->setProperty("args", args);
+                            norynControl(h.p.get(), var(request));
+                        }
                 };
                 applyDrums();
                 const double bpm = h.parameters.at("bpm")->convertFrom0to1(h.parameters.at("bpm")->getValue());
@@ -876,6 +885,44 @@ int main(int argc, char **argv)
                             PNGImageFormat().writeImageToStream(image, stream);
                         }
             view.reset();
+            return 0;
+        }
+        if (argc > 4 && String(argv[2]) == "--drum-render")
+        {
+            // --drum-render outdir "<preset>"...: loads each preset in turn into one instance (as the app does)
+            // and records 8 s of its drums alone.
+            for (int a = 4; a < argc; ++a)
+            {
+                MemoryBlock patch;
+                exampleRoot.getChildFile("presets/" + String(argv[a]) + ".noryn").loadFileAsData(patch);
+                h.p->setStateInformation(patch.getData(), int(patch.getSize()));
+                h.value("master", 0);
+                if (auto *mute = std::getenv("NORYN_DR_MUTE_DRUMS"))
+                    h.value("drumlevel", 0);
+                if (auto *solo = std::getenv("NORYN_DR_SOLO"))
+                    for (int pad = 0; pad < 16; ++pad)
+                        if (pad != atoi(solo))
+                            norynControl(h.p.get(), JSON::parse("{\"op\":\"drums\",\"args\":{\"pad\":{\"index\":" + String(pad) + ",\"level\":0}}}"));
+                h.prepare(48000, 512);
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":true}})"));
+                const int total = 48000 * 8;
+                AudioBuffer<float> all(2, total), block(2, 512);
+                MidiBuffer none;
+                for (int at = 0; at < total; at += 512)
+                {
+                    block.clear();
+                    h.p->processBlock(block, none);
+                    for (int c = 0; c < 2; ++c)
+                        all.copyFrom(c, at, block, c, 0, jmin(512, total - at));
+                }
+                norynControl(h.p.get(), JSON::parse(R"({"op":"transport","args":{"playing":false}})"));
+                auto out = File(argv[3]).getChildFile(String(a - 4) + ".wav");
+                out.deleteFile();
+                WavAudioFormat wav;
+                std::unique_ptr<AudioFormatWriter> writer(wav.createWriterFor(new FileOutputStream(out), 48000, 2, 24, {}, 0));
+                writer->writeFromAudioSampleBuffer(all, 0, total);
+                std::cout << a - 4 << " " << argv[a] << "\n";
+            }
             return 0;
         }
         if (argc > 3 && String(argv[2]) == "--probe")
@@ -1884,7 +1931,7 @@ int main(int argc, char **argv)
         }
         wav(directory.getChildFile("signature-demo.wav"), signatureDemo);
         double elapsed = (Time::getMillisecondCounterHiRes() - started) / 1000;
-        String report = "{\n  \"version\": \"1.0.1\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
+        String report = "{\n  \"version\": \"1.0.2\",\n  \"factory_presets\": 290,\n  \"signature_presets\": "
                         "192,\n  \"reference_studies\": 2,\n  \"reference_likeness_verified\": false,\n  "
                         "\"unique_reference_states\": " +
                         String(int(signatureStates.size())) +

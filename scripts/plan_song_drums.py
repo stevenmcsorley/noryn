@@ -10,6 +10,7 @@ import argparse, json, re
 from pathlib import Path
 import mido
 import replace_song_sequences  # noqa: F401  (tolerant key-signature parsing)
+from song_drum_identities import SONGS, groove_hits
 
 GM = {35: 0, 36: 0, 38: 1, 40: 1, 39: 2, 42: 3, 44: 3, 46: 4, 41: 5, 43: 5, 45: 6, 47: 6, 48: 7, 50: 7,
       37: 8, 56: 9, 49: 10, 51: 10, 52: 10, 55: 10, 57: 10, 59: 10, 54: 11, 69: 11, 70: 11,
@@ -85,6 +86,22 @@ def drum_hits(path, slices, limit=256):
         offset += int(beats * 4)
     return [[pad, step, vel] for (pad, step), vel in sorted(hits.items(), key=lambda kv: (kv[0][1], kv[0][0]))], min(limit, offset)
 
+def identity(name, entry):
+    """Applies the song's own kit, sound and (for songs without drum MIDI) groove to a plan entry."""
+    song = song_of(name)
+    spec = SONGS.get(song)
+    if spec is None:
+        raise SystemExit(f'no drum identity for {song}')
+    entry['kit'] = spec['kit']
+    if 'groove' in spec:
+        entry.pop('pattern', None)
+        entry['length'] = spec['length']
+        entry['hits'] = groove_hits(spec['groove'], spec['length'])
+    drive, compression, room = spec['bus']
+    entry['tweaks'] = [{'drive': drive, 'compression': compression, 'room': room,
+                        'swing': spec.get('swing', 0)}] + spec.get('pads', [])
+    return entry
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--source-dir', required=True)
@@ -95,27 +112,25 @@ def main():
     studies = json.loads(Path('examples/chord-study-sequences.json').read_text())['studies']
     for spec in songs:
         name, song = spec['name'], song_of(spec['name'])
-        hits, length = [], 0
         slices = spec.get('slices') or [{'startBeat': spec['startBeat'], 'beats': spec['beats']}]
         hits, length = drum_hits(Path(args.source_dir) / spec['file'], slices)
-        if len(hits) >= 32 and song not in FALLBACK:  # sparse sections are not the song's beat
-            plan.append({'preset': name, 'kit': kit_for(name), 'length': max(16, length), 'hits': hits,
-                         'source': spec['file']})
-            continue
-        fallback = FALLBACK.get(song, ('Synth-pop drive (Depeche Mode)', kit_for(name)))
-        plan.append({'preset': name, 'none': True} if fallback is None else
-                    {'preset': name, 'kit': fallback[1], 'pattern': fallback[0]})
+        if FALLBACK.get(song, 0) is None:
+            plan.append({'preset': name, 'none': True})
+        elif len(hits) >= 32 and song not in FALLBACK:  # sparse sections are not the song's beat
+            plan.append(identity(name, {'preset': name, 'length': max(16, length), 'hits': hits, 'source': spec['file']}))
+        else:
+            plan.append(identity(name, {'preset': name}))
     for study in studies:
         name, song = study['name'], song_of(study['name'])
-        fallback = FALLBACK.get(song)
-        plan.append({'preset': name, 'none': True} if fallback is None else
-                    {'preset': name, 'kit': fallback[1], 'pattern': fallback[0]})
+        plan.append({'preset': name, 'none': True} if FALLBACK.get(song, 0) is None else identity(name, {'preset': name}))
     Path(args.out).write_text(json.dumps(plan))
     for item in plan:
-        kind = 'none' if item.get('none') else item.get('pattern') or f"{len(item['hits'])} hits / {item['length']} steps from MIDI"
+        kind = 'none' if item.get('none') else f"{len(item['hits'])} hits / {item['length']} steps " + \
+            ('from MIDI' if 'source' in item else 'song groove')
         print(f"{item['preset'][:58]:58s} {item.get('kit', '')[:28]:28s} {kind}")
-    print(len(plan), 'song demos;', sum(1 for i in plan if 'hits' in i), 'from MIDI drums,',
-          sum(1 for i in plan if 'pattern' in i), 'pattern presets,', sum(1 for i in plan if i.get('none')), 'without drums')
+    print(len(plan), 'song demos;', sum(1 for i in plan if 'source' in i), 'from MIDI drums,',
+          sum(1 for i in plan if 'hits' in i and 'source' not in i), 'written grooves,',
+          sum(1 for i in plan if i.get('none')), 'without drums')
 
 if __name__ == '__main__':
     main()

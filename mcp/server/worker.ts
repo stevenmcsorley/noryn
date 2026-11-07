@@ -16,7 +16,7 @@ const instanceId = z
     "Optional instance ID from get_state; defaults to the latest running synth.",
   );
 function upstream(env: Env) {
-  const server = new McpServer({ name: "noryn", version: "1.0.1" });
+  const server = new McpServer({ name: "noryn", version: "1.0.2" });
   async function call(op: string, args: unknown, id?: string) {
     const response = await fetch(`${env.NORYN_BRIDGE_URL}/api`, {
       method: "POST",
@@ -200,17 +200,22 @@ function upstream(env: Env) {
     "drums",
     {
       description:
-        "Drum machine: choose a kit and/or pattern (index or name, e.g. 'Industrial', 'Trip-hop slow'), set pattern length (1-256 sixteenths), let MIDI keys play pads, arm drum recording, edit one pad's sound (type, tune in semitones, decay/tone/snap 0-1, level 0-1.5, pan -1..1, choke group, sample path), set one step's velocity (0 clears), or audition a pad. Pads: 1 kick, 2 snare, 3 clap, 4 closed hat, 5 open hat, 6-8 toms, 9 rim, 10 cowbell, 11 cymbal, 12 shaker, 13 conga, 14 zap, 15 noise hit, 16 boom (0-based indices). Returns the kit, pads and the pattern as text (X accent, x hit, o ghost).",
+        "Drum machine: choose a kit and/or pattern (index or name, e.g. 'Industrial', 'Trip-hop slow'), set pattern length (1-256 sixteenths), set the drum bus (drive, compression, room 0-1) and swing (0-1), let MIDI keys play pads, arm drum recording, edit one pad's sound (name, type, tune in semitones, decay/tone/snap 0-1, level 0-1.5, pan -1..1, choke group, sample path), set one step's velocity (0 clears), or audition a pad. Pads: 1 kick, 2 snare, 3 clap, 4 closed hat, 5 open hat, 6-8 toms, 9 rim, 10 cowbell, 11 cymbal, 12 shaker, 13 conga, 14 zap, 15 noise hit, 16 boom (0-based indices). Returns the kit, pads and the pattern as text (X accent, x hit, o ghost).",
       inputSchema: {
         kit: z.union([z.number().int(), z.string()]).optional(),
         pattern: z.union([z.number().int(), z.string()]).optional(),
         clear: z.boolean().optional(),
         length: z.number().int().min(1).max(256).optional(),
+        drive: z.number().min(0).max(1).optional(),
+        compression: z.number().min(0).max(1).optional(),
+        room: z.number().min(0).max(1).optional(),
+        swing: z.number().min(0).max(1).optional(),
         keysPlayDrums: z.boolean().optional(),
         recording: z.boolean().optional(),
         pad: z
           .object({
             index: z.number().int().min(0).max(15),
+            name: z.string().max(40).optional(),
             type: z.union([z.number().int(), z.string()]).optional(),
             tune: z.number().min(-24).max(24).optional(),
             decay: z.number().min(0).max(1).optional(),
@@ -314,7 +319,7 @@ export default {
     )
       return new Response("Unauthorized", { status: 401 });
     if (new URL(request.url).pathname === "/health")
-      return Response.json({ name: "noryn-codemode", version: "1.0.1" });
+      return Response.json({ name: "noryn-codemode", version: "1.0.2" });
     const server = await codeMcpServer({
       server: upstream(env),
       executor: new DynamicWorkerExecutor({ loader: env.LOADER }),

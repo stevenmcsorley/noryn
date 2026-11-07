@@ -2,6 +2,14 @@
 
 Native Linux VST3 instrument and standalone synthesizer. The interface takes cues from the supplied NORYN concept and the SONAVYRE module's dark panels and colored traces. This is an original instrument built with JUCE and custom DSP, not a circuit emulation of a particular commercial synth.
 
+## v1.0.2: every song demo has its own drums
+
+- **No two demos share a drum sound or groove any more.** In 1.0.1, ten Burial demos played the same two-step pattern note for note, the Depeche Mode pattern demos shared one beat, and 34 demos used the same Linn kit untouched.
+- Each song now has its own drum identity (`scripts/song_drum_identities.py`): a base kit chosen for the record, then pad edits, bus drive, compression and room, and swing. Examples: Closer's overdriven Nightclubbing kick and static, the whip crack and chain rattle on Master and Servant, the anvil snare on People Are People, the stomp and clap on Personal Jesus, the gated snare on Never Let Me Down Again, brushes on Chloe and Roads.
+- The 23 demos without drum MIDI get a groove written for that song instead of a shared preset. Each Burial track has its own two-step (Archangel, Untrue, Near Dark, Kindred, Raver, Rival Dealer and the rest), as do the Portishead, Father John Misty and Richard Ashcroft demos.
+- The 53 demos with drum MIDI keep their transcribed parts, now played on their own kit sound.
+- The `drums` control (and MCP tool) can set bus drive, compression, room and swing, and rename pads.
+
 ## v1.0.1: drums for every song demo
 
 - **Every song demo has its drums.** 55 transcribed demos carry the drum part from the same community MIDI file and the same four song sections as their synth part (channel 10, quantized to 1/16, General MIDI notes mapped to the pad roles). They span up to 256 steps, so the drums follow the medley section by section. 22 demos without drum MIDI, mostly the chord studies, get a pattern chosen for the song: two-step garage for Burial, trip-hop for Portishead, synth-pop drive for Depeche Mode and so on. Five songs that have no drums on record (Motion Picture Soundtrack, Daydreaming, A Warm Place, Night Bus, The Palace) stay drumless, as do the M83 and Code Mode studies.

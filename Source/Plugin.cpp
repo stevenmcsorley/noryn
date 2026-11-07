@@ -701,8 +701,8 @@ class NorynProcessor : public AudioProcessor, private Timer
         const auto &spec = drumPatterns()[size_t(jlimit(0, int(drumPatterns().size()) - 1, index))];
         setValue("drumswing", jlimit(0.f, 1.f, spec.swing * 2), true);
     }
-    // {"kit", "pattern", "length", "keysPlayDrums", "recording", "pad": {index, type, tune, decay, tone, snap,
-    //  level, pan, choke}, "step": {pad, step, velocity}, "hit": {pad, velocity}}
+    // {"kit", "pattern", "length", "drive", "compression", "room", "swing", "keysPlayDrums", "recording", "pad": {index, name, type, tune, decay, tone,
+    //  snap, level, pan, choke}, "step": {pad, step, velocity}, "hit": {pad, velocity}}
     var drumControl(const var &args)
     {
         if (args.hasProperty("kit"))
@@ -713,6 +713,12 @@ class NorynProcessor : public AudioProcessor, private Timer
             drums.pattern.clear();
         if (args.hasProperty("length"))
             drums.pattern.length.store(jlimit(1, maxDrumSteps, int(args["length"])));
+        for (auto [id, field] : std::vector<std::pair<const char *, std::atomic<float> *>>{
+                 {"drive", &drums.busDrive}, {"compression", &drums.busCompression}, {"room", &drums.room}})
+            if (args.hasProperty(id))
+                field->store(jlimit(0.f, 1.f, float(args[id])));
+        if (args.hasProperty("swing"))
+            setValue("drumswing", jlimit(0.f, 1.f, float(args["swing"])), true);
         if (args.hasProperty("keysPlayDrums"))
             drums.keysPlayDrums.store(bool(args["keysPlayDrums"]));
         if (args.hasProperty("recording"))
@@ -722,6 +728,8 @@ class NorynProcessor : public AudioProcessor, private Timer
             auto &target = drums.pads[size_t(jlimit(0, drumPads - 1, int(pad->getProperty("index"))))];
             if (pad->hasProperty("type"))
                 target.type.store(indexByName(pad->getProperty("type"), drumTypeNames()));
+            if (pad->hasProperty("name"))
+                target.name = pad->getProperty("name").toString().substring(0, 40);
             for (auto [id, field] : std::vector<std::pair<const char *, std::atomic<float> *>>{
                      {"tune", &target.tune}, {"decay", &target.decay}, {"tone", &target.tone},
                      {"snap", &target.snap}, {"level", &target.level}, {"pan", &target.pan}})
@@ -881,7 +889,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         if (incidents.pending.load() == IncidentRecorder::none)
             return false;
         String summary;
-        summary << "Version 1.0.1\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
+        summary << "Version 1.0.2\nPreset: " << loadedPresetName() << "\nSample rate " << getSampleRate()
                 << ", block " << preparedBlock << "\nSequencer playing " << int(sequencer.playing.load())
                 << ", recording " << int(sequencer.recording.load()) << ", playhead "
                 << sequencer.playhead.load() << "\nActive voices " << visual.voices.load()
@@ -1056,7 +1064,7 @@ class NorynProcessor : public AudioProcessor, private Timer
         auto *result = new DynamicObject();
         result->setProperty("instanceId", bridge ? bridge->id : String());
         result->setProperty("name", "NORYN");
-        result->setProperty("version", "1.0.1");
+        result->setProperty("version", "1.0.2");
         result->setProperty("factoryPreset", getCurrentProgram());
         result->setProperty("presetName", loadedPresetName());
         result->setProperty("playing", sequencer.playing.load());

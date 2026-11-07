@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "factory_presets": 290,
   "signature_presets": 192,
   "reference_studies": 2,
@@ -18,6 +18,6 @@
   "five_minute_note_balance": true,
   "stress_sample_rates": [44100, 48000, 96000],
   "stress_block_sizes": [16, 64, 127, 512],
-  "elapsed_seconds": 77.54,
-  "dense_16_voice_realtime_ratio": 0.5678
+  "elapsed_seconds": 79.37,
+  "dense_16_voice_realtime_ratio": 0.5820
 }

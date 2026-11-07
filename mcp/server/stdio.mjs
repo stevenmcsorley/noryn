@@ -14,14 +14,14 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const token = (
   await fs.readFile(path.join(runtimeDir, "mcp-token"), "utf8")
 ).trim();
-const remote = new Client({ name: "noryn-local-client", version: "1.0.1" });
+const remote = new Client({ name: "noryn-local-client", version: "1.0.2" });
 await remote.connect(
   new StreamableHTTPClientTransport(new URL("http://127.0.0.1:8787/mcp"), {
     requestInit: { headers: { Authorization: `Bearer ${token}` } },
   }),
 );
 const local = new Server(
-  { name: "noryn-codemode", version: "1.0.1" },
+  { name: "noryn-codemode", version: "1.0.2" },
   { capabilities: { tools: {} } },
 );
 local.setRequestHandler(ListToolsRequestSchema, () => remote.listTools());
